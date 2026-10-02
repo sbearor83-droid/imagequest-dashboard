@@ -16,7 +16,7 @@
       "severity": "CRITICAL",
       "title": "Active exploitation of Apache Struts CVE-2026-3189 observed in wild",
       "source": "CISA KEV / ImageQuest Threat Lab",
-      "affectedClients": ["Apex Financial", "Quantico Health"]
+      "affectedClients": ["Apex Financial Holdings", "Quantico Health Systems"]
     },
     {
       "id": "TF-102",
@@ -24,7 +24,7 @@
       "severity": "HIGH",
       "title": "Emerging spear-phishing campaign leveraging malicious SVG attachments",
       "source": "MITRE ATT&CK Group APT29",
-      "affectedClients": ["BioNova Pharma"]
+      "affectedClients": ["BioNova Pharmaceuticals"]
     },
     {
       "id": "TF-103",
@@ -32,7 +32,7 @@
       "severity": "MEDIUM",
       "title": "OpenSSL 3.4.1 patch release addressing memory corruption in handshake",
       "source": "NVD / NIST",
-      "affectedClients": ["Global Logistics Corp", "Strata Cloud"]
+      "affectedClients": ["Global Logistics Corp", "Strata Cloud Services"]
     }
   ],
   "clients": [
@@ -539,7 +539,7 @@
       "id": "RISK-04",
       "category": "Compliance & Regulatory",
       "sector": "Financial",
-      "client": "First National Trust Bank",
+      "client": "Summit Capital Assets",
       "title": "Non-compliance with SEC Incident Disclosure Rules (4-Day Rule)",
       "description": "Failure to accurately determine materiality of security incident within mandatory 4-business-day reporting timeline.",
       "likelihood": 2,
@@ -599,7 +599,7 @@
       "id": "RISK-07",
       "category": "Banking & Financial",
       "sector": "Financial",
-      "client": "Pinnacle Wealth Partners",
+      "client": "First Heritage Credit Union",
       "title": "FFIEC / GLBA Safeguards Non-Compliance & Core Gateway API Tampering",
       "description": "Vulnerabilities in wealth management APIs leading to unauthorized wire transfers and supervisory FDIC/OCC enforcement actions.",
       "likelihood": 3,
@@ -752,7 +752,7 @@
       "id": "VND-05",
       "name": "DevFlow CI/CD Hosting",
       "sector": "Other",
-      "client": "AeroSpace Dynamics",
+      "client": "Strata Cloud Services",
       "service": "Automated Deployment Pipeline",
       "tier": "Tier 2 - Operational",
       "riskScore": 68,
@@ -786,7 +786,7 @@
       "id": "VND-07",
       "name": "Fiserv DNA Core Platform",
       "sector": "Financial",
-      "client": "First National Trust Bank",
+      "client": "First Heritage Credit Union",
       "service": "Core Banking Ledger & Wire System",
       "tier": "Tier 1 - Mission Critical",
       "riskScore": 91,
@@ -820,7 +820,7 @@
       "id": "VND-09",
       "name": "Jack Henry & Associates",
       "sector": "Financial",
-      "client": "Pinnacle Wealth Partners",
+      "client": "Summit Capital Assets",
       "service": "Commercial Wealth & Portfolio Core",
       "tier": "Tier 1 - Mission Critical",
       "riskScore": 90,
