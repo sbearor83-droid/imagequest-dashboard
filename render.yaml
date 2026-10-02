@@ -1,0 +1,14 @@
+# Render Blueprint: one Node web service that serves both the API and the built dashboard.
+services:
+  - type: web
+    name: cyberpulse-dashboard
+    runtime: node
+    plan: free
+    branch: main
+    autoDeploy: true
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/stats
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
