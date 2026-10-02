@@ -1,71 +1,74 @@
-# CYBERPULSE // Cyber Security Project Operations & MSSP Dashboard
+# IMAGEQUEST // Cybersecurity & Compliance Operations Command Center
 
-An enterprise-grade Project Management & Operations Command Center built specifically for full-service Cybersecurity firms, MSSPs, and Security Advisory practices.
+An enterprise-grade Project Management & Operations Command Center built specifically for **ImageQuest** (Nashville, TN — [imagequest.com](https://www.imagequest.com/)), a SOC 2 Type II certified cybersecurity, compliance, and managed IT services provider.
+
+Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's primary client sectors:
+- 🏥 **Healthcare Networks & Clinical Systems** (HIPAA Security Rule, HITECH, HITRUST, Medical IoMT Device Isolation)
+- 🏦 **Financial Institutions & Banking** (FFIEC CAT, GLBA Safeguards, SEC 4-Day Incident Disclosure, PCI-DSS 4.0)
+- 🌐 **Other Commercial & Enterprise** (SOC 2 Type II, NIST CSF, ISO 27001)
 
 ---
 
 ## 🛡️ Core Functional Modules
 
-1. **Operations Overview (Executive Telemetry)**
-   - Live Threat Intelligence Broadcast (CISA KEV, MITRE ATT&CK, NIST CVEs)
+1. **Client Accounts 360° Hub**
+   - Portfolio directory with sector filter tabs (`Healthcare`, `Financial`, `Other`)
+   - Compliance posture meters, SLA response health, active engagement tracking
+   - Interactive **360° Account Cockpit Modal** for full client drilldown across all operational practices
+
+2. **Ops Telemetry (Executive Radar)**
+   - Live Threat Intelligence Broadcast (CISA KEV, ImageQuest Threat Lab, MITRE ATT&CK)
    - Real-time KPI statistics: Active Engagements, Critical Findings Open, Monitored Endpoints, SLA compliance
    - Triage queue for high-priority CVSS 9.0+ vulnerabilities
-   - Quick practice navigation across all service lines
 
-2. **Engagements & Project Management**
-   - Covers all cybersecurity service lines:
-     - **Penetration Testing** (External/Internal Network, Web Applications, Cloud, APIs)
-     - **Red Teaming & Adversary Emulation** (Lateral movement, assumed breach)
-     - **Compliance & Audits** (SOC 2 Type II, ISO/IEC 27001, CMMC Level 2, NIST 800-171, PCI-DSS 4.0)
-     - **Managed IT & 24/7 SOC Onboarding**
-     - **Third-Party Vendor Risk Management (TPRM)**
-     - **Crisis Tabletop Exercises (TTX)**
-   - Interactive milestone phase progression: *Scoping & Recon → Active Exploitation → Evidence Analysis → Executive Debrief → Retest & Sign-off → Completed*
-   - Budget vs. logged hours tracking and team allocation
-   - Direct launch of client executive deliverable audit reports
+3. **Engagements & Project Management**
+   - Covers ImageQuest's core advisory and technical service lines:
+     - **vCISO Advisory Retainers** & Strategic Roadmaps
+     - **Cybersecurity Risk Assessments & BIA**
+     - **Healthcare HIPAA Technical Audits & Medical IoMT Reviews**
+     - **FFIEC / GLBA Banking Examination Readiness**
+     - **Network & Web Application Penetration Testing**
+     - **24/7 Managed IT & SOC Onboarding**
+   - Interactive Kanban milestone phases: *Scoping & Recon → Active Testing → Evidence Analysis → Executive Debrief → Retest & Sign-off → Completed*
+   - Budget tracking, logged hours, and staff allocation
 
-3. **Vulnerability Matrix & Findings Tracker**
+4. **Vulnerability Matrix & Findings Tracker**
    - Formal CVSS v3.1 / v4.0 scoring breakdown (Critical, High, Medium, Low)
-   - Full CVSS vector strings (e.g. `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`)
-   - Proof-of-concept (PoC) notes, affected asset endpoints, and technical impact
+   - Full CVSS vector strings, PoC notes, affected endpoints, and technical impact
    - Actionable remediation playbooks and SLA deadlines
    - Retest workflow: *Open → In Remediation → Retest Requested → Verified Mitigated*
 
-4. **Enterprise Risk Register & 5x5 Heatmap Matrix**
+5. **Cyber Risk Register & 5x5 Heatmap Matrix**
    - 5x5 Likelihood (1-5) vs. Impact (1-5) qualitative risk grid
    - Inherent Risk vs. Residual Risk scoring displaying percentage reduction achieved by defensive controls
-   - Categorization: Ransomware, Supply Chain & TPRM, Cloud IAM Identity, SEC Regulatory Incident Disclosure (4-Day Rule), AI Deepfake & Social Engineering
+   - Domain-specific scenarios: Clinical Ransomware & Ambulatory Outage, FFIEC/GLBA Non-Compliance, Deepfake Commercial Wire Fraud, Medical IoMT Tampering
 
-5. **Managed IT Operations & 24/7 SOC SLAs**
+6. **24/7 SecOps & Managed IT Operations**
    - Fleet telemetry across Windows Server, Windows 11 Enterprise, Ubuntu Linux, and macOS
-   - Patch compliance tracking and EDR sensor health
-   - Active SOC Escalations & Ticket SLA queue with live countdown timers (P1 Critical 1-hour SLA, P2 High 4-hour SLA, P3 Medium)
-   - Interactive SLA ticket dispatch modal
+   - Patch compliance tracking and EDR sensor health (SentinelOne, Microsoft Defender for Endpoint)
+   - Active SLA queue with live countdown timers (P1 Critical 1-hour SLA, P2 High 4-hour SLA)
 
-6. **Third-Party Vendor Risk Management (TPRM)**
-   - Vendor supply chain tiering (Tier 1 Mission Critical, Tier 2 Operational, Tier 3 Support)
-   - Continuous vendor risk scoring (0-100) and ISO 27001 validation
+7. **Vendor Management (TPRM)**
+   - Sector-specific vendor risk assessments (e.g. *Epic Systems EHR*, *Oracle/Cerner*, *Fiserv DNA Core*, *Jack Henry*, *CrowdStrike*, *Cloudflare*)
    - SOC 2 Type II attestation status tracking and data access scopes
    - Rapid vendor onboarding modal
 
-7. **Tabletop Exercises (TTX) & Incident Simulation Planner**
-   - Pre-configured and custom crisis scenarios (*Operation Cerberus Black - Clinical Ransomware*, *Operation Sovereign Ghost - SWIFT Wire Interception*)
-   - Chronological inject timeline (T+00:00 Infiltration, T+00:45 Escalation, T+01:30 Public Darknet leak, T+02:45 Regulatory SEC/HHS countdown)
-   - Participant department alignment (CEO, CISO, General Counsel, Clinical Ops, PR)
-   - After-Action Report (AAR) rating and debrief summaries
+8. **BCM Tabletop Drills (TTX) & Incident Simulation**
+   - Pre-configured crisis scenarios (*Operation Cerberus Black - Hospital Ransomware*, *Operation Sovereign Wire - Commercial Banking Clawback*)
+   - Chronological inject timeline (T+00:00 Infiltration, T+00:45 Escalation, T+01:30 Darknet leak, T+02:45 Regulatory SEC/HHS countdown)
+   - Participant department alignment (CEO, CISO, General Counsel, Clinical Ops, Outside Counsel)
 
-8. **Security Analyst Roster & Resource Allocation**
-   - Government clearance level tracking (Top Secret / SCI, Secret, Public Trust)
-   - Industry credentials (OSCP, OSEP, CISSP, GCFA, CISA, CEH, CCNA Security, AWS Security)
-   - Workload capacity % utilization meters with high-utilization indicators
-   - Active engagement count and direct comms
+9. **ImageQuest Advisory & Practice Roster**
+   - Features ImageQuest leadership (**Milton Bartley**, CEO & Founder; **Andy Barker**, President & vCISO Practice Lead)
+   - Specialized practice leads for Healthcare Compliance (HIPAA), Banking & Financial (FFIEC), and Offensive SecOps
+   - Workload capacity % utilization meters and clearance levels
 
-9. **Executive Deliverables & Audit Report Exporter**
-   - Audit-grade client report generation with formal classification headers
-   - Executive attestation statement, assessment methodology, and scope verification
-   - Severity distribution chart and technical findings breakdown
-   - Digital cryptographic signature sign-off blocks (Lead Assessor & Managing Director CISO)
-   - One-click Print / Save to PDF and JSON export
+10. **Audit Deliverables & PDF Exporter**
+    - Audit-grade client report generation with ImageQuest Nashville letterhead and SOC 2 Type II stamp
+    - Executive attestation statement, assessment methodology, and scope verification
+    - Severity distribution chart and technical findings breakdown
+    - Digital cryptographic sign-offs (Lead Assessor & Andy Barker, President)
+    - One-click Print / Save to PDF and JSON export
 
 ---
 

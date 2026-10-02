@@ -1,7 +1,7 @@
 {
-  "name": "cyber-pulse",
+  "name": "imagequest-dashboard",
   "version": "1.0.0",
-  "description": "Enterprise Project Management & Cyber Operations Dashboard for Cybersecurity Firms",
+  "description": "ImageQuest Cybersecurity, Compliance & Project Operations Dashboard (Healthcare, Financial Institutions & Commercial)",
   "main": "server/index.js",
   "type": "module",
   "scripts": {
