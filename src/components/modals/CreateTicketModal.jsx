@@ -9,10 +9,10 @@ export default function CreateTicketModal() {
 }
 
 function CreateTicketForm() {
-  const { setIsCreateTicketModalOpen, addTicket, engagements, team, selectedClient } = useCyber();
+  const { setIsCreateTicketModalOpen, addTicket, clientFilteredEngagements, team, scopedClientName } = useCyber();
 
   const [formData, setFormData] = useState({
-    client: selectedClient === 'ALL' ? (engagements[0]?.client || '') : selectedClient,
+    client: scopedClientName || clientFilteredEngagements[0]?.client || '',
     priority: 'P1 - Critical',
     title: '',
     category: 'SOC Escalation',

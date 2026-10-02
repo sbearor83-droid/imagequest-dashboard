@@ -10,10 +10,10 @@ export default function CreateEngagementModal() {
 }
 
 function CreateEngagementForm() {
-  const { setIsCreateEngModalOpen, addEngagement, team, selectedClient } = useCyber();
+  const { setIsCreateEngModalOpen, addEngagement, team, scopedClientName } = useCyber();
 
   const [formData, setFormData] = useState({
-    client: selectedClient === 'ALL' ? '' : selectedClient,
+    client: scopedClientName || '',
     title: '',
     type: 'Penetration Testing',
     phase: 'Scoping & Recon',

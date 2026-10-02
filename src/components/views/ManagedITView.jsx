@@ -7,12 +7,14 @@ import {
   Activity
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { summarizeClients } from '../../utils/helpers';
 
 export default function ManagedITView() {
-  const { managedIT, clientFilteredTickets, setIsCreateTicketModalOpen, selectedClient, setSelectedClient, searchQuery } = useCyber();
+  const { managedIT, scopedClients, clientFilteredTickets, setIsCreateTicketModalOpen, selectedClient, scopeLabel, setSelectedClient, searchQuery } = useCyber();
   const [ticketFilter, setTicketFilter] = useState('ALL');
 
-  const { summary, endpointHealth } = managedIT;
+  const { endpointHealth } = managedIT;
+  const summary = summarizeClients(scopedClients);
 
   const query = searchQuery.toLowerCase();
   const filteredTickets = clientFilteredTickets.filter(t => {
@@ -53,7 +55,7 @@ export default function ManagedITView() {
           <span className="text-[#205588] flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
             <span className="text-[#475569]">Showing infrastructure & SLA tickets scoped for:</span>
-            <strong className="text-[#205588] bg-white px-2 py-0.5 rounded border border-[#b4d5ff]">{selectedClient}</strong>
+            <strong className="text-[#205588] bg-white px-2 py-0.5 rounded border border-[#b4d5ff]">{scopeLabel}</strong>
           </span>
           <button 
             onClick={() => setSelectedClient('ALL')}
@@ -69,27 +71,27 @@ export default function ManagedITView() {
         <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
           <div className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Monitored Endpoints</div>
           <div className="text-2xl font-bold font-mono text-[#1b2a3a] mt-1">
-            {summary.totalEndpoints?.toLocaleString()}
+            {summary.endpoints.toLocaleString()}
           </div>
           <div className="text-[11px] text-emerald-700 font-mono mt-1 flex items-center gap-1 font-semibold">
-            <CheckCircle2 className="w-3 h-3" /> {summary.healthyEndpoints?.toLocaleString()} Healthy
+            <CheckCircle2 className="w-3 h-3" /> {summary.patchedEndpoints?.toLocaleString() ?? '—'} Patched
           </div>
         </div>
 
         <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
           <div className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Patch Compliance</div>
           <div className="text-2xl font-bold font-mono text-emerald-700 mt-1">
-            {summary.patchCompliance}%
+            {summary.patchCompliance ?? '—'}%
           </div>
           <div className="text-[11px] text-[#64748b] font-mono mt-1">
-            {summary.vulnerableEndpoints} Pending Reboot
+            {summary.unpatchedEndpoints?.toLocaleString() ?? '—'} Pending Patches
           </div>
         </div>
 
         <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
           <div className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Avg SOC Response</div>
           <div className="text-2xl font-bold font-mono text-[#205588] mt-1">
-            {summary.avgResponseMinutes} min
+            {summary.avgResponseMinutes ?? '—'} min
           </div>
           <div className="text-[11px] text-[#64748b] font-mono mt-1">
             Target SLA: &lt;15 min
@@ -99,10 +101,10 @@ export default function ManagedITView() {
         <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
           <div className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Overall SLA Met Rate</div>
           <div className="text-2xl font-bold font-mono text-amber-600 mt-1">
-            {summary.slaMet}%
+            {summary.slaMet ?? '—'}%
           </div>
-          <div className="text-[11px] text-emerald-700 font-mono mt-1 font-semibold">
-            Zero SLA Breaches in 30d
+          <div className="text-[11px] text-[#64748b] font-mono mt-1">
+            Target: 99.0%
           </div>
         </div>
       </div>
@@ -113,6 +115,11 @@ export default function ManagedITView() {
           <Activity className="w-4 h-4 text-[#205588]" />
           Client Infrastructure & OS Fleet Health Telemetry
         </h2>
+        {selectedClient !== 'ALL' && (
+          <p className="text-xs text-[#64748b] -mt-2">
+            Firm-wide OS breakdown. Fleet health isn't tracked per client yet.
+          </p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {endpointHealth.map((item, idx) => {

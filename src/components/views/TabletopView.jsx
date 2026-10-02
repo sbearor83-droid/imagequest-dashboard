@@ -9,7 +9,7 @@ import {
 import { useCyber } from '../../context/CyberContext';
 
 export default function TabletopView() {
-  const { clientFilteredTabletop: clientExercises, setIsCreateTTXModalOpen, selectedClient, setSelectedClient } = useCyber();
+  const { clientFilteredTabletop: clientExercises, setIsCreateTTXModalOpen, selectedClient, scopeLabel, setSelectedClient } = useCyber();
   const [activeExerciseId, setActiveExerciseId] = useState(null);
 
   const currentExercise = clientExercises.find(t => t.id === activeExerciseId) || clientExercises[0];
@@ -43,7 +43,7 @@ export default function TabletopView() {
           <span className="text-[#205588] flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
             <span className="text-[#475569]">Showing tabletop drills scoped for:</span>
-            <strong className="text-[#205588] bg-white px-2 py-0.5 rounded border border-[#b4d5ff]">{selectedClient}</strong>
+            <strong className="text-[#205588] bg-white px-2 py-0.5 rounded border border-[#b4d5ff]">{scopeLabel}</strong>
           </span>
           <button 
             onClick={() => setSelectedClient('ALL')}

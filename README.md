@@ -13,6 +13,7 @@ Engineered with a **Client-Centric 360° Architecture** tailored to primary regu
 
 1. **Client Accounts 360° Hub**
    - Portfolio directory with sector filter tabs (`Healthcare`, `Financial`, `Other`)
+   - Global scope picker in the top bar: all clients, a whole sector, or a single client. Every view, KPI, threat feed and roster follows the selected scope
    - Compliance posture meters, SLA response health, active engagement tracking
    - Interactive **360° Account Cockpit Modal** for full client drilldown across all operational practices
 

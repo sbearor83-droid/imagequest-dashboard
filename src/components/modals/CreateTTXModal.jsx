@@ -10,11 +10,11 @@ export default function CreateTTXModal() {
 }
 
 function CreateTTXForm() {
-  const { setIsCreateTTXModalOpen, addTabletopExercise, team, selectedClient } = useCyber();
+  const { setIsCreateTTXModalOpen, addTabletopExercise, team, scopedClientName } = useCyber();
 
   const [formData, setFormData] = useState({
     title: '',
-    client: selectedClient === 'ALL' ? '' : selectedClient,
+    client: scopedClientName || '',
     threatActor: 'APT29 / Russian SVR Emulation',
     scenario: '',
     scheduledDate: dateInDays(30),

@@ -6,7 +6,7 @@ import {
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
-import { useCyber } from '../../context/CyberContext';
+import { useCyber, SECTOR_PREFIX } from '../../context/CyberContext';
 
 export default function ClientsView() {
   const { 
@@ -15,25 +15,30 @@ export default function ClientsView() {
     findings, 
     managedIT, 
     tabletopExercises, 
+    selectedClient,
     setSelectedClient, 
+    scopedSector,
+    scopedClientName,
+    scopedClients,
     setActiveTab, 
     openReportFor,
     setIsCreateClientModalOpen,
     searchQuery
   } = useCyber();
 
-  const [sectorFilter, setSectorFilter] = useState('ALL');
+  // The sector tabs drive the global scope, so they always agree with the navbar selector
+  const sectorFilter = selectedClient === 'ALL' ? 'ALL' : scopedSector;
+  const setSectorFilter = (sector) => setSelectedClient(sector === 'ALL' ? 'ALL' : SECTOR_PREFIX + sector);
   const [selectedClientModal, setSelectedClientModal] = useState(null);
   const [clientModalTab, setClientModalTab] = useState('engagements');
 
   const query = searchQuery.toLowerCase();
-  const filteredClients = clients.filter(c => {
+  const filteredClients = scopedClients.filter(c => {
     const matchesSearch = 
       c.name.toLowerCase().includes(query) ||
       c.industry.toLowerCase().includes(query) ||
       c.primaryContact.toLowerCase().includes(query);
-    const matchesSector = sectorFilter === 'ALL' || c.sector === sectorFilter;
-    return matchesSearch && matchesSector;
+    return matchesSearch;
   });
 
   const getClientMetrics = (clientName) => {
@@ -87,6 +92,20 @@ export default function ClientsView() {
           <span>Add New Client Account</span>
         </button>
       </div>
+
+      {scopedClientName && (
+        <div className="bg-[#e8eff6] border border-[#b4d5ff] rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+          <span className="text-[#205588]">
+            Showing <strong className="text-[#1b2a3a]">{scopedClientName}</strong> only
+          </span>
+          <button
+            onClick={() => setSelectedClient('ALL')}
+            className="text-[#205588] hover:text-[#2365a3] font-semibold underline text-[11px]"
+          >
+            Show All Accounts
+          </button>
+        </div>
+      )}
 
       {/* Sector Filter Bar */}
       <div className="bg-white border border-[#d8e5f2] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
