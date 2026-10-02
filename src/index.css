@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --iq-navy-dark: #001224;
+    --iq-navy: #001c38;
+    --iq-navy-card: #00254a;
+    --iq-blue: #0077b6;
+    --iq-blue-vibrant: #0096c7;
+    --iq-sky: #48cae4;
+    --iq-border: #0e3966;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Open Sans', system-ui, -apple-system, sans-serif;
+    background-color: #001224;
+    color: #e2eaf4;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #001224;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0e3966;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0077b6;
+}
+
+/* ImageQuest accents and glows */
+.iq-glow-blue {
+  box-shadow: 0 0 25px -4px rgba(0, 150, 199, 0.35);
+}
+
+.iq-glow-emerald {
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
+}
+
+.iq-glow-rose {
+  box-shadow: 0 0 20px -3px rgba(239, 71, 111, 0.35);
+}
+
+.cyber-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 150, 199, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 150, 199, 0.03) 1px, transparent 1px);
+}
