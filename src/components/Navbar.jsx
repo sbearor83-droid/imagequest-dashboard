@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ShieldAlert, 
-  Search, 
-  Plus, 
-  FileText, 
-  Bell, 
-  Radio, 
-  Clock, 
-  Crosshair, 
+  Search,
+  Plus,
+  FileText,
+  Clock,
+  Crosshair,
   Building2,
   ChevronDown,
-  X,
-  Layers,
-  Sparkles
+  X
 } from 'lucide-react';
 import { useCyber } from '../context/CyberContext';
 
@@ -20,7 +15,6 @@ export default function Navbar() {
   const { 
     searchQuery, 
     setSearchQuery, 
-    stats, 
     clients,
     selectedClient,
     setSelectedClient,
@@ -28,8 +22,7 @@ export default function Navbar() {
     setIsCreateFindingModalOpen, 
     openReportFor,
     engagements,
-    setActiveTab,
-    setIsCreateClientModalOpen
+    setActiveTab
   } = useCyber();
 
   const [currentTime, setCurrentTime] = useState('');
@@ -37,7 +30,7 @@ export default function Navbar() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' UTC');
+      setCurrentTime(now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }) + ' UTC');
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
@@ -45,7 +38,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="relative h-16 border-b border-[#1d3e63] bg-[#0f2238]/95 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className="h-16 border-b border-[#1d3e63] bg-[#0f2238]/95 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 print:hidden">
       {/* Official ImageQuest Top Brand Accent Line */}
       <div className="h-1 bg-gradient-to-r from-[#205588] via-[#2365a3] to-[#3882c8] w-full absolute top-0 left-0" />
 

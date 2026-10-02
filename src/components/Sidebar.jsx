@@ -1,17 +1,15 @@
 import React from 'react';
 import { 
   Building2,
-  LayoutDashboard, 
-  FolderKanban, 
-  Bug, 
-  ShieldAlert, 
-  Server, 
-  Gamepad2, 
-  Users, 
-  FileCheck2, 
-  Activity,
+  LayoutDashboard,
+  FolderKanban,
+  Bug,
+  ShieldAlert,
+  Server,
+  Gamepad2,
+  Users,
+  FileCheck2,
   Layers,
-  ChevronRight,
   X
 } from 'lucide-react';
 import { useCyber } from '../context/CyberContext';
@@ -23,13 +21,10 @@ export default function Sidebar() {
     clients,
     selectedClient,
     setSelectedClient,
-    engagements, 
     clientFilteredEngagements,
-    findings, 
     clientFilteredFindings,
     clientFilteredTickets,
-    vendors, 
-    tabletopExercises, 
+    clientFilteredVendors,
     clientFilteredTabletop
   } = useCyber();
 
@@ -87,7 +82,7 @@ export default function Sidebar() {
       label: 'Vendor Risk (TPRM)',
       subtitle: 'Supply Chain & SOC 2 Reviews',
       icon: Layers,
-      badge: `${vendors.length} Org`,
+      badge: `${clientFilteredVendors.length} Org`,
       badgeColor: 'bg-slate-800 text-slate-300 border-slate-700'
     },
     {
@@ -116,7 +111,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-[#0f2238] border-r border-[#1d3e63] flex flex-col justify-between shrink-0 select-none">
+    <aside className="w-64 bg-[#0f2238] border-r border-[#1d3e63] flex flex-col justify-between shrink-0 select-none print:hidden">
       <div className="p-3 space-y-1">
         {/* Active Client Scope Banner */}
         {selectedClient !== 'ALL' && (

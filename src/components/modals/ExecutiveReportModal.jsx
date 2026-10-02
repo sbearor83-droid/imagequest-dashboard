@@ -1,15 +1,15 @@
 import React from 'react';
 import { 
-  X, 
-  FileCheck2, 
-  Printer, 
-  Download, 
-  ShieldAlert, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Target 
+  X,
+  FileCheck2,
+  Printer,
+  Download,
+  ShieldAlert,
+  CheckCircle2,
+  Target
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { exportDeliverableJson } from '../../utils/helpers';
 
 export default function ExecutiveReportModal() {
   const { 
@@ -24,27 +24,9 @@ export default function ExecutiveReportModal() {
   const eng = reportTargetEngagement;
   const relatedFindings = findings.filter(f => f.engagementId === eng.id);
 
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleExportJson = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
-      engagement: eng,
-      findings: relatedFindings,
-      generatedAt: new Date().toISOString()
-    }, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `${eng.id}_Security_Deliverable.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  };
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 print:static print:block print:p-0 print:bg-transparent">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col print:max-h-none print:max-w-none print:border-none">
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d] shrink-0">
           <div className="flex items-center gap-2.5">
@@ -57,16 +39,16 @@ export default function ExecutiveReportModal() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 print:hidden">
             <button
-              onClick={handleExportJson}
+              onClick={() => exportDeliverableJson(eng, relatedFindings)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 text-xs font-mono transition-colors border border-[#1d3e63]"
             >
               <Download className="w-3.5 h-3.5 text-[#2365a3]" />
               <span>JSON</span>
             </button>
             <button
-              onClick={handlePrint}
+              onClick={() => window.print()}
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs font-mono transition-colors shadow-md shadow-[#205588]/30"
             >
               <Printer className="w-3.5 h-3.5" />
@@ -82,7 +64,7 @@ export default function ExecutiveReportModal() {
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="p-6 overflow-y-auto space-y-6 text-xs font-sans bg-[#081320]">
+        <div className="p-6 overflow-y-auto print:overflow-visible space-y-6 text-xs font-sans bg-[#081320]">
           {/* Classification Banner */}
           <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl p-3 flex items-center justify-between text-[#b4d5ff] font-mono">
             <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
@@ -126,7 +108,7 @@ export default function ExecutiveReportModal() {
 
             {relatedFindings.length === 0 ? (
               <div className="bg-[#0f2238]/60 border border-dashed border-[#1d3e63] rounded-xl p-6 text-center text-slate-400 font-mono">
-                ✓ No high or critical severity vulnerabilities detected in this engagement scope.
+                ✓ No findings logged for this engagement.
               </div>
             ) : (
               <div className="space-y-2.5">

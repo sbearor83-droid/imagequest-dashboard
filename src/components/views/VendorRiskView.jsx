@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import { 
-  Building2, 
-  ShieldCheck, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Plus, 
-  ExternalLink, 
-  FileCheck2, 
-  Calendar, 
-  Lock, 
-  Layers, 
-  Search 
+  Building2,
+  Plus,
+  FileCheck2,
+  Calendar,
+  Lock
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function VendorRiskView() {
   const { 
-    vendors, 
     clientFilteredVendors, 
     selectedClient, 
     setSelectedClient, 
@@ -26,11 +19,15 @@ export default function VendorRiskView() {
   const [tierFilter, setTierFilter] = useState('ALL');
   const [sectorFilter, setSectorFilter] = useState('ALL');
 
-  const filteredVendors = clientFilteredVendors.filter(v => {
+  const vendors = clientFilteredVendors;
+  const pct = (n) => vendors.length ? Math.round((n / vendors.length) * 100) : 0;
+
+  const query = searchQuery.toLowerCase();
+  const filteredVendors = vendors.filter(v => {
     const matchesSearch = 
-      v.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      v.service.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      v.id.toLowerCase().includes(searchQuery.toLowerCase());
+      v.name.toLowerCase().includes(query) ||
+      v.service.toLowerCase().includes(query) ||
+      v.id.toLowerCase().includes(query);
     const matchesTier = tierFilter === 'ALL' || v.tier.toLowerCase().includes(tierFilter.toLowerCase());
     const matchesSector = sectorFilter === 'ALL' || (v.sector && v.sector.toLowerCase() === sectorFilter.toLowerCase());
     return matchesSearch && matchesTier && matchesSector;
@@ -96,7 +93,7 @@ export default function VendorRiskView() {
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <span className="text-xs font-mono uppercase tracking-wider text-slate-400">SOC 2 Type II Verification</span>
           <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
-            {Math.round((vendors.filter(v => v.soc2Status.includes('Verified')).length / vendors.length) * 100)}%
+            {pct(vendors.filter(v => v.soc2Status.includes('Verified')).length)}%
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
             {vendors.filter(v => v.soc2Status.includes('Gap') || v.soc2Status.includes('Overdue')).length} Overdue Reviews
@@ -106,7 +103,7 @@ export default function VendorRiskView() {
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Average Security Score</span>
           <div className="text-2xl font-bold font-mono text-[#b4d5ff] mt-1">
-            {Math.round(vendors.reduce((acc, v) => acc + v.riskScore, 0) / vendors.length)} / 100
+            {vendors.length ? Math.round(vendors.reduce((acc, v) => acc + v.riskScore, 0) / vendors.length) : 0} / 100
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
             Continuous Security Questionnaire Audits

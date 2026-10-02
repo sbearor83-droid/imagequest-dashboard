@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { X, ShieldAlert, Plus, Layers, Target, Clock, UserCheck } from 'lucide-react';
+import { X, Layers } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { dateInDays } from '../../utils/helpers';
 
 export default function CreateEngagementModal() {
-  const { isCreateEngModalOpen, setIsCreateEngModalOpen, addEngagement, team } = useCyber();
+  const { isCreateEngModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateEngModalOpen ? <CreateEngagementForm /> : null;
+}
+
+function CreateEngagementForm() {
+  const { setIsCreateEngModalOpen, addEngagement, team, selectedClient } = useCyber();
 
   const [formData, setFormData] = useState({
-    client: '',
+    client: selectedClient === 'ALL' ? '' : selectedClient,
     title: '',
     type: 'Penetration Testing',
     phase: 'Scoping & Recon',
@@ -14,11 +21,10 @@ export default function CreateEngagementModal() {
     leadAnalyst: team[0]?.name || 'Andy Barker',
     scope: '',
     budgetHours: 80,
-    startDate: new Date().toISOString().split('T')[0],
-    endDate: '2026-11-15'
+    startDate: dateInDays(0),
+    endDate: dateInDays(45)
   });
 
-  if (!isCreateEngModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

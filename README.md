@@ -29,7 +29,7 @@ Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's
      - **FFIEC / GLBA Banking Examination Readiness**
      - **Network & Web Application Penetration Testing**
      - **24/7 Managed IT & SOC Onboarding**
-   - Interactive Kanban milestone phases: *Scoping & Recon → Active Testing → Evidence Analysis → Executive Debrief → Retest & Sign-off → Completed*
+   - Interactive Kanban milestone phases: *Scoping & Recon → Active Exploitation → Evidence Analysis → Executive Debrief → Retest & Sign-off → Completed*
    - Budget tracking, logged hours, and staff allocation
 
 4. **Vulnerability Matrix & Findings Tracker**
@@ -46,7 +46,7 @@ Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's
 6. **24/7 SecOps & Managed IT Operations**
    - Fleet telemetry across Windows Server, Windows 11 Enterprise, Ubuntu Linux, and macOS
    - Patch compliance tracking and EDR sensor health (SentinelOne, Microsoft Defender for Endpoint)
-   - Active SLA queue with live countdown timers (P1 Critical 1-hour SLA, P2 High 4-hour SLA)
+   - Active SLA queue with per-priority SLA targets (P1 1h, P2 4h, P3 8h, P4 24h)
 
 7. **Vendor Management (TPRM)**
    - Sector-specific vendor risk assessments (e.g. *Epic Systems EHR*, *Oracle/Cerner*, *Fiserv DNA Core*, *Jack Henry*, *CrowdStrike*, *Cloudflare*)
@@ -78,7 +78,7 @@ Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's
 ```bash
 npm run server
 ```
-Runs Express on `http://localhost:5001` with seed data persistence in `server/data/database.json`.
+Runs Express on `http://localhost:5001`. Seed data lives in `server/data/database.json`; anything created through the UI is saved to `server/data/runtime.json` (gitignored). Delete that file to reset to the seed data.
 
 ### 2. Start the Frontend Development Server
 ```bash
@@ -90,4 +90,4 @@ Runs Vite on `http://localhost:5174` with automatic proxying to `/api`.
 ```bash
 npm run build
 ```
-Creates an optimized, production-ready build in `dist/`.
+Creates an optimized, production-ready build in `dist/`. After building, `npm start` serves both the API and the built dashboard from `http://localhost:5001`.

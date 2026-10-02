@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { X, Building2, Plus } from 'lucide-react';
+import { X, Building2 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function CreateVendorModal() {
-  const { isCreateVendorModalOpen, setIsCreateVendorModalOpen, addVendor } = useCyber();
+  const { isCreateVendorModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateVendorModalOpen ? <CreateVendorForm /> : null;
+}
+
+function CreateVendorForm() {
+  const { setIsCreateVendorModalOpen, addVendor } = useCyber();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -16,7 +22,6 @@ export default function CreateVendorModal() {
     contact: 'security@vendor.com'
   });
 
-  if (!isCreateVendorModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

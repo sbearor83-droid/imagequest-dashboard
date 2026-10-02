@@ -2,48 +2,42 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CyberContext = createContext();
 
+async function fetchJson(url, options) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error(`${options?.method || 'GET'} ${url} failed: ${res.status}`);
+  return res.json();
+}
+
+const sendJson = (url, method, body) => fetchJson(url, {
+  method,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body)
+});
+
 export function CyberProvider({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('clients'); // default to clients hub or overview
+  const [activeTab, setActiveTab] = useState('clients');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClient, setSelectedClient] = useState('ALL'); // Global Client Filter: 'ALL' or Client Name
-  
+
   // Data states
   const [stats, setStats] = useState({
-    activeEngagements: 14,
-    criticalVulnerabilities: 9,
-    slaComplianceRate: 98.4,
-    endpointsMonitored: 8420,
-    managedTenants: 12,
-    avgRemediationDays: 6.2,
-    threatLevel: 'ELEVATED',
-    tabletopsScheduled: 3
+    slaComplianceRate: 0,
+    endpointsMonitored: 0,
+    managedTenants: 0,
+    avgRemediationDays: 0
   });
   const [threatFeed, setThreatFeed] = useState([]);
   const [clients, setClients] = useState([]);
   const [engagements, setEngagements] = useState([]);
   const [findings, setFindings] = useState([]);
   const [risks, setRisks] = useState([]);
-  const [managedIT, setManagedIT] = useState({
-    summary: {
-      totalEndpoints: 8420,
-      healthyEndpoints: 8312,
-      vulnerableEndpoints: 108,
-      patchCompliance: 98.7,
-      avgResponseMinutes: 11.4,
-      openTickets: 18,
-      slaMet: 99.4
-    },
-    tickets: [],
-    endpointHealth: []
-  });
+  const [managedIT, setManagedIT] = useState({ summary: { openTickets: 0 }, tickets: [], endpointHealth: [] });
   const [vendors, setVendors] = useState([]);
   const [tabletopExercises, setTabletopExercises] = useState([]);
   const [team, setTeam] = useState([]);
 
   // Active selections & Modals
   const [selectedEngagement, setSelectedEngagement] = useState(null);
-  const [selectedFinding, setSelectedFinding] = useState(null);
   const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
   const [isCreateEngModalOpen, setIsCreateEngModalOpen] = useState(false);
   const [isCreateFindingModalOpen, setIsCreateFindingModalOpen] = useState(false);
@@ -54,198 +48,57 @@ export function CyberProvider({ children }) {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportTargetEngagement, setReportTargetEngagement] = useState(null);
 
-  // Fetch initial data from API
+  // Fetch initial data from API; each endpoint loads independently so one failure doesn't blank the rest
   useEffect(() => {
-    async function loadData() {
-      try {
-        const [statsRes, clientRes, engRes, vulnRes, riskRes, itRes, venRes, ttxRes, teamRes] = await Promise.all([
-          fetch('/api/stats').then(r => r.json()).catch(() => null),
-          fetch('/api/clients').then(r => r.json()).catch(() => []),
-          fetch('/api/engagements').then(r => r.json()).catch(() => []),
-          fetch('/api/findings').then(r => r.json()).catch(() => []),
-          fetch('/api/risks').then(r => r.json()).catch(() => []),
-          fetch('/api/managed-it').then(r => r.json()).catch(() => null),
-          fetch('/api/vendors').then(r => r.json()).catch(() => []),
-          fetch('/api/tabletop').then(r => r.json()).catch(() => []),
-          fetch('/api/team').then(r => r.json()).catch(() => [])
-        ]);
-
-        if (statsRes) {
-          setStats(statsRes);
-          if (statsRes.threatFeed) setThreatFeed(statsRes.threatFeed);
-        }
-        if (clientRes && clientRes.length) setClients(clientRes);
-        if (engRes && engRes.length) setEngagements(engRes);
-        if (vulnRes && vulnRes.length) setFindings(vulnRes);
-        if (riskRes && riskRes.length) setRisks(riskRes);
-        if (itRes && itRes.summary) setManagedIT(itRes);
-        if (venRes && venRes.length) setVendors(venRes);
-        if (ttxRes && ttxRes.length) setTabletopExercises(ttxRes);
-        if (teamRes && teamRes.length) setTeam(teamRes);
-      } catch (err) {
-        console.error('Error fetching cyber ops data:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
+    const load = (url, apply) => fetchJson(url).then(apply).catch(err => console.error(err));
+    load('/api/stats', ({ threatFeed, ...rest }) => {
+      setStats(rest);
+      setThreatFeed(threatFeed || []);
+    });
+    load('/api/clients', setClients);
+    load('/api/engagements', setEngagements);
+    load('/api/findings', setFindings);
+    load('/api/risks', setRisks);
+    load('/api/managed-it', setManagedIT);
+    load('/api/vendors', setVendors);
+    load('/api/tabletop', setTabletopExercises);
+    load('/api/team', setTeam);
   }, []);
 
   // Filtered dataset helpers based on selectedClient
-  const clientFilteredEngagements = selectedClient === 'ALL'
-    ? engagements
-    : engagements.filter(e => e.client.toLowerCase() === selectedClient.toLowerCase());
+  const isScopedTo = (client, sharedLabel) =>
+    selectedClient === 'ALL' ||
+    (sharedLabel && (!client || client === sharedLabel)) ||
+    client?.toLowerCase() === selectedClient.toLowerCase();
 
-  const clientFilteredFindings = selectedClient === 'ALL'
-    ? findings
-    : findings.filter(f => f.client.toLowerCase() === selectedClient.toLowerCase());
+  const clientFilteredEngagements = engagements.filter(e => isScopedTo(e.client));
+  const clientFilteredFindings = findings.filter(f => isScopedTo(f.client));
+  const clientFilteredTickets = managedIT.tickets.filter(t => isScopedTo(t.client));
+  const clientFilteredTabletop = tabletopExercises.filter(t => isScopedTo(t.client));
+  const clientFilteredRisks = risks.filter(r => isScopedTo(r.client, 'All Clients'));
+  const clientFilteredVendors = vendors.filter(v => isScopedTo(v.client, 'All Accounts'));
 
-  const clientFilteredTickets = selectedClient === 'ALL'
-    ? managedIT.tickets
-    : managedIT.tickets.filter(t => t.client.toLowerCase() === selectedClient.toLowerCase());
-
-  const clientFilteredTabletop = selectedClient === 'ALL'
-    ? tabletopExercises
-    : tabletopExercises.filter(t => t.client.toLowerCase() === selectedClient.toLowerCase());
-
-  const clientFilteredRisks = selectedClient === 'ALL'
-    ? risks
-    : risks.filter(r => !r.client || r.client === 'All Clients' || r.client.toLowerCase() === selectedClient.toLowerCase());
-
-  const clientFilteredVendors = selectedClient === 'ALL'
-    ? vendors
-    : vendors.filter(v => !v.client || v.client === 'All Accounts' || v.client.toLowerCase() === selectedClient.toLowerCase());
-
-  // Action methods
-  const addClient = async (clientData) => {
+  // Action methods: POST a new record and prepend the server's copy to local state
+  const createWith = (url, setter) => async (data) => {
     try {
-      const res = await fetch('/api/clients', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clientData)
-      });
-      const created = await res.json();
-      setClients(prev => [created, ...prev]);
+      const created = await sendJson(url, 'POST', data);
+      setter(prev => [created, ...prev]);
       return created;
     } catch (err) {
       console.error(err);
     }
   };
 
-  const addEngagement = async (engagementData) => {
-    try {
-      const res = await fetch('/api/engagements', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(engagementData)
-      });
-      const created = await res.json();
-      setEngagements(prev => [created, ...prev]);
-      setStats(prev => ({ ...prev, activeEngagements: prev.activeEngagements + 1 }));
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const updateEngagementPhase = async (id, phase, progress) => {
-    try {
-      setEngagements(prev => prev.map(e => e.id === id ? { ...e, phase, progress } : e));
-      await fetch(`/api/engagements/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phase, progress })
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const addFinding = async (findingData) => {
-    try {
-      const res = await fetch('/api/findings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(findingData)
-      });
-      const created = await res.json();
-      setFindings(prev => [created, ...prev]);
-      if (created.severity === 'CRITICAL') {
-        setStats(prev => ({ ...prev, criticalVulnerabilities: prev.criticalVulnerabilities + 1 }));
-      }
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const updateFindingStatus = async (id, status) => {
-    try {
-      setFindings(prev => prev.map(f => f.id === id ? { ...f, status } : f));
-      await fetch(`/api/findings/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const addRisk = async (riskData) => {
-    try {
-      const res = await fetch('/api/risks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(riskData)
-      });
-      const created = await res.json();
-      setRisks(prev => [created, ...prev]);
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const addVendor = async (vendorData) => {
-    try {
-      const res = await fetch('/api/vendors', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vendorData)
-      });
-      const created = await res.json();
-      setVendors(prev => [created, ...prev]);
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const addTabletopExercise = async (ttxData) => {
-    try {
-      const res = await fetch('/api/tabletop', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ttxData)
-      });
-      const created = await res.json();
-      setTabletopExercises(prev => [created, ...prev]);
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const addClient = createWith('/api/clients', setClients);
+  const addEngagement = createWith('/api/engagements', setEngagements);
+  const addFinding = createWith('/api/findings', setFindings);
+  const addRisk = createWith('/api/risks', setRisks);
+  const addVendor = createWith('/api/vendors', setVendors);
+  const addTabletopExercise = createWith('/api/tabletop', setTabletopExercises);
 
   const addTicket = async (ticketData) => {
     try {
-      const res = await fetch('/api/managed-it/tickets', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ticketData)
-      });
-      const created = await res.json();
+      const created = await sendJson('/api/managed-it/tickets', 'POST', ticketData);
       setManagedIT(prev => ({
         ...prev,
         summary: { ...prev.summary, openTickets: prev.summary.openTickets + 1 },
@@ -257,6 +110,21 @@ export function CyberProvider({ children }) {
     }
   };
 
+  // Optimistic update; the server's copy replaces it once the PATCH succeeds
+  const updateWith = (url, setter) => async (id, changes) => {
+    setter(prev => prev.map(item => item.id === id ? { ...item, ...changes } : item));
+    try {
+      const updated = await sendJson(`${url}/${id}`, 'PATCH', changes);
+      setter(prev => prev.map(item => item.id === id ? updated : item));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateEngagement = updateWith('/api/engagements', setEngagements);
+  const updateFinding = updateWith('/api/findings', setFindings);
+  const updateFindingStatus = (id, status) => updateFinding(id, { status });
+
   const openReportFor = (engagement) => {
     setReportTargetEngagement(engagement || engagements[0]);
     setIsReportModalOpen(true);
@@ -264,7 +132,6 @@ export function CyberProvider({ children }) {
 
   return (
     <CyberContext.Provider value={{
-      loading,
       activeTab,
       setActiveTab,
       searchQuery,
@@ -278,19 +145,15 @@ export function CyberProvider({ children }) {
       clientFilteredEngagements,
       findings,
       clientFilteredFindings,
-      risks,
       clientFilteredRisks,
       managedIT,
       clientFilteredTickets,
-      vendors,
       clientFilteredVendors,
       tabletopExercises,
       clientFilteredTabletop,
       team,
       selectedEngagement,
       setSelectedEngagement,
-      selectedFinding,
-      setSelectedFinding,
       isCreateClientModalOpen,
       setIsCreateClientModalOpen,
       isCreateEngModalOpen,
@@ -308,11 +171,10 @@ export function CyberProvider({ children }) {
       isReportModalOpen,
       setIsReportModalOpen,
       reportTargetEngagement,
-      setReportTargetEngagement,
       openReportFor,
       addClient,
       addEngagement,
-      updateEngagementPhase,
+      updateEngagement,
       addFinding,
       updateFindingStatus,
       addRisk,

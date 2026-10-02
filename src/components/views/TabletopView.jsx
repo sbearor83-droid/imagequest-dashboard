@@ -1,27 +1,16 @@
 import React, { useState } from 'react';
 import { 
-  Gamepad2, 
-  Clock, 
-  Users, 
-  ShieldAlert, 
-  Plus, 
-  Calendar, 
-  CheckCircle2, 
-  AlertCircle, 
-  FileText, 
-  Radio, 
-  Sparkles 
+  Gamepad2,
+  Clock,
+  Users,
+  Plus,
+  CheckCircle2
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function TabletopView() {
-  const { tabletopExercises, setIsCreateTTXModalOpen, selectedClient, setSelectedClient } = useCyber();
-  
-  const clientExercises = selectedClient === 'ALL'
-    ? tabletopExercises
-    : tabletopExercises.filter(t => t.client.toLowerCase() === selectedClient.toLowerCase());
-
-  const [activeExerciseId, setActiveExerciseId] = useState(clientExercises[0]?.id || tabletopExercises[0]?.id);
+  const { clientFilteredTabletop: clientExercises, setIsCreateTTXModalOpen, selectedClient, setSelectedClient } = useCyber();
+  const [activeExerciseId, setActiveExerciseId] = useState(null);
 
   const currentExercise = clientExercises.find(t => t.id === activeExerciseId) || clientExercises[0];
 
@@ -67,17 +56,17 @@ export default function TabletopView() {
 
       {/* Scenario Selector Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
-        {tabletopExercises.map((ttx) => (
+        {clientExercises.map((ttx) => (
           <button
             key={ttx.id}
             onClick={() => setActiveExerciseId(ttx.id)}
             className={`px-4 py-2.5 rounded-xl border text-left shrink-0 transition-all ${
-              activeExerciseId === ttx.id
+              currentExercise?.id === ttx.id
                 ? 'bg-[#205588] border-[#2365a3] text-white shadow-md shadow-[#205588]/40'
                 : 'bg-[#0f2238] border-[#1d3e63] text-slate-400 hover:text-white hover:bg-[#132b47]'
             }`}
           >
-            <div className={`text-[10px] font-mono font-bold ${activeExerciseId === ttx.id ? 'text-[#b4d5ff]' : 'text-slate-400'}`}>
+            <div className={`text-[10px] font-mono font-bold ${currentExercise?.id === ttx.id ? 'text-[#b4d5ff]' : 'text-slate-400'}`}>
               {ttx.id} • {ttx.status}
             </div>
             <div className="text-xs font-semibold mt-0.5 truncate max-w-xs">{ttx.title}</div>
@@ -86,7 +75,7 @@ export default function TabletopView() {
       </div>
 
       {currentExercise && (
-        <div className="space-y-6 animate-in fade-in duration-200">
+        <div className="space-y-6">
           {/* Main Scenario Overview Card */}
           <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-6 shadow-sm space-y-4">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">

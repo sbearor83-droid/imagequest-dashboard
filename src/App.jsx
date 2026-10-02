@@ -26,7 +26,7 @@ import CreateTicketModal from './components/modals/CreateTicketModal';
 import ExecutiveReportModal from './components/modals/ExecutiveReportModal';
 
 function DashboardContent() {
-  const { activeTab } = useCyber();
+  const { activeTab, isReportModalOpen } = useCyber();
 
   const renderActiveView = () => {
     switch (activeTab) {
@@ -56,10 +56,11 @@ function DashboardContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="flex-1 flex overflow-hidden">
+      {/* When the report modal is open, print only the modal */}
+      <div className={`flex-1 flex overflow-hidden ${isReportModalOpen ? 'print:hidden' : ''}`}>
         <Sidebar />
 
         <main className="flex-1 overflow-y-auto p-6 lg:p-8 cyber-grid-pattern">

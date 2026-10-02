@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { 
-  ShieldAlert, 
-  AlertTriangle, 
-  Plus, 
-  CheckCircle2, 
-  ArrowRight, 
-  Calendar, 
-  UserCheck, 
+  ShieldAlert,
+  AlertTriangle,
+  Plus,
+  ArrowRight,
   ShieldCheck,
-  TrendingDown,
-  Info
+  TrendingDown
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function RiskRegisterView() {
   const { 
-    risks, 
     clientFilteredRisks, 
     selectedClient, 
     setSelectedClient, 
@@ -133,7 +128,7 @@ export default function RiskRegisterView() {
                     </div>
                     {[1, 2, 3, 4, 5].map((imp) => {
                       const score = lh * imp;
-                      const matchingRisks = risks.filter(r => r.likelihood === lh && r.impact === imp);
+                      const matchingRisks = clientFilteredRisks.filter(r => r.likelihood === lh && r.impact === imp);
                       return (
                         <div
                           key={`${lh}-${imp}`}
@@ -185,7 +180,7 @@ export default function RiskRegisterView() {
           </p>
 
           <div className="space-y-3">
-            {risks.slice(0, 4).map((risk) => {
+            {clientFilteredRisks.slice(0, 4).map((risk) => {
               const reduction = Math.round(((risk.inherentScore - risk.residualScore) / risk.inherentScore) * 100);
               return (
                 <div 

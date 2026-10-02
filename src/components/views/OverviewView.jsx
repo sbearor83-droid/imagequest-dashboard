@@ -9,39 +9,31 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   TrendingUp, 
-  Terminal, 
-  ExternalLink,
-  Users,
   ChevronRight,
   Sparkles,
   Layers,
   Radio
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { countFindingsBySeverity } from '../../utils/helpers';
 
 export default function OverviewView() {
   const { 
     stats, 
     threatFeed, 
-    engagements, 
     findings, 
-    clients,
+    managedIT,
     selectedClient,
     setSelectedClient,
     clientFilteredEngagements,
     clientFilteredFindings,
     setActiveTab, 
     openReportFor,
-    setIsCreateEngModalOpen,
-    setIsCreateFindingModalOpen,
     updateFindingStatus
   } = useCyber();
 
-  const currentEngagements = selectedClient === 'ALL' ? engagements : clientFilteredEngagements;
-  const currentFindings = selectedClient === 'ALL' ? findings : clientFilteredFindings;
-
-  const criticalFindings = currentFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
-  const activeEngagements = currentEngagements.filter(e => e.status !== 'Completed');
+  const criticalFindings = clientFilteredFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
+  const activeEngagements = clientFilteredEngagements.filter(e => e.status !== 'Completed');
 
   return (
     <div className="space-y-6">
@@ -135,15 +127,15 @@ export default function OverviewView() {
             </span>
           </div>
           <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
-            <span>{engagements.filter(e => e.type.includes('Penetration')).length} Pen Tests</span>
-            <span>{engagements.filter(e => e.type.includes('Compliance')).length} Audits</span>
+            <span>{activeEngagements.filter(e => e.type.includes('Penetration')).length} Pen Tests</span>
+            <span>{activeEngagements.filter(e => e.type.includes('Compliance')).length} Audits</span>
           </div>
         </div>
 
         {/* Critical Vulnerabilities */}
         <div 
           onClick={() => setActiveTab('findings')}
-          className="bg-slate-900/80 border border-slate-800 hover:border-rose-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-rose-950/30 group"
+          className="bg-[#0f2238] border border-[#1d3e63] hover:border-rose-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-rose-950/30 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Open Critical CVSS</span>
@@ -164,7 +156,7 @@ export default function OverviewView() {
         {/* Managed IT & Endpoints */}
         <div 
           onClick={() => setActiveTab('managedIT')}
-          className="bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-950/30 group"
+          className="bg-[#0f2238] border border-[#1d3e63] hover:border-emerald-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-950/30 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Managed IT Endpoints</span>
@@ -177,7 +169,7 @@ export default function OverviewView() {
             <span className="text-xs text-emerald-400 font-mono">{stats.managedTenants} Tenants</span>
           </div>
           <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
-            <span>98.7% Patch Compliance</span>
+            <span>{managedIT.summary.patchCompliance}% Patch Compliance</span>
             <span className="text-emerald-400 font-mono">EDR Active</span>
           </div>
         </div>
@@ -185,7 +177,7 @@ export default function OverviewView() {
         {/* Incident Response & SLA */}
         <div 
           onClick={() => setActiveTab('managedIT')}
-          className="bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-amber-950/30 group"
+          className="bg-[#0f2238] border border-[#1d3e63] hover:border-amber-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-amber-950/30 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400">SOC SLA Met Rate</span>
@@ -198,8 +190,8 @@ export default function OverviewView() {
             <span className="text-xs text-slate-400 font-mono">Target: 99.0%</span>
           </div>
           <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
-            <span>Avg Response: 11.4 min</span>
-            <span className="text-cyan-400 font-mono">Tier 1-3 Active</span>
+            <span>Avg Response: {managedIT.summary.avgResponseMinutes} min</span>
+            <span className="text-[#b4d5ff] font-mono">Tier 1-3 Active</span>
           </div>
         </div>
       </div>
@@ -220,83 +212,84 @@ export default function OverviewView() {
               onClick={() => setActiveTab('engagements')}
               className="text-xs text-[#b4d5ff] hover:text-white font-mono flex items-center gap-1 group"
             >
-              View All ({engagements.length})
+              View All ({clientFilteredEngagements.length})
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
 
           <div className="space-y-3">
-            {activeEngagements.slice(0, 4).map((eng) => (
-              <div 
-                key={eng.id}
-                className="bg-[#0b1a2d] border border-[#1d3e63] hover:border-[#2365a3] rounded-lg p-3.5 transition-all"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-[#b4d5ff]">{eng.id}</span>
-                      <span className="text-xs font-medium text-slate-400">• {eng.client}</span>
+            {activeEngagements.slice(0, 4).map((eng) => {
+              const counts = countFindingsBySeverity(findings.filter(f => f.engagementId === eng.id));
+              return (
+                <div 
+                  key={eng.id}
+                  className="bg-[#0b1a2d] border border-[#1d3e63] hover:border-[#2365a3] rounded-lg p-3.5 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-[#b4d5ff]">{eng.id}</span>
+                        <span className="text-xs font-medium text-slate-400">• {eng.client}</span>
+                      </div>
+                      <h3 className="text-sm font-semibold text-white mt-0.5">{eng.title}</h3>
                     </div>
-                    <h3 className="text-sm font-semibold text-white mt-0.5">{eng.title}</h3>
-                  </div>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold shrink-0 ${
-                    eng.type.includes('Penetration') ? 'bg-[#2365a3]/30 text-[#b4d5ff] border border-[#2365a3]/60' :
-                    eng.type.includes('Red') ? 'bg-rose-950 text-rose-300 border border-rose-800' :
-                    eng.type.includes('Compliance') ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                    'bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]'
-                  }`}>
-                    {eng.type}
-                  </span>
-                </div>
-
-                {/* Phase & Progress */}
-                <div className="mt-3">
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-slate-400 font-mono">
-                      Phase: <strong className="text-slate-200">{eng.phase}</strong>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold shrink-0 ${
+                      eng.type.includes('Penetration') ? 'bg-[#2365a3]/30 text-[#b4d5ff] border border-[#2365a3]/60' :
+                      eng.type.includes('Red') ? 'bg-rose-950 text-rose-300 border border-rose-800' :
+                      eng.type.includes('Compliance') ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
+                      'bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]'
+                    }`}>
+                      {eng.type}
                     </span>
-                    <span className="font-mono text-[#b4d5ff]">{eng.progress}%</span>
                   </div>
-                  <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
-                    <div 
-                      className="bg-gradient-to-r from-[#205588] to-[#2365a3] h-full rounded-full transition-all" 
-                      style={{ width: `${eng.progress}%` }}
-                    />
-                  </div>
-                </div>
 
-                {/* Footer metrics */}
-                <div className="mt-3 pt-2.5 border-t border-[#1d3e63] flex items-center justify-between text-xs text-slate-400">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono">Lead: {eng.leadAnalyst}</span>
-                    <span>•</span>
-                    <span className="text-[11px] font-mono">{eng.spentHours}/{eng.budgetHours} hrs</span>
+                  {/* Phase & Progress */}
+                  <div className="mt-3">
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-slate-400 font-mono">
+                        Phase: <strong className="text-slate-200">{eng.phase}</strong>
+                      </span>
+                      <span className="font-mono text-[#b4d5ff]">{eng.progress}%</span>
+                    </div>
+                    <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-[#205588] to-[#2365a3] h-full rounded-full transition-all" 
+                        style={{ width: `${eng.progress}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {eng.findingsCount && (
+
+                  {/* Footer metrics */}
+                  <div className="mt-3 pt-2.5 border-t border-[#1d3e63] flex items-center justify-between text-xs text-slate-400">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-mono">Lead: {eng.leadAnalyst}</span>
+                      <span>•</span>
+                      <span className="text-[11px] font-mono">{eng.spentHours}/{eng.budgetHours} hrs</span>
+                    </div>
+                    <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1 font-mono text-[11px]">
-                        {eng.findingsCount.critical > 0 && (
-                          <span className="px-1.5 py-0.2 rounded bg-rose-950/80 text-rose-400 border border-rose-800/60">
-                            {eng.findingsCount.critical} Crit
+                        {counts.critical > 0 && (
+                          <span className="px-1.5 py-0.5 rounded bg-rose-950/80 text-rose-400 border border-rose-800/60">
+                            {counts.critical} Crit
                           </span>
                         )}
-                        {eng.findingsCount.high > 0 && (
-                          <span className="px-1.5 py-0.2 rounded bg-orange-950/80 text-orange-400 border border-orange-800/60">
-                            {eng.findingsCount.high} High
+                        {counts.high > 0 && (
+                          <span className="px-1.5 py-0.5 rounded bg-orange-950/80 text-orange-400 border border-orange-800/60">
+                            {counts.high} High
                           </span>
                         )}
                       </div>
-                    )}
-                    <button 
-                      onClick={() => openReportFor(eng)}
-                      className="text-xs text-[#b4d5ff] hover:text-white font-mono underline underline-offset-2 ml-1"
-                    >
-                      Report
-                    </button>
+                      <button 
+                        onClick={() => openReportFor(eng)}
+                        className="text-xs text-[#b4d5ff] hover:text-white font-mono underline underline-offset-2 ml-1"
+                      >
+                        Report
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -392,12 +385,12 @@ export default function OverviewView() {
               <button
                 key={idx}
                 onClick={() => setActiveTab(item.tab)}
-                className="bg-slate-900/60 hover:bg-slate-800/70 border border-slate-800 hover:border-cyan-500/40 rounded-xl p-3.5 text-left transition-all group"
+                className="bg-[#0f2238] hover:bg-[#132b47] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-3.5 text-left transition-all group"
               >
-                <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 w-fit text-cyan-400 group-hover:scale-105 transition-transform">
+                <div className="p-2 rounded-lg bg-[#0b1a2d] border border-[#1d3e63] w-fit text-[#b4d5ff] group-hover:scale-105 transition-transform">
                   <Icon className="w-4 h-4" />
                 </div>
-                <div className="mt-2.5 text-xs font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                <div className="mt-2.5 text-xs font-semibold text-white group-hover:text-[#b4d5ff] transition-colors">
                   {item.title}
                 </div>
                 <div className="text-[10px] text-slate-500 font-mono mt-0.5">
