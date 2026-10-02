@@ -19,7 +19,6 @@ function CreateTicketForm() {
     assignedTo: team.find(t => t.role.includes('MSSP'))?.name || 'Andy Barker'
   });
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.title) return;
@@ -28,57 +27,57 @@ function CreateTicketForm() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-white border border-[#d8e5f2] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#d8e5f2] flex items-center justify-between bg-[#f8fafc]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
-              <Server className="w-5 h-5 text-[#2365a3]" />
+            <div className="p-2 rounded-lg bg-[#e8eff6] text-[#205588] border border-[#b4d5ff]">
+              <Server className="w-5 h-5 text-[#205588]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">Dispatch SOC / Managed IT Ticket</h2>
-              <p className="text-xs text-slate-400">Initiate SLA response countdown timer and assign on-call analyst</p>
+              <h2 className="text-base font-bold text-[#1b2a3a]">Dispatch SOC / Managed IT Ticket</h2>
+              <p className="text-xs text-[#64748b]">Initiate SLA response countdown timer and assign on-call analyst</p>
             </div>
           </div>
           <button
             onClick={() => setIsCreateTicketModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
+            className="text-[#64748b] hover:text-[#1b2a3a] p-1 rounded-lg hover:bg-[#e8eff6]"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs font-sans">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs font-sans bg-white">
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Client Tenant *</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Client Tenant *</label>
             <input
               type="text"
               required
               value={formData.client}
               onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Incident / Ticket Subject *</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Incident / Ticket Subject *</label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g. Cobalt Strike Beacon detected on Domain Controller"
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Priority / SLA Target</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">Priority / SLA Target</label>
               <select
                 value={formData.priority}
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               >
                 <option value="P1 - Critical">P1 - Critical (1 Hour SLA)</option>
                 <option value="P2 - High">P2 - High (4 Hour SLA)</option>
@@ -88,11 +87,11 @@ function CreateTicketForm() {
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Incident Category</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">Incident Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               >
                 <option value="SOC Escalation">SOC Escalation</option>
                 <option value="Endpoint Defense">Endpoint Defense</option>
@@ -104,11 +103,11 @@ function CreateTicketForm() {
           </div>
 
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Assigned SOC Engineer</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Assigned SOC Engineer</label>
             <select
               value={formData.assignedTo}
               onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value })}
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             >
               {team.map(t => (
                 <option key={t.id} value={t.name}>{t.name} ({t.role})</option>
@@ -116,17 +115,17 @@ function CreateTicketForm() {
             </select>
           </div>
 
-          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#d8e5f2] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateTicketModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#f0f5fa] hover:bg-[#e8eff6] text-[#475569] hover:text-[#1b2a3a] font-mono border border-[#d8e5f2]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/20"
             >
               Dispatch Ticket
             </button>

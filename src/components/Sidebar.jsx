@@ -37,7 +37,7 @@ export default function Sidebar() {
       subtitle: 'Healthcare & Banking Hub',
       icon: Building2,
       badge: `${clients.length} Orgs`,
-      badgeColor: 'bg-[#2365a3]/25 text-[#b4d5ff] border-[#2365a3]/40'
+      badgeColor: 'bg-[#e8eff6] text-[#205588] border-[#b4d5ff]'
     },
     {
       id: 'overview',
@@ -52,7 +52,7 @@ export default function Sidebar() {
       subtitle: 'vCISO, Audits & Pentests',
       icon: FolderKanban,
       badge: clientFilteredEngagements.length,
-      badgeColor: 'bg-[#2365a3]/25 text-[#b4d5ff] border-[#2365a3]/40'
+      badgeColor: 'bg-[#e8eff6] text-[#205588] border-[#b4d5ff]'
     },
     {
       id: 'findings',
@@ -60,7 +60,7 @@ export default function Sidebar() {
       subtitle: 'CVSS & Finding Remediation',
       icon: Bug,
       badge: criticalCount > 0 ? `${criticalCount} Crit` : null,
-      badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/30 animate-pulse'
+      badgeColor: 'bg-rose-100 text-rose-700 border-rose-200 animate-pulse font-bold'
     },
     {
       id: 'risks',
@@ -75,7 +75,7 @@ export default function Sidebar() {
       subtitle: 'M365, Endpoints & SLAs',
       icon: Server,
       badge: clientFilteredTickets.length > 0 ? `${clientFilteredTickets.length} SLAs` : null,
-      badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+      badgeColor: 'bg-amber-100 text-amber-800 border-amber-200 font-bold'
     },
     {
       id: 'vendors',
@@ -83,7 +83,7 @@ export default function Sidebar() {
       subtitle: 'Supply Chain & SOC 2 Reviews',
       icon: Layers,
       badge: `${clientFilteredVendors.length} Org`,
-      badgeColor: 'bg-slate-800 text-slate-300 border-slate-700'
+      badgeColor: 'bg-[#f0f5fa] text-[#475569] border-[#d8e5f2]'
     },
     {
       id: 'tabletop',
@@ -91,12 +91,12 @@ export default function Sidebar() {
       subtitle: 'Incident Simulations (TTX)',
       icon: Gamepad2,
       badge: `${clientFilteredTabletop.length} TTX`,
-      badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+      badgeColor: 'bg-purple-100 text-purple-800 border-purple-200'
     },
     {
       id: 'team',
       label: 'vCISO & Staff Roster',
-      subtitle: 'ImageQuest Team & Clearances',
+      subtitle: 'Advisory Team & Clearances',
       icon: Users,
       badge: null
     },
@@ -106,31 +106,31 @@ export default function Sidebar() {
       subtitle: 'Board & Executive Reports',
       icon: FileCheck2,
       badge: 'PDF / Export',
-      badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200'
     }
   ];
 
   return (
-    <aside className="w-64 bg-[#0f2238] border-r border-[#1d3e63] flex flex-col justify-between shrink-0 select-none print:hidden">
+    <aside className="w-64 bg-white border-r border-[#d8e5f2] flex flex-col justify-between shrink-0 select-none print:hidden shadow-xs">
       <div className="p-3 space-y-1">
         {/* Active Client Scope Banner */}
         {selectedClient !== 'ALL' && (
-          <div className="mx-1 mb-3 p-2.5 rounded-lg bg-[#132b47] border border-[#2365a3]/60 text-xs font-mono shadow-sm">
-            <div className="flex items-center justify-between text-[10px] text-[#b4d5ff] font-bold uppercase tracking-wider">
+          <div className="mx-1 mb-3 p-2.5 rounded-lg bg-[#e8eff6] border border-[#b4d5ff] text-xs font-mono shadow-2xs">
+            <div className="flex items-center justify-between text-[10px] text-[#205588] font-bold uppercase tracking-wider">
               <span>Scoped Client</span>
               <button 
                 onClick={() => setSelectedClient('ALL')}
-                className="hover:text-white transition-colors"
+                className="hover:text-[#195589] transition-colors"
                 title="Reset to All Clients"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
-            <div className="text-white font-bold truncate mt-0.5">{selectedClient}</div>
+            <div className="text-[#1b2a3a] font-bold truncate mt-0.5">{selectedClient}</div>
           </div>
         )}
 
-        <div className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#b4d5ff]">
+        <div className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748b]">
           Practices & Operations
         </div>
 
@@ -144,23 +144,23 @@ export default function Sidebar() {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all group ${
                   isActive
-                    ? 'bg-[#205588] text-white border border-[#2365a3] shadow-md shadow-[#0b1a2d]'
-                    : 'text-slate-300 hover:text-white hover:bg-[#132b47] border border-transparent'
+                    ? 'bg-[#205588] text-white shadow-sm font-semibold'
+                    : 'text-[#475569] hover:text-[#205588] hover:bg-[#e8eff6] border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className={`p-1.5 rounded-md transition-colors ${
                     isActive 
-                      ? 'bg-[#2365a3] text-white border border-[#3882c8]' 
-                      : 'bg-[#132b47] text-slate-400 group-hover:text-white'
+                      ? 'bg-[#2365a3] text-white' 
+                      : 'bg-[#f0f5fa] text-[#205588] group-hover:bg-[#e8eff6]'
                   }`}>
                     <Icon className="w-3.5 h-3.5 shrink-0" />
                   </div>
                   <div className="truncate">
-                    <div className={`text-xs font-semibold tracking-wide truncate ${isActive ? 'text-white' : 'text-slate-200'}`}>
+                    <div className={`text-xs font-semibold tracking-wide truncate ${isActive ? 'text-white' : 'text-[#1b2a3a]'}`}>
                       {item.label}
                     </div>
-                    <div className="text-[10px] text-slate-400 font-mono truncate">
+                    <div className={`text-[10px] font-mono truncate ${isActive ? 'text-[#b4d5ff]' : 'text-[#64748b]'}`}>
                       {item.subtitle}
                     </div>
                   </div>
@@ -178,20 +178,20 @@ export default function Sidebar() {
       </div>
 
       {/* System Status Footer */}
-      <div className="p-3 border-t border-[#1d3e63] bg-[#0b1a2d]">
+      <div className="p-3 border-t border-[#d8e5f2] bg-[#f8fafc]">
         <div className="flex items-center justify-between text-xs mb-1.5">
-          <span className="text-slate-400 flex items-center gap-1.5 text-[11px]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="text-[#64748b] flex items-center gap-1.5 text-[11px]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             SIEM & EDR Sensor Feed
           </span>
-          <span className="font-mono text-[10px] text-emerald-400 font-bold">ONLINE</span>
+          <span className="font-mono text-[10px] text-emerald-700 font-bold">ONLINE</span>
         </div>
-        <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
-          <div className="bg-gradient-to-r from-emerald-500 via-[#2365a3] to-[#b4d5ff] h-full rounded-full w-[98%]"></div>
+        <div className="w-full bg-[#e8eff6] rounded-full h-1.5 overflow-hidden">
+          <div className="bg-gradient-to-r from-emerald-500 via-[#205588] to-[#2365a3] h-full rounded-full w-[98%]"></div>
         </div>
-        <div className="mt-1.5 text-[10px] font-mono text-slate-400 flex justify-between">
+        <div className="mt-1.5 text-[10px] font-mono text-[#64748b] flex justify-between">
           <span>{clients.length} Accounts Synced</span>
-          <span className="text-[#b4d5ff] font-semibold">SOC 2 Type II</span>
+          <span className="text-[#205588] font-semibold">SOC 2 Type II</span>
         </div>
       </div>
     </aside>

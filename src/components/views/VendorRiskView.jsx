@@ -34,25 +34,25 @@ export default function VendorRiskView() {
   });
 
   const getScoreColor = (score) => {
-    if (score >= 80) return 'text-emerald-400 bg-emerald-950/80 border-emerald-800';
-    if (score >= 60) return 'text-amber-400 bg-amber-950/80 border-amber-800';
-    return 'text-rose-400 bg-rose-950/80 border-rose-800';
+    if (score >= 80) return 'text-emerald-800 bg-emerald-100 border-emerald-300';
+    if (score >= 60) return 'text-amber-800 bg-amber-100 border-amber-300';
+    return 'text-rose-800 bg-rose-100 border-rose-300';
   };
 
   return (
     <div className="space-y-6">
       {/* Active Client Scope Alert */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl p-3 flex items-center justify-between">
+        <div className="bg-[#e8eff6] border border-[#b4d5ff] rounded-xl p-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#2365a3] animate-ping" />
-            <span className="text-slate-400">Scoped TPRM Registry:</span>
-            <span className="text-white font-bold">{selectedClient}</span>
-            <span className="text-[#b4d5ff]">({clientFilteredVendors.length} authorized vendors & suppliers)</span>
+            <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
+            <span className="text-[#475569]">Scoped TPRM Registry:</span>
+            <span className="text-[#1b2a3a] font-bold">{selectedClient}</span>
+            <span className="text-[#205588]">({clientFilteredVendors.length} authorized vendors & suppliers)</span>
           </div>
           <button
             onClick={() => setSelectedClient('ALL')}
-            className="text-xs font-mono text-[#b4d5ff] hover:text-white underline"
+            className="text-xs font-mono text-[#205588] hover:text-[#2365a3] font-semibold underline"
           >
             Show All Accounts
           </button>
@@ -62,18 +62,18 @@ export default function VendorRiskView() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-[#2365a3]" />
+          <h1 className="text-xl font-bold text-[#1b2a3a] tracking-wide flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-[#205588]" />
             Third-Party Vendor Risk Management (TPRM)
           </h1>
-          <p className="text-xs text-slate-400">
-            ImageQuest supply chain due diligence, SOC 2 Type II validation, EHR/Core banking risk ratings, and security questionnaires
+          <p className="text-xs text-[#475569] mt-0.5">
+            Enterprise supply chain due diligence, SOC 2 Type II validation, EHR/Core banking risk ratings, and security questionnaires
           </p>
         </div>
 
         <button
           onClick={() => setIsCreateVendorModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/20 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Onboard New Vendor</span>
@@ -82,40 +82,40 @@ export default function VendorRiskView() {
 
       {/* TPRM Statistics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
-          <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Audited SaaS & Tech Vendors</span>
-          <div className="text-2xl font-bold font-mono text-white mt-1">{vendors.length} Providers</div>
-          <div className="text-[11px] text-slate-400 font-mono mt-1">
+        <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Audited SaaS & Tech Vendors</span>
+          <div className="text-2xl font-bold font-mono text-[#1b2a3a] mt-1">{vendors.length} Providers</div>
+          <div className="text-[11px] text-[#64748b] font-mono mt-1">
             {vendors.filter(v => v.tier.includes('Tier 1')).length} Mission-Critical Tier 1
           </div>
         </div>
 
-        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
-          <span className="text-xs font-mono uppercase tracking-wider text-slate-400">SOC 2 Type II Verification</span>
-          <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
+        <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">SOC 2 Type II Verification</span>
+          <div className="text-2xl font-bold font-mono text-emerald-700 mt-1">
             {pct(vendors.filter(v => v.soc2Status.includes('Verified')).length)}%
           </div>
-          <div className="text-[11px] text-slate-400 font-mono mt-1">
+          <div className="text-[11px] text-[#64748b] font-mono mt-1">
             {vendors.filter(v => v.soc2Status.includes('Gap') || v.soc2Status.includes('Overdue')).length} Overdue Reviews
           </div>
         </div>
 
-        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
-          <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Average Security Score</span>
-          <div className="text-2xl font-bold font-mono text-[#b4d5ff] mt-1">
+        <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-sm">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Average Security Score</span>
+          <div className="text-2xl font-bold font-mono text-[#205588] mt-1">
             {vendors.length ? Math.round(vendors.reduce((acc, v) => acc + v.riskScore, 0) / vendors.length) : 0} / 100
           </div>
-          <div className="text-[11px] text-slate-400 font-mono mt-1">
+          <div className="text-[11px] text-[#64748b] font-mono mt-1">
             Continuous Security Questionnaire Audits
           </div>
         </div>
       </div>
 
       {/* Filters: Sector & Tier */}
-      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="bg-white border border-[#d8e5f2] rounded-xl p-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
         {/* Sector Tabs */}
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-xs font-mono text-slate-400 mr-1">Sector:</span>
+          <span className="text-xs font-mono text-[#64748b] mr-1">Sector:</span>
           {[
             { id: 'ALL', label: 'All Sectors' },
             { id: 'Healthcare', label: '🏥 Healthcare EHR' },
@@ -127,8 +127,8 @@ export default function VendorRiskView() {
               onClick={() => setSectorFilter(s.id)}
               className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
                 sectorFilter === s.id
-                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
+                  ? 'bg-[#205588] text-white border border-[#205588] font-bold shadow-sm'
+                  : 'text-[#475569] hover:text-[#1b2a3a] hover:bg-[#f0f5fa] border border-transparent'
               }`}
             >
               {s.label}
@@ -137,22 +137,22 @@ export default function VendorRiskView() {
         </div>
 
         {/* Tier Filter */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs font-mono text-slate-400">Tier:</span>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-xs font-mono text-[#64748b]">Tier:</span>
           {['ALL', 'Tier 1', 'Tier 2'].map(tier => (
             <button
               key={tier}
               onClick={() => setTierFilter(tier)}
               className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
                 tierFilter === tier
-                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
+                  ? 'bg-[#205588] text-white border border-[#205588] font-bold shadow-sm'
+                  : 'text-[#475569] hover:text-[#1b2a3a] hover:bg-[#f0f5fa] border border-transparent'
               }`}
             >
               {tier === 'ALL' ? 'All' : tier}
             </button>
           ))}
-          <span className="text-xs font-mono text-[#b4d5ff] ml-2">({filteredVendors.length} Providers)</span>
+          <span className="text-xs font-mono text-[#205588] font-semibold ml-2">({filteredVendors.length} Providers)</span>
         </div>
       </div>
 
@@ -161,52 +161,52 @@ export default function VendorRiskView() {
         {filteredVendors.map((vendor) => (
           <div 
             key={vendor.id}
-            className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-5 shadow-sm transition-all space-y-4"
+            className="bg-white border border-[#d8e5f2] hover:border-[#205588] rounded-xl p-5 shadow-sm transition-all space-y-4"
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <span className="font-mono text-xs font-bold text-slate-400">{vendor.id}</span>
-                  <span className="text-base font-bold text-white">{vendor.name}</span>
+                  <span className="font-mono text-xs font-bold text-[#64748b]">{vendor.id}</span>
+                  <span className="text-base font-bold text-[#1b2a3a]">{vendor.name}</span>
                   {vendor.sector && (
                     <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
-                      vendor.sector === 'Healthcare' ? 'bg-rose-950/60 text-rose-300 border-rose-800' :
-                      vendor.sector === 'Financial' ? 'bg-[#205588]/30 text-[#b4d5ff] border-[#2365a3]' :
-                      'bg-[#132b47] text-slate-300 border-[#1d3e63]'
+                      vendor.sector === 'Healthcare' ? 'bg-rose-100 text-rose-800 border-rose-200' :
+                      vendor.sector === 'Financial' ? 'bg-[#e8eff6] text-[#205588] border-[#b4d5ff]' :
+                      'bg-[#f0f5fa] text-[#475569] border-[#d8e5f2]'
                     }`}>
                       {vendor.sector === 'Healthcare' ? '🏥 Healthcare EHR' :
                        vendor.sector === 'Financial' ? '🏦 Banking Core' : '🌐 Cloud Infra'}
                     </span>
                   )}
                   {vendor.client && vendor.client !== 'All Accounts' && (
-                    <span className="text-[10px] font-mono text-[#b4d5ff] bg-[#132b47] px-2 py-0.5 rounded border border-[#1d3e63]">
+                    <span className="text-[10px] font-mono text-[#205588] bg-[#e8eff6] px-2 py-0.5 rounded border border-[#b4d5ff]">
                       Client: {vendor.client}
                     </span>
                   )}
                   <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
                     vendor.tier.includes('Tier 1') ? 'bg-[#205588] text-white border-[#2365a3]' :
-                    'bg-[#132b47] text-slate-300 border-[#1d3e63]'
+                    'bg-[#f0f5fa] text-[#475569] border-[#d8e5f2]'
                   }`}>
                     {vendor.tier}
                   </span>
                 </div>
-                <div className="text-xs text-slate-400 font-mono mt-1">
-                  Service Category: <strong className="text-slate-200">{vendor.service}</strong>
+                <div className="text-xs text-[#475569] font-mono mt-1">
+                  Service Category: <strong className="text-[#1b2a3a]">{vendor.service}</strong>
                 </div>
               </div>
 
               {/* Risk Score Pill */}
               <div className="flex items-center gap-4 self-end md:self-center shrink-0">
                 <div className="text-right font-mono">
-                  <div className="text-[10px] text-slate-400 uppercase">Security Score</div>
+                  <div className="text-[10px] text-[#64748b] uppercase">Security Score</div>
                   <div className={`text-base font-black px-2.5 py-0.5 rounded border mt-0.5 ${getScoreColor(vendor.riskScore)}`}>
                     {vendor.riskScore} / 100
                   </div>
                 </div>
 
                 <span className={`text-xs font-mono px-2.5 py-1 rounded border font-semibold ${
-                  vendor.status === 'Approved' ? 'bg-emerald-950/80 text-emerald-300 border-emerald-800' :
-                  'bg-rose-950/80 text-rose-300 border-rose-800'
+                  vendor.status === 'Approved' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+                  'bg-rose-100 text-rose-800 border-rose-300'
                 }`}>
                   {vendor.status}
                 </span>
@@ -214,35 +214,35 @@ export default function VendorRiskView() {
             </div>
 
             {/* Compliance badges & Data access */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs bg-[#0b1a2d] p-3 rounded-lg border border-[#1d3e63] font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs bg-[#f8fafc] p-3 rounded-lg border border-[#d8e5f2] font-mono">
               <div className="flex items-center gap-2">
-                <FileCheck2 className="w-4 h-4 text-[#2365a3]" />
+                <FileCheck2 className="w-4 h-4 text-[#205588]" />
                 <div>
-                  <div className="text-slate-400 text-[10px]">SOC 2 ATTESTATION</div>
-                  <div className="text-slate-200">{vendor.soc2Status}</div>
+                  <div className="text-[#64748b] text-[10px]">SOC 2 ATTESTATION</div>
+                  <div className="text-[#1b2a3a] font-semibold">{vendor.soc2Status}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-emerald-400" />
+                <Lock className="w-4 h-4 text-emerald-700" />
                 <div>
-                  <div className="text-slate-400 text-[10px]">DATA ACCESS LEVEL</div>
-                  <div className="text-slate-200">{vendor.dataAccess}</div>
+                  <div className="text-[#64748b] text-[10px]">DATA ACCESS LEVEL</div>
+                  <div className="text-[#1b2a3a] font-semibold">{vendor.dataAccess}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-amber-400" />
+                <Calendar className="w-4 h-4 text-amber-600" />
                 <div>
-                  <div className="text-slate-400 text-[10px]">NEXT RE-ASSESSMENT</div>
-                  <div className="text-slate-200">{vendor.nextReview}</div>
+                  <div className="text-[#64748b] text-[10px]">NEXT RE-ASSESSMENT</div>
+                  <div className="text-[#1b2a3a] font-semibold">{vendor.nextReview}</div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 text-[11px] font-mono text-slate-400 flex justify-between">
+            <div className="pt-2 text-[11px] font-mono text-[#64748b] flex justify-between">
               <span>Security Liaison: {vendor.contact}</span>
-              <span>ISO 27001 Certified: <strong className={vendor.iso27001 ? "text-emerald-400" : "text-slate-400"}>{vendor.iso27001 ? "YES" : "NO"}</strong></span>
+              <span>ISO 27001 Certified: <strong className={vendor.iso27001 ? "text-emerald-700 font-bold" : "text-[#64748b]"}>{vendor.iso27001 ? "YES" : "NO"}</strong></span>
             </div>
           </div>
         ))}

@@ -1,18 +1,21 @@
 import React from 'react';
 import { 
-  ShieldCheck, 
   ShieldAlert, 
+  ShieldCheck, 
+  Clock, 
   Bug, 
   Server, 
-  Clock, 
-  ArrowUpRight, 
-  AlertTriangle, 
-  CheckCircle2, 
   TrendingUp, 
-  ChevronRight,
-  Sparkles,
+  AlertTriangle, 
+  ArrowUpRight, 
+  ChevronRight, 
+  Activity, 
+  Radio, 
+  Terminal,
   Layers,
-  Radio
+  Sparkles,
+  CheckCircle2,
+  Building2
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 import { countFindingsBySeverity } from '../../utils/helpers';
@@ -21,59 +24,55 @@ export default function OverviewView() {
   const { 
     stats, 
     threatFeed, 
+    engagements, 
     findings, 
-    managedIT,
+    managedIT, 
+    setActiveTab, 
+    updateFindingStatus, 
+    openReportFor,
     selectedClient,
     setSelectedClient,
     clientFilteredEngagements,
-    clientFilteredFindings,
-    setActiveTab, 
-    openReportFor,
-    updateFindingStatus
+    clientFilteredFindings
   } = useCyber();
 
-  const criticalFindings = clientFilteredFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
   const activeEngagements = clientFilteredEngagements.filter(e => e.status !== 'Completed');
+  const criticalFindings = clientFilteredFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
 
   return (
     <div className="space-y-6">
-      {/* Scoped Client Banner */}
+      {/* Scoped Client Alert Banner */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-[#132b47] border border-[#2365a3]/60 rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono shadow-sm">
-          <div className="flex items-center gap-2 text-[#b4d5ff]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#2365a3] animate-pulse"></span>
-            <span>Operations Telemetry scoped for: <strong className="text-white text-sm bg-[#0b1a2d] px-2 py-0.5 rounded border border-[#2365a3]/60">{selectedClient}</strong></span>
+        <div className="bg-[#e8eff6] border border-[#b4d5ff] rounded-xl p-3 flex items-center justify-between shadow-2xs">
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
+            <span className="text-[#64748b]">Scoped Operational Dashboard:</span>
+            <span className="text-[#1b2a3a] font-bold">{selectedClient}</span>
+            <span className="text-[#205588] font-semibold">({clientFilteredEngagements.length} Engagements • {clientFilteredFindings.length} Vulnerabilities)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setActiveTab('clients')}
-              className="px-2.5 py-1 rounded bg-[#0b1a2d] hover:bg-[#1a385c] text-[#b4d5ff] text-xs transition-colors border border-[#1d3e63]"
-            >
-              360° Client Profile
-            </button>
-            <button 
-              onClick={() => setSelectedClient('ALL')}
-              className="px-2.5 py-1 rounded bg-[#205588] hover:bg-[#2365a3] text-white text-xs transition-colors font-semibold"
-            >
-              Reset to All Accounts
-            </button>
-          </div>
+          <button
+            onClick={() => setSelectedClient('ALL')}
+            className="text-xs font-mono text-[#205588] hover:text-[#195589] font-bold underline"
+          >
+            Show All Accounts
+          </button>
         </div>
       )}
+
       {/* Top Banner: Threat Intel Stream */}
-      <div className="bg-gradient-to-r from-[#0f2238] via-[#0f2238] to-[#132b47] border border-[#1d3e63] rounded-xl p-4 shadow-lg relative overflow-hidden">
+      <div className="bg-white border border-[#d8e5f2] rounded-xl p-4 shadow-2xs relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="flex h-3 w-3 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-600"></span>
             </span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-700 flex items-center gap-1.5">
               <Radio className="w-3.5 h-3.5" /> LIVE THREAT INTELLIGENCE BROADCAST
             </span>
           </div>
-          <span className="text-[11px] font-mono text-slate-400">
-            Source: CISA KEV & ImageQuest Threat Lab // Real-Time Pulse
+          <span className="text-[11px] font-mono text-[#64748b]">
+            Source: CISA KEV & Global Threat Intelligence Lab // Real-Time Pulse
           </span>
         </div>
 
@@ -82,22 +81,22 @@ export default function OverviewView() {
           {threatFeed.map((threat) => (
             <div 
               key={threat.id}
-              className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-2.5 flex items-start gap-2.5 hover:border-[#2365a3] transition-colors"
+              className="bg-[#f8fafc] border border-[#d8e5f2] rounded-lg p-2.5 flex items-start gap-2.5 hover:border-[#205588] transition-colors"
             >
               <div className={`mt-0.5 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
                 threat.severity === 'CRITICAL' 
-                  ? 'bg-rose-950 text-rose-400 border border-rose-800' 
+                  ? 'bg-rose-100 text-rose-800 border border-rose-200' 
                   : threat.severity === 'HIGH' 
-                  ? 'bg-orange-950 text-orange-400 border border-orange-800' 
-                  : 'bg-amber-950 text-amber-400 border border-amber-800'
+                  ? 'bg-orange-100 text-orange-800 border border-orange-200' 
+                  : 'bg-amber-100 text-amber-800 border border-amber-200'
               }`}>
                 {threat.severity}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-xs text-slate-200 font-medium line-clamp-1">
+                <div className="text-xs text-[#1b2a3a] font-medium line-clamp-1">
                   {threat.title}
                 </div>
-                <div className="text-[10px] text-slate-400 font-mono mt-0.5 flex justify-between">
+                <div className="text-[10px] text-[#64748b] font-mono mt-0.5 flex justify-between">
                   <span>{threat.source}</span>
                   <span>{threat.timestamp}</span>
                 </div>
@@ -112,21 +111,21 @@ export default function OverviewView() {
         {/* Active Engagements */}
         <div 
           onClick={() => setActiveTab('engagements')}
-          className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-[#0b1a2d]/80 group"
+          className="bg-white border border-[#d8e5f2] hover:border-[#205588] rounded-xl p-4 cursor-pointer transition-all hover:shadow-md group shadow-2xs"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Active Engagements</span>
-            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63] group-hover:scale-110 transition-transform">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Active Engagements</span>
+            <div className="p-2 rounded-lg bg-[#e8eff6] text-[#205588] border border-[#b4d5ff] group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white font-mono">{activeEngagements.length}</span>
-            <span className="text-xs text-[#b4d5ff] font-mono flex items-center">
+            <span className="text-3xl font-extrabold text-[#1b2a3a] font-mono">{activeEngagements.length}</span>
+            <span className="text-xs text-[#205588] font-mono flex items-center font-semibold">
               <TrendingUp className="w-3 h-3 mr-0.5" /> 100% On-Track
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
+          <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
             <span>{activeEngagements.filter(e => e.type.includes('Penetration')).length} Pen Tests</span>
             <span>{activeEngagements.filter(e => e.type.includes('Compliance')).length} Audits</span>
           </div>
@@ -135,63 +134,63 @@ export default function OverviewView() {
         {/* Critical Vulnerabilities */}
         <div 
           onClick={() => setActiveTab('findings')}
-          className="bg-[#0f2238] border border-[#1d3e63] hover:border-rose-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-rose-950/30 group"
+          className="bg-white border border-[#d8e5f2] hover:border-rose-400 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md group shadow-2xs"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Open Critical CVSS</span>
-            <div className="p-2 rounded-lg bg-rose-950/60 text-rose-400 border border-rose-800/50 group-hover:scale-110 transition-transform">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Open Critical CVSS</span>
+            <div className="p-2 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 group-hover:scale-110 transition-transform">
               <Bug className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-rose-400 font-mono">{criticalFindings.length}</span>
-            <span className="text-xs text-rose-400 font-mono">CVSS 9.0+</span>
+            <span className="text-3xl font-extrabold text-rose-700 font-mono">{criticalFindings.length}</span>
+            <span className="text-xs text-rose-700 font-mono font-bold">CVSS 9.0+</span>
           </div>
-          <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
+          <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
             <span>Avg MTTR: {stats.avgRemediationDays} Days</span>
-            <span className="text-rose-400 font-mono font-medium">Urgent Triage</span>
+            <span className="text-rose-700 font-mono font-bold">Urgent Triage</span>
           </div>
         </div>
 
         {/* Managed IT & Endpoints */}
         <div 
           onClick={() => setActiveTab('managedIT')}
-          className="bg-[#0f2238] border border-[#1d3e63] hover:border-emerald-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-950/30 group"
+          className="bg-white border border-[#d8e5f2] hover:border-emerald-500 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md group shadow-2xs"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Managed IT Endpoints</span>
-            <div className="p-2 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 group-hover:scale-110 transition-transform">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">Managed IT Endpoints</span>
+            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 group-hover:scale-110 transition-transform">
               <Server className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white font-mono">{stats.endpointsMonitored.toLocaleString()}</span>
-            <span className="text-xs text-emerald-400 font-mono">{stats.managedTenants} Tenants</span>
+            <span className="text-3xl font-extrabold text-[#1b2a3a] font-mono">{stats.endpointsMonitored.toLocaleString()}</span>
+            <span className="text-xs text-emerald-700 font-mono font-semibold">{stats.managedTenants} Tenants</span>
           </div>
-          <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
-            <span>{managedIT.summary.patchCompliance}% Patch Compliance</span>
-            <span className="text-emerald-400 font-mono">EDR Active</span>
+          <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
+            <span>{managedIT.summary?.patchCompliance || 98.7}% Patch Compliance</span>
+            <span className="text-emerald-700 font-mono font-semibold">EDR Active</span>
           </div>
         </div>
 
         {/* Incident Response & SLA */}
         <div 
           onClick={() => setActiveTab('managedIT')}
-          className="bg-[#0f2238] border border-[#1d3e63] hover:border-amber-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-amber-950/30 group"
+          className="bg-white border border-[#d8e5f2] hover:border-amber-500 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md group shadow-2xs"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400">SOC SLA Met Rate</span>
-            <div className="p-2 rounded-lg bg-amber-950/60 text-amber-400 border border-amber-800/50 group-hover:scale-110 transition-transform">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#64748b]">SOC SLA Met Rate</span>
+            <div className="p-2 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 group-hover:scale-110 transition-transform">
               <Clock className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-amber-400 font-mono">{stats.slaComplianceRate}%</span>
-            <span className="text-xs text-slate-400 font-mono">Target: 99.0%</span>
+            <span className="text-3xl font-extrabold text-amber-700 font-mono">{stats.slaComplianceRate}%</span>
+            <span className="text-xs text-[#64748b] font-mono">Target: 99.0%</span>
           </div>
-          <div className="mt-2 text-[11px] text-slate-400 flex justify-between">
-            <span>Avg Response: {managedIT.summary.avgResponseMinutes} min</span>
-            <span className="text-[#b4d5ff] font-mono">Tier 1-3 Active</span>
+          <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
+            <span>Avg Response: {managedIT.summary?.avgResponseMinutes || 11.4} min</span>
+            <span className="text-[#205588] font-mono font-semibold">Tier 1-3 Active</span>
           </div>
         </div>
       </div>
@@ -199,18 +198,18 @@ export default function OverviewView() {
       {/* Main Grid: Active Engagements vs. Critical Findings Triage */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Active Engagements Matrix (7 cols) */}
-        <div className="lg:col-span-7 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-7 bg-white border border-[#d8e5f2] rounded-xl p-5 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#b4d5ff]" />
+              <h2 className="text-sm font-semibold text-[#1b2a3a] tracking-wide flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#205588]" />
                 Active Cyber Engagements & Milestones
               </h2>
-              <p className="text-xs text-slate-400">Current offensive and defensive security operations</p>
+              <p className="text-xs text-[#64748b]">Current offensive and defensive security operations</p>
             </div>
             <button
               onClick={() => setActiveTab('engagements')}
-              className="text-xs text-[#b4d5ff] hover:text-white font-mono flex items-center gap-1 group"
+              className="text-xs text-[#205588] hover:text-[#195589] font-mono flex items-center gap-1 font-bold group"
             >
               View All ({clientFilteredEngagements.length})
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -223,21 +222,21 @@ export default function OverviewView() {
               return (
                 <div 
                   key={eng.id}
-                  className="bg-[#0b1a2d] border border-[#1d3e63] hover:border-[#2365a3] rounded-lg p-3.5 transition-all"
+                  className="bg-[#f8fafc] border border-[#d8e5f2] hover:border-[#205588] rounded-lg p-3.5 transition-all"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold text-[#b4d5ff]">{eng.id}</span>
-                        <span className="text-xs font-medium text-slate-400">• {eng.client}</span>
+                        <span className="text-xs font-mono font-bold text-[#205588]">{eng.id}</span>
+                        <span className="text-xs font-medium text-[#64748b]">• {eng.client}</span>
                       </div>
-                      <h3 className="text-sm font-semibold text-white mt-0.5">{eng.title}</h3>
+                      <h3 className="text-sm font-semibold text-[#1b2a3a] mt-0.5">{eng.title}</h3>
                     </div>
                     <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold shrink-0 ${
-                      eng.type.includes('Penetration') ? 'bg-[#2365a3]/30 text-[#b4d5ff] border border-[#2365a3]/60' :
-                      eng.type.includes('Red') ? 'bg-rose-950 text-rose-300 border border-rose-800' :
-                      eng.type.includes('Compliance') ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                      'bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]'
+                      eng.type.includes('Penetration') ? 'bg-[#e8eff6] text-[#205588] border border-[#b4d5ff]' :
+                      eng.type.includes('Red') ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                      eng.type.includes('Compliance') ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                      'bg-[#f0f5fa] text-[#475569] border border-[#d8e5f2]'
                     }`}>
                       {eng.type}
                     </span>
@@ -246,12 +245,12 @@ export default function OverviewView() {
                   {/* Phase & Progress */}
                   <div className="mt-3">
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-400 font-mono">
-                        Phase: <strong className="text-slate-200">{eng.phase}</strong>
+                      <span className="text-[#64748b] font-mono">
+                        Phase: <strong className="text-[#1b2a3a]">{eng.phase}</strong>
                       </span>
-                      <span className="font-mono text-[#b4d5ff]">{eng.progress}%</span>
+                      <span className="font-mono text-[#205588] font-bold">{eng.progress}%</span>
                     </div>
-                    <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
+                    <div className="w-full bg-[#e8eff6] rounded-full h-1.5 overflow-hidden">
                       <div 
                         className="bg-gradient-to-r from-[#205588] to-[#2365a3] h-full rounded-full transition-all" 
                         style={{ width: `${eng.progress}%` }}
@@ -260,7 +259,7 @@ export default function OverviewView() {
                   </div>
 
                   {/* Footer metrics */}
-                  <div className="mt-3 pt-2.5 border-t border-[#1d3e63] flex items-center justify-between text-xs text-slate-400">
+                  <div className="mt-3 pt-2.5 border-t border-[#d8e5f2] flex items-center justify-between text-xs text-[#64748b]">
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] font-mono">Lead: {eng.leadAnalyst}</span>
                       <span>•</span>
@@ -269,19 +268,19 @@ export default function OverviewView() {
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1 font-mono text-[11px]">
                         {counts.critical > 0 && (
-                          <span className="px-1.5 py-0.5 rounded bg-rose-950/80 text-rose-400 border border-rose-800/60">
+                          <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 border border-rose-200 font-bold">
                             {counts.critical} Crit
                           </span>
                         )}
                         {counts.high > 0 && (
-                          <span className="px-1.5 py-0.5 rounded bg-orange-950/80 text-orange-400 border border-orange-800/60">
+                          <span className="px-1.5 py-0.5 rounded bg-orange-100 text-orange-700 border border-orange-200 font-bold">
                             {counts.high} High
                           </span>
                         )}
                       </div>
                       <button 
                         onClick={() => openReportFor(eng)}
-                        className="text-xs text-[#b4d5ff] hover:text-white font-mono underline underline-offset-2 ml-1"
+                        className="text-xs text-[#205588] hover:text-[#195589] font-mono font-bold underline underline-offset-2 ml-1"
                       >
                         Report
                       </button>
@@ -294,18 +293,18 @@ export default function OverviewView() {
         </div>
 
         {/* Right Column: Critical Findings Immediate Triage (5 cols) */}
-        <div className="lg:col-span-5 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-5 bg-white border border-[#d8e5f2] rounded-xl p-5 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-rose-400" />
+              <h2 className="text-sm font-semibold text-[#1b2a3a] tracking-wide flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-rose-600" />
                 Critical Vulnerability Queue
               </h2>
-              <p className="text-xs text-slate-400">High impact exploits awaiting remediation or re-test</p>
+              <p className="text-xs text-[#64748b]">High impact exploits awaiting remediation or re-test</p>
             </div>
             <button
               onClick={() => setActiveTab('findings')}
-              className="text-xs text-rose-400 hover:text-rose-300 font-mono flex items-center gap-1 group"
+              className="text-xs text-rose-700 hover:text-rose-800 font-mono font-bold flex items-center gap-1 group"
             >
               All Findings
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -316,40 +315,40 @@ export default function OverviewView() {
             {criticalFindings.map((vuln) => (
               <div 
                 key={vuln.id}
-                className="bg-slate-950/70 border border-rose-950/80 hover:border-rose-800/60 rounded-lg p-3.5 transition-all"
+                className="bg-rose-50/40 border border-rose-200 hover:border-rose-400 rounded-lg p-3.5 transition-all"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-rose-900/80 text-rose-200 border border-rose-700">
+                    <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-rose-600 text-white">
                       CVSS {vuln.cvssScore}
                     </span>
-                    <span className="text-xs font-mono text-slate-400">{vuln.cve}</span>
+                    <span className="text-xs font-mono text-[#64748b]">{vuln.cve}</span>
                   </div>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold ${
                     vuln.status === 'Retest Requested' 
-                      ? 'bg-cyan-950 text-cyan-300 border-cyan-800'
-                      : 'bg-amber-950 text-amber-300 border-amber-800'
+                      ? 'bg-blue-100 text-blue-800 border-blue-200' 
+                      : 'bg-amber-100 text-amber-800 border-amber-200'
                   }`}>
                     {vuln.status}
                   </span>
                 </div>
 
-                <div className="mt-2 text-xs font-semibold text-slate-100 line-clamp-2">
+                <div className="mt-2 text-xs font-semibold text-[#1b2a3a] line-clamp-2">
                   {vuln.title}
                 </div>
-                <div className="mt-1 text-[11px] text-slate-400 font-mono truncate">
+                <div className="mt-1 text-[11px] text-[#64748b] font-mono truncate">
                   Asset: {vuln.asset}
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/60 flex items-center justify-between text-xs">
-                  <span className="text-[11px] text-slate-500 font-mono">
-                    Client: <strong className="text-slate-300">{vuln.client}</strong>
+                <div className="mt-3 pt-2 border-t border-rose-200/60 flex items-center justify-between text-xs">
+                  <span className="text-[11px] text-[#64748b] font-mono">
+                    Client: <strong className="text-[#1b2a3a]">{vuln.client}</strong>
                   </span>
                   <div className="flex items-center gap-2">
                     {vuln.status !== 'Verified Mitigated' && (
                       <button
                         onClick={() => updateFindingStatus(vuln.id, 'Verified Mitigated')}
-                        className="text-[10px] font-mono px-2 py-1 rounded bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800/70 transition-colors"
+                        className="text-[10px] font-mono px-2 py-1 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border border-emerald-300 font-bold transition-colors"
                       >
                         ✓ Verify Fix
                       </button>
@@ -365,10 +364,10 @@ export default function OverviewView() {
       {/* Cyber Services Hub Quick Cards */}
       <div className="pt-2">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-white tracking-wide">
+          <h2 className="text-sm font-semibold text-[#1b2a3a] tracking-wide">
             Enterprise Cybersecurity Service Practice Lines
           </h2>
-          <span className="text-xs text-slate-400 font-mono">Full-Scope Operations</span>
+          <span className="text-xs text-[#64748b] font-mono">Full-Scope Operations</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -385,15 +384,15 @@ export default function OverviewView() {
               <button
                 key={idx}
                 onClick={() => setActiveTab(item.tab)}
-                className="bg-[#0f2238] hover:bg-[#132b47] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-3.5 text-left transition-all group"
+                className="bg-white hover:bg-[#e8eff6] border border-[#d8e5f2] hover:border-[#205588] rounded-xl p-3.5 text-left transition-all group shadow-2xs"
               >
-                <div className="p-2 rounded-lg bg-[#0b1a2d] border border-[#1d3e63] w-fit text-[#b4d5ff] group-hover:scale-105 transition-transform">
+                <div className="p-2 rounded-lg bg-[#f0f5fa] border border-[#d8e5f2] w-fit text-[#205588] group-hover:scale-105 transition-transform">
                   <Icon className="w-4 h-4" />
                 </div>
-                <div className="mt-2.5 text-xs font-semibold text-white group-hover:text-[#b4d5ff] transition-colors">
+                <div className="mt-2.5 text-xs font-semibold text-[#1b2a3a] group-hover:text-[#205588] transition-colors">
                   {item.title}
                 </div>
-                <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                <div className="text-[10px] text-[#64748b] font-mono mt-0.5">
                   {item.desc}
                 </div>
               </button>

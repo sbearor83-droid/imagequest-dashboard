@@ -1,7 +1,7 @@
 {
-  "name": "imagequest-dashboard",
+  "name": "cyberpulse-dashboard",
   "version": "1.0.0",
-  "description": "ImageQuest Cybersecurity, Compliance & Project Operations Dashboard (Healthcare, Financial Institutions & Commercial)",
+  "description": "CyberPulse Cybersecurity, Compliance & Project Operations Dashboard (Healthcare, Financial Institutions & Commercial)",
   "main": "server/index.js",
   "type": "module",
   "scripts": {

@@ -1,8 +1,8 @@
-# IMAGEQUEST // Cybersecurity & Compliance Operations Command Center
+# CYBERPULSE // Cybersecurity & Compliance Operations Command Center
 
-An enterprise-grade Project Management & Operations Command Center built specifically for **ImageQuest** (Nashville, TN — [imagequest.com](https://www.imagequest.com/)), a SOC 2 Type II certified cybersecurity, compliance, and managed IT services provider.
+An enterprise-grade Project Management & Operations Command Center engineered for managed cybersecurity, compliance, and SOC operations providers.
 
-Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's primary client sectors:
+Engineered with a **Client-Centric 360° Architecture** tailored to primary regulated client sectors:
 - 🏥 **Healthcare Networks & Clinical Systems** (HIPAA Security Rule, HITECH, HITRUST, Medical IoMT Device Isolation)
 - 🏦 **Financial Institutions & Banking** (FFIEC CAT, GLBA Safeguards, SEC 4-Day Incident Disclosure, PCI-DSS 4.0)
 - 🌐 **Other Commercial & Enterprise** (SOC 2 Type II, NIST CSF, ISO 27001)
@@ -17,12 +17,12 @@ Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's
    - Interactive **360° Account Cockpit Modal** for full client drilldown across all operational practices
 
 2. **Ops Telemetry (Executive Radar)**
-   - Live Threat Intelligence Broadcast (CISA KEV, ImageQuest Threat Lab, MITRE ATT&CK)
+   - Live Threat Intelligence Broadcast (CISA KEV, Global Threat Lab, MITRE ATT&CK)
    - Real-time KPI statistics: Active Engagements, Critical Findings Open, Monitored Endpoints, SLA compliance
    - Triage queue for high-priority CVSS 9.0+ vulnerabilities
 
 3. **Engagements & Project Management**
-   - Covers ImageQuest's core advisory and technical service lines:
+   - Covers core advisory and technical service lines:
      - **vCISO Advisory Retainers** & Strategic Roadmaps
      - **Cybersecurity Risk Assessments & BIA**
      - **Healthcare HIPAA Technical Audits & Medical IoMT Reviews**
@@ -58,16 +58,16 @@ Engineered with a **Client-Centric 360° Architecture** tailored to ImageQuest's
    - Chronological inject timeline (T+00:00 Infiltration, T+00:45 Escalation, T+01:30 Darknet leak, T+02:45 Regulatory SEC/HHS countdown)
    - Participant department alignment (CEO, CISO, General Counsel, Clinical Ops, Outside Counsel)
 
-9. **ImageQuest Advisory & Practice Roster**
-   - Features ImageQuest leadership (**Milton Bartley**, CEO & Founder; **Andy Barker**, President & vCISO Practice Lead)
+9. **Cyber Advisory & Operations Roster**
+   - Leadership & advisory practice leads (**Milton Bartley**, Managing Partner; **Andy Barker**, President & vCISO Practice Lead)
    - Specialized practice leads for Healthcare Compliance (HIPAA), Banking & Financial (FFIEC), and Offensive SecOps
    - Workload capacity % utilization meters and clearance levels
 
 10. **Audit Deliverables & PDF Exporter**
-    - Audit-grade client report generation with ImageQuest Nashville letterhead and SOC 2 Type II stamp
+    - Audit-grade client report generation with formal CyberPulse letterhead and SOC 2 Type II stamp
     - Executive attestation statement, assessment methodology, and scope verification
     - Severity distribution chart and technical findings breakdown
-    - Digital cryptographic sign-offs (Lead Assessor & Andy Barker, President)
+    - Digital cryptographic sign-offs (Lead Assessor & Andy Barker, Practice Lead)
     - One-click Print / Save to PDF and JSON export
 
 ---

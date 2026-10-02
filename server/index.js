@@ -263,5 +263,5 @@ if (fs.existsSync(DIST_PATH)) {
 }
 
 app.listen(PORT, () => {
-  console.log(`[ImageQuest API] listening on http://localhost:${PORT}`);
+  console.log(`[CyberPulse API] listening on http://localhost:${PORT}`);
 });

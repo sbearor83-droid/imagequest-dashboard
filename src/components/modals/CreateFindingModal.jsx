@@ -34,7 +34,6 @@ function CreateFindingForm() {
     remediation: ''
   });
 
-
   const close = () => {
     setSelectedEngagement(null);
     setIsCreateFindingModalOpen(false);
@@ -68,33 +67,33 @@ function CreateFindingForm() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-white border border-[#d8e5f2] rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#d8e5f2] flex items-center justify-between bg-[#f8fafc]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-rose-950/80 text-rose-400 border border-rose-800">
+            <div className="p-2 rounded-lg bg-rose-100 text-rose-700 border border-rose-300">
               <Bug className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">Log Security Vulnerability / Finding</h2>
-              <p className="text-xs text-slate-400">Record technical exploit evidence, CVSS v3.1 metrics, and remediation guidance</p>
+              <h2 className="text-base font-bold text-[#1b2a3a]">Log Security Vulnerability / Finding</h2>
+              <p className="text-xs text-[#64748b]">Record technical exploit evidence, CVSS v3.1 metrics, and remediation guidance</p>
             </div>
           </div>
           <button
             onClick={() => close()}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
+            className="text-[#64748b] hover:text-[#1b2a3a] p-1 rounded-lg hover:bg-[#e8eff6]"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs font-sans max-h-[80vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs font-sans max-h-[80vh] overflow-y-auto bg-white">
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Target Engagement *</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Target Engagement *</label>
             <select
               value={formData.engagementId}
               onChange={(e) => setFormData({ ...formData, engagementId: e.target.value })}
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             >
               {engagements.map(e => (
                 <option key={e.id} value={e.id}>{e.id} - {e.client} ({e.title})</option>
@@ -104,36 +103,36 @@ function CreateFindingForm() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-slate-400 font-mono mb-1">Finding Title *</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">Finding Title *</label>
               <input
                 type="text"
                 required
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="e.g. Unauthenticated Remote Code Execution in API Gateway"
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">CVE / ATT&CK ID</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">CVE / ATT&CK ID</label>
               <input
                 type="text"
                 value={formData.cve}
                 onChange={(e) => setFormData({ ...formData, cve: e.target.value })}
                 placeholder="e.g. CVE-2026-4419"
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Severity Rating</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">Severity Rating</label>
               <select
                 value={formData.severity}
                 onChange={(e) => handleSeverityChange(e.target.value)}
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               >
                 <option value="CRITICAL">CRITICAL (9.0 - 10.0)</option>
                 <option value="HIGH">HIGH (7.0 - 8.9)</option>
@@ -143,7 +142,7 @@ function CreateFindingForm() {
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">CVSS Base Score (0.0 - 10.0)</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">CVSS Base Score (0.0 - 10.0)</label>
               <input
                 type="number"
                 step="0.1"
@@ -151,66 +150,66 @@ function CreateFindingForm() {
                 max="10.0"
                 value={formData.cvssScore}
                 onChange={(e) => setFormData({ ...formData, cvssScore: parseFloat(e.target.value) })}
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Remediation SLA Date</label>
+              <label className="block text-[#475569] font-mono mb-1 font-semibold">Remediation SLA Date</label>
               <input
                 type="date"
                 value={formData.remediationDeadline}
                 onChange={(e) => setFormData({ ...formData, remediationDeadline: e.target.value })}
-                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+                className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Affected Target Asset / URL / Port *</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Affected Target Asset / URL / Port *</label>
             <input
               type="text"
               required
               value={formData.asset}
               onChange={(e) => setFormData({ ...formData, asset: e.target.value })}
               placeholder="e.g. api.apexfin-core.com / /v1/telemetry-upload (Port 443)"
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Vulnerability Description & Proof-of-Concept (PoC)</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Vulnerability Description & Proof-of-Concept (PoC)</label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Detail the reproduction steps, payload structure, and exploit mechanics..."
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-slate-400 font-mono mb-1">Remediation & Mitigation Recommendations</label>
+            <label className="block text-[#475569] font-mono mb-1 font-semibold">Remediation & Mitigation Recommendations</label>
             <textarea
               rows={2}
               value={formData.remediation}
               onChange={(e) => setFormData({ ...formData, remediation: e.target.value })}
               placeholder="Specific patch guidance, configuration changes, or WAF rules..."
-              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
+              className="w-full bg-[#f8fafc] border border-[#d8e5f2] rounded-lg px-3 py-2 text-[#1b2a3a] placeholder-[#94a3b8] text-xs focus:outline-none focus:border-[#205588] focus:bg-white font-mono"
             />
           </div>
 
-          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#d8e5f2] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => close()}
-              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#f0f5fa] hover:bg-[#e8eff6] text-[#475569] hover:text-[#1b2a3a] font-mono border border-[#d8e5f2]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/20"
             >
               Commit Finding
             </button>

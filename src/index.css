@@ -2,24 +2,24 @@
 
 @layer base {
   :root {
-    /* ImageQuest Official Brand Colors (from imagequest.com) */
-    --iq-blue-primary: #2365a3;    /* Header Top Bar & Brand Highlight */
-    --iq-blue-button: #205588;     /* Primary Action Button & Footer Blue */
-    --iq-blue-dark: #195589;       /* Deep Ocean Blue */
-    --iq-blue-light: #b4d5ff;      /* Accent Pill Tag & Highlight */
-    --iq-blue-ice: #d1e0ee;        /* Soft Tint */
-    --iq-blue-pale: #e8eff6;       /* Divider Light Blue */
-    --iq-navy-dark: #0b1a2d;       /* Dark Canvas Background */
-    --iq-navy-surface: #0f2238;    /* Elevated Surfaces & Sidebars */
-    --iq-navy-card: #132b47;       /* Card Backgrounds */
-    --iq-border: #1d3e63;          /* Navy Border */
-    --iq-border-light: #2d5584;    /* Active Accent Border */
-    --iq-silver: #a0aec0;          /* Silver Gray from Logo */
+    /* Corporate Light Color Scheme */
+    --iq-blue-primary: #205588;     /* Signature Corporate Blue (Buttons, Main Headings) */
+    --iq-blue-accent: #2365a3;      /* Cerulean Blue (Active States, Top Bar Gradient) */
+    --iq-blue-soft: #e8eff6;        /* Soft Ice Blue (Section Wells, Active Badges) */
+    --iq-blue-pale: #f0f5fa;        /* Pale Blue Tint (Sub-cards, Inputs) */
+    --iq-blue-highlight: #b4d5ff;   /* Border Highlight */
+    --iq-canvas: #f4f8fc;           /* Clean Page Background */
+    --iq-surface: #ffffff;          /* Pure White Cards & Panels */
+    --iq-border: #d8e5f2;           /* Crisp Structural Borders */
+    --iq-text-primary: #1b2a3a;     /* Deep Slate / Navy Primary Text */
+    --iq-text-secondary: #475569;   /* Muted Slate Body Text */
+    --iq-text-muted: #64748b;       /* Subtle Metadata Text */
   }
 
   body {
-    background-color: var(--iq-navy-dark);
-    color: var(--iq-blue-pale);
+    background-color: var(--iq-canvas);
+    color: var(--iq-text-primary);
+    font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
   }
 }
 
@@ -29,7 +29,7 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* Keep the dark report styling when printing / saving to PDF */
+/* Keep styling clean when printing / saving to PDF */
 @media print {
   * {
     -webkit-print-color-adjust: exact;
@@ -37,28 +37,28 @@
   }
 }
 
-/* Custom scrollbars */
+/* Custom scrollbars matching corporate blue */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b1a2d;
+  background: #f0f5fa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1d3e63;
+  background: #c3d6e8;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2365a3;
+  background: #205588;
 }
 
 .cyber-grid-pattern {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(35, 101, 163, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(35, 101, 163, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(32, 85, 136, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(32, 85, 136, 0.04) 1px, transparent 1px);
 }

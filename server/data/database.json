@@ -15,7 +15,7 @@
       "timestamp": "12m ago",
       "severity": "CRITICAL",
       "title": "Active exploitation of Apache Struts CVE-2026-3189 observed in wild",
-      "source": "CISA KEV / ImageQuest Threat Lab",
+      "source": "CISA KEV / CyberPulse Threat Lab",
       "affectedClients": ["Apex Financial Holdings", "Quantico Health Systems"]
     },
     {
@@ -883,7 +883,7 @@
       "activeEngagements": 2,
       "utilization": 75,
       "avatarColor": "from-blue-600 to-indigo-900",
-      "email": "mbartley@imagequest.com"
+      "email": "mbartley@cyberpulse.io"
     },
     {
       "id": "USR-02",
@@ -894,7 +894,7 @@
       "activeEngagements": 4,
       "utilization": 92,
       "avatarColor": "from-cyan-500 to-blue-700",
-      "email": "abarker@imagequest.com"
+      "email": "abarker@cyberpulse.io"
     },
     {
       "id": "USR-03",
@@ -905,7 +905,7 @@
       "activeEngagements": 4,
       "utilization": 90,
       "avatarColor": "from-emerald-500 to-teal-700",
-      "email": "schen@imagequest.com"
+      "email": "schen@cyberpulse.io"
     },
     {
       "id": "USR-04",
@@ -916,7 +916,7 @@
       "activeEngagements": 3,
       "utilization": 85,
       "avatarColor": "from-cyan-500 to-blue-600",
-      "email": "mvance@imagequest.com"
+      "email": "mvance@cyberpulse.io"
     },
     {
       "id": "USR-05",
@@ -927,7 +927,7 @@
       "activeEngagements": 4,
       "utilization": 94,
       "avatarColor": "from-blue-500 to-indigo-800",
-      "email": "dokafor@imagequest.com"
+      "email": "dokafor@cyberpulse.io"
     },
     {
       "id": "USR-06",
@@ -938,7 +938,7 @@
       "activeEngagements": 3,
       "utilization": 70,
       "avatarColor": "from-teal-400 to-cyan-700",
-      "email": "tmansoor@imagequest.com"
+      "email": "tmansoor@cyberpulse.io"
     },
     {
       "id": "USR-07",
@@ -949,7 +949,7 @@
       "activeEngagements": 2,
       "utilization": 65,
       "avatarColor": "from-pink-500 to-rose-700",
-      "email": "mlin@imagequest.com"
+      "email": "mlin@cyberpulse.io"
     }
   ]
 }
