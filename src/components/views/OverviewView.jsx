@@ -9,13 +9,10 @@ import {
   AlertTriangle, 
   ArrowUpRight, 
   ChevronRight, 
-  Activity, 
   Radio, 
-  Terminal,
   Layers,
   Sparkles,
-  CheckCircle2,
-  Building2
+  CheckCircle2
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 import { countFindingsBySeverity } from '../../utils/helpers';
@@ -24,7 +21,6 @@ export default function OverviewView() {
   const { 
     stats, 
     threatFeed, 
-    engagements, 
     findings, 
     managedIT, 
     setActiveTab, 
@@ -168,7 +164,7 @@ export default function OverviewView() {
             <span className="text-xs text-emerald-700 font-mono font-semibold">{stats.managedTenants} Tenants</span>
           </div>
           <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
-            <span>{managedIT.summary?.patchCompliance || 98.7}% Patch Compliance</span>
+            <span>{managedIT.summary.patchCompliance}% Patch Compliance</span>
             <span className="text-emerald-700 font-mono font-semibold">EDR Active</span>
           </div>
         </div>
@@ -189,7 +185,7 @@ export default function OverviewView() {
             <span className="text-xs text-[#64748b] font-mono">Target: 99.0%</span>
           </div>
           <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
-            <span>Avg Response: {managedIT.summary?.avgResponseMinutes || 11.4} min</span>
+            <span>Avg Response: {managedIT.summary.avgResponseMinutes} min</span>
             <span className="text-[#205588] font-mono font-semibold">Tier 1-3 Active</span>
           </div>
         </div>

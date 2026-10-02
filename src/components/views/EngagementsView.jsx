@@ -32,6 +32,8 @@ const PHASE_PROGRESS = {
   'Completed': 100
 };
 
+// Engagements can carry practice-specific phase names (e.g. "Lateral Movement");
+// place those on the standard track by their progress so advancing never moves backwards.
 function getPhaseIndex(eng) {
   const idx = PHASES.indexOf(eng.phase);
   if (idx !== -1) return idx;

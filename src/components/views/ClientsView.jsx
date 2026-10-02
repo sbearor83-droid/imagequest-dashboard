@@ -4,8 +4,7 @@ import {
   Plus, 
   FileText, 
   ArrowRight,
-  ExternalLink,
-  ShieldCheck
+  ExternalLink
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
