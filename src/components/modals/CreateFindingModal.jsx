@@ -20,7 +20,7 @@ export default function CreateFindingModal() {
     cvssScore: 8.5,
     cvssVector: 'CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N',
     asset: '',
-    discoveredBy: team[0]?.name || 'Marcus Vance',
+    discoveredBy: team[0]?.name || 'Andy Barker',
     remediationDeadline: '2026-10-25',
     description: '',
     remediation: ''
@@ -57,10 +57,10 @@ export default function CreateFindingModal() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-rose-950 text-rose-400 border border-rose-800">
+            <div className="p-2 rounded-lg bg-rose-950/80 text-rose-400 border border-rose-800">
               <Bug className="w-5 h-5" />
             </div>
             <div>
@@ -70,7 +70,7 @@ export default function CreateFindingModal() {
           </div>
           <button
             onClick={() => setIsCreateFindingModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -82,7 +82,7 @@ export default function CreateFindingModal() {
             <select
               value={formData.engagementId}
               onChange={(e) => setFormData({ ...formData, engagementId: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             >
               {engagements.map(e => (
                 <option key={e.id} value={e.id}>{e.id} - {e.client} ({e.title})</option>
@@ -99,7 +99,7 @@ export default function CreateFindingModal() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="e.g. Unauthenticated Remote Code Execution in API Gateway"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
               />
             </div>
 
@@ -110,7 +110,7 @@ export default function CreateFindingModal() {
                 value={formData.cve}
                 onChange={(e) => setFormData({ ...formData, cve: e.target.value })}
                 placeholder="e.g. CVE-2026-4419"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function CreateFindingModal() {
               <select
                 value={formData.severity}
                 onChange={(e) => handleSeverityChange(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="CRITICAL">CRITICAL (9.0 - 10.0)</option>
                 <option value="HIGH">HIGH (7.0 - 8.9)</option>
@@ -139,7 +139,7 @@ export default function CreateFindingModal() {
                 max="10.0"
                 value={formData.cvssScore}
                 onChange={(e) => setFormData({ ...formData, cvssScore: parseFloat(e.target.value) })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
 
@@ -149,7 +149,7 @@ export default function CreateFindingModal() {
                 type="date"
                 value={formData.remediationDeadline}
                 onChange={(e) => setFormData({ ...formData, remediationDeadline: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function CreateFindingModal() {
               value={formData.asset}
               onChange={(e) => setFormData({ ...formData, asset: e.target.value })}
               placeholder="e.g. api.apexfin-core.com / /v1/telemetry-upload (Port 443)"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
@@ -173,7 +173,7 @@ export default function CreateFindingModal() {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Detail the reproduction steps, payload structure, and exploit mechanics..."
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
@@ -184,21 +184,21 @@ export default function CreateFindingModal() {
               value={formData.remediation}
               onChange={(e) => setFormData({ ...formData, remediation: e.target.value })}
               placeholder="Specific patch guidance, configuration changes, or WAF rules..."
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-rose-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateFindingModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold font-mono tracking-wider transition-colors shadow-md shadow-rose-900/30"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
             >
               Commit Finding
             </button>

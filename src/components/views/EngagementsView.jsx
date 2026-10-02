@@ -84,17 +84,17 @@ export default function EngagementsView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
-            <Layers className="w-5 h-5 text-cyan-400" />
+            <Layers className="w-5 h-5 text-[#b4d5ff]" />
             Cyber Security Engagements & Project Management
           </h1>
           <p className="text-xs text-slate-400">
-            Track offensive engagements, SOC onboarding, compliance audits, and delivery timelines
+            ImageQuest vCISO advisory, SOC onboarding, compliance audits, penetration testing, and delivery timelines
           </p>
         </div>
 
         <button
           onClick={() => setIsCreateEngModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs tracking-wider transition-all shadow-md shadow-cyan-900/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/40 border border-[#2365a3]/50 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Launch New Engagement</span>
@@ -103,10 +103,10 @@ export default function EngagementsView() {
 
       {/* Scoped Client Banner */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-cyan-950/40 border border-cyan-800/80 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
-          <span className="text-cyan-300 flex items-center gap-2">
+        <div className="bg-[#132b47] border border-[#2365a3]/60 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono shadow-sm">
+          <span className="text-[#b4d5ff] flex items-center gap-2">
             <span>Showing security engagements scoped for:</span>
-            <strong className="text-white bg-slate-900 px-2 py-0.5 rounded border border-cyan-800">{selectedClient}</strong>
+            <strong className="text-white bg-[#0b1a2d] px-2 py-0.5 rounded border border-[#2365a3]/50">{selectedClient}</strong>
           </span>
           <button 
             onClick={() => setSelectedClient('ALL')}
@@ -118,10 +118,10 @@ export default function EngagementsView() {
       )}
 
       {/* Filter Tabs */}
-      <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs font-mono text-slate-500 mr-2 flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5" /> Practice:
+          <span className="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1">
+            <Filter className="w-3.5 h-3.5 text-[#b4d5ff]" /> Practice:
           </span>
           {[
             { id: 'ALL', label: 'All Services' },
@@ -137,8 +137,8 @@ export default function EngagementsView() {
               onClick={() => setSelectedType(tab.id)}
               className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
                 selectedType === tab.id
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                  : 'text-slate-300 hover:text-white hover:bg-[#132b47]'
               }`}
             >
               {tab.label}
@@ -176,19 +176,19 @@ export default function EngagementsView() {
           filtered.map((eng) => (
             <div 
               key={eng.id}
-              className="bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-xl p-5 shadow-sm transition-all space-y-4"
+              className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-5 shadow-sm transition-all space-y-4"
             >
               {/* Header: ID, Client, Title, Type */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-800">
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]">
                       {eng.id}
                     </span>
                     <span className="text-sm font-bold text-slate-200">
                       {eng.client}
                     </span>
-                    <span className="text-xs text-slate-500 font-mono">• {eng.startDate} to {eng.endDate}</span>
+                    <span className="text-xs text-slate-400 font-mono">• {eng.startDate} to {eng.endDate}</span>
                   </div>
                   <h2 className="text-base font-semibold text-white mt-1">
                     {eng.title}
@@ -203,15 +203,15 @@ export default function EngagementsView() {
                   }`}>
                     {eng.priority} Priority
                   </span>
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-slate-950 text-slate-300 border border-slate-800">
+                  <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-[#0b1a2d] text-slate-300 border border-[#1d3e63]">
                     {eng.type}
                   </span>
                 </div>
               </div>
 
               {/* Scope definition */}
-              <div className="bg-slate-950/70 border border-slate-800/80 rounded-lg p-3 text-xs flex items-start gap-2.5">
-                <Target className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-3 text-xs flex items-start gap-2.5">
+                <Target className="w-4 h-4 text-[#b4d5ff] shrink-0 mt-0.5" />
                 <div className="min-w-0">
                   <span className="font-mono text-slate-400 uppercase text-[11px] font-semibold">Scope of Work: </span>
                   <span className="text-slate-200">{eng.scope}</span>
@@ -222,14 +222,14 @@ export default function EngagementsView() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-400 font-mono">
-                    Current Milestone: <strong className="text-cyan-300">{eng.phase}</strong>
+                    Current Milestone: <strong className="text-[#b4d5ff]">{eng.phase}</strong>
                   </span>
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-slate-300">{eng.progress}% Completed</span>
                     {eng.phase !== 'Completed' && (
                       <button
                         onClick={() => handleAdvancePhase(eng)}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 flex items-center gap-1 transition-colors"
+                        className="text-[11px] font-mono px-2.5 py-1 rounded bg-[#205588] hover:bg-[#2365a3] text-white border border-[#2365a3]/60 flex items-center gap-1 transition-colors font-semibold shadow-sm"
                         title="Advance engagement to next milestone phase"
                       >
                         Advance Phase <ChevronRight className="w-3 h-3" />
@@ -239,15 +239,15 @@ export default function EngagementsView() {
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                <div className="w-full bg-[#0b1a2d] rounded-full h-2 overflow-hidden border border-[#1d3e63]">
                   <div 
-                    className="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-[#205588] via-[#2365a3] to-[#3882c8] h-full rounded-full transition-all duration-500"
                     style={{ width: `${eng.progress}%` }}
                   />
                 </div>
 
                 {/* Phase Steps Indicators */}
-                <div className="grid grid-cols-2 sm:grid-cols-6 gap-1 text-[10px] font-mono pt-1 text-slate-500">
+                <div className="grid grid-cols-2 sm:grid-cols-6 gap-1 text-[10px] font-mono pt-1 text-slate-400">
                   {PHASES.map((p, idx) => {
                     const isDone = PHASES.indexOf(eng.phase) >= idx;
                     const isCurrent = eng.phase === p;
@@ -255,8 +255,8 @@ export default function EngagementsView() {
                       <div 
                         key={p} 
                         className={`truncate text-center py-1 px-1 rounded ${
-                          isCurrent ? 'bg-cyan-950/70 text-cyan-400 font-bold border border-cyan-800/50' :
-                          isDone ? 'text-slate-400' : 'text-slate-600'
+                          isCurrent ? 'bg-[#132b47] text-[#b4d5ff] font-bold border border-[#2365a3]/60' :
+                          isDone ? 'text-slate-300' : 'text-slate-600'
                         }`}
                       >
                         {idx + 1}. {p}
@@ -267,7 +267,7 @@ export default function EngagementsView() {
               </div>
 
               {/* Bottom Footer: Budget Hours, Team, Findings, Deliverables */}
-              <div className="pt-3 border-t border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+              <div className="pt-3 border-t border-[#1d3e63] flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
                 {/* Hours & Team */}
                 <div className="flex items-center gap-4 flex-wrap">
                   <div className="flex items-center gap-1.5 font-mono text-slate-400">
@@ -279,11 +279,11 @@ export default function EngagementsView() {
                   </div>
 
                   <div className="flex items-center gap-1.5 font-mono text-slate-400">
-                    <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+                    <UserCheck className="w-3.5 h-3.5 text-[#b4d5ff]" />
                     <span>Lead: <strong className="text-slate-200">{eng.leadAnalyst}</strong></span>
                   </div>
 
-                  <div className="text-[11px] text-slate-500 font-mono">
+                  <div className="text-[11px] text-slate-400 font-mono">
                     Team: {eng.team.join(', ')}
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export default function EngagementsView() {
                       setSelectedEngagement(eng);
                       setIsCreateFindingModalOpen(true);
                     }}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-mono text-[11px] transition-colors"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#132b47] hover:bg-[#195589] text-slate-200 border border-[#1d3e63] font-mono text-[11px] transition-colors"
                   >
                     <Bug className="w-3.5 h-3.5 text-rose-400" />
                     <span>+ Finding</span>
@@ -317,7 +317,7 @@ export default function EngagementsView() {
 
                   <button
                     onClick={() => openReportFor(eng)}
-                    className="flex items-center gap-1 px-3 py-1 rounded bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 font-mono text-[11px] transition-colors font-semibold"
+                    className="flex items-center gap-1 px-3 py-1 rounded bg-[#205588] hover:bg-[#2365a3] text-white border border-[#2365a3]/60 font-mono text-[11px] transition-colors font-semibold shadow-sm"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>Audit Report</span>

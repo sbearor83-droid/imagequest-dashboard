@@ -57,9 +57,9 @@ export default function FindingsView() {
       case 'MEDIUM':
         return 'bg-amber-950/80 text-amber-300 border-amber-700/80';
       case 'LOW':
-        return 'bg-cyan-950/80 text-cyan-300 border-cyan-700/80';
+        return 'bg-[#132b47] text-[#b4d5ff] border-[#2365a3]';
       default:
-        return 'bg-slate-800 text-slate-300 border-slate-700';
+        return 'bg-[#132b47] text-slate-300 border-[#1d3e63]';
     }
   };
 
@@ -68,13 +68,13 @@ export default function FindingsView() {
       case 'Verified Mitigated':
         return 'bg-emerald-950/80 text-emerald-300 border-emerald-800';
       case 'Retest Requested':
-        return 'bg-cyan-950/80 text-cyan-300 border-cyan-800 animate-pulse';
+        return 'bg-[#205588]/40 text-[#b4d5ff] border-[#2365a3] animate-pulse';
       case 'In Remediation':
         return 'bg-amber-950/80 text-amber-300 border-amber-800';
       case 'Open':
         return 'bg-rose-950/80 text-rose-300 border-rose-800';
       default:
-        return 'bg-slate-800 text-slate-300 border-slate-700';
+        return 'bg-[#132b47] text-slate-300 border-[#1d3e63]';
     }
   };
 
@@ -94,7 +94,7 @@ export default function FindingsView() {
 
         <button
           onClick={() => setIsCreateFindingModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-rose-900/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Log Discovered Vulnerability</span>
@@ -103,10 +103,11 @@ export default function FindingsView() {
 
       {/* Scoped Client Banner */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-rose-950/30 border border-rose-800/70 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
-          <span className="text-rose-300 flex items-center gap-2">
+        <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+          <span className="text-[#b4d5ff] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#2365a3] animate-ping" />
             <span>Showing security vulnerabilities scoped for:</span>
-            <strong className="text-white bg-slate-900 px-2 py-0.5 rounded border border-rose-800">{selectedClient}</strong>
+            <strong className="text-white bg-[#132b47] px-2 py-0.5 rounded border border-[#2365a3]">{selectedClient}</strong>
           </span>
           <button 
             onClick={() => setSelectedClient('ALL')}
@@ -120,10 +121,10 @@ export default function FindingsView() {
       {/* Severity Filter Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'CRITICAL (9.0 - 10.0)', sev: 'CRITICAL', color: 'border-rose-800/80 bg-rose-950/30 text-rose-300' },
-          { label: 'HIGH (7.0 - 8.9)', sev: 'HIGH', color: 'border-orange-800/80 bg-orange-950/30 text-orange-300' },
-          { label: 'MEDIUM (4.0 - 6.9)', sev: 'MEDIUM', color: 'border-amber-800/80 bg-amber-950/30 text-amber-300' },
-          { label: 'LOW (0.1 - 3.9)', sev: 'LOW', color: 'border-cyan-800/80 bg-cyan-950/30 text-cyan-300' },
+          { label: 'CRITICAL (9.0 - 10.0)', sev: 'CRITICAL', color: 'border-rose-800/80 bg-rose-950/30 text-rose-300 ring-[#2365a3]' },
+          { label: 'HIGH (7.0 - 8.9)', sev: 'HIGH', color: 'border-orange-800/80 bg-orange-950/30 text-orange-300 ring-[#2365a3]' },
+          { label: 'MEDIUM (4.0 - 6.9)', sev: 'MEDIUM', color: 'border-amber-800/80 bg-amber-950/30 text-amber-300 ring-[#2365a3]' },
+          { label: 'LOW (0.1 - 3.9)', sev: 'LOW', color: 'border-[#1d3e63] bg-[#0f2238] text-[#b4d5ff] ring-[#2365a3]' },
         ].map(item => {
           const count = findings.filter(f => f.severity.toUpperCase() === item.sev).length;
           const isSelected = selectedSeverity === item.sev;
@@ -132,7 +133,7 @@ export default function FindingsView() {
               key={item.sev}
               onClick={() => setSelectedSeverity(isSelected ? 'ALL' : item.sev)}
               className={`p-3 rounded-xl border text-left transition-all ${item.color} ${
-                isSelected ? 'ring-2 ring-cyan-400 shadow-md' : 'opacity-85 hover:opacity-100'
+                isSelected ? 'ring-2 shadow-md shadow-[#2365a3]/30 scale-[1.02]' : 'opacity-85 hover:opacity-100'
               }`}
             >
               <div className="text-[10px] font-mono uppercase tracking-wider font-semibold">{item.label}</div>
@@ -143,17 +144,17 @@ export default function FindingsView() {
       </div>
 
       {/* Filter and Status Controls */}
-      <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-slate-500">Status Filter:</span>
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-mono text-slate-400">Status Filter:</span>
           {['ALL', 'Open', 'In Remediation', 'Retest Requested', 'Verified Mitigated'].map(stat => (
             <button
               key={stat}
               onClick={() => setSelectedStatus(stat)}
               className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
                 selectedStatus === stat
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                  : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
               }`}
             >
               {stat}
@@ -162,14 +163,14 @@ export default function FindingsView() {
         </div>
 
         <span className="text-xs font-mono text-slate-400">
-          Showing <strong className="text-cyan-400">{filtered.length}</strong> findings
+          Showing <strong className="text-[#b4d5ff]">{filtered.length}</strong> findings
         </span>
       </div>
 
       {/* Findings List */}
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="bg-slate-900/40 border border-dashed border-slate-800 rounded-xl p-12 text-center">
+          <div className="bg-[#0f2238]/60 border border-dashed border-[#1d3e63] rounded-xl p-12 text-center">
             <Bug className="w-10 h-10 text-slate-600 mx-auto mb-3" />
             <p className="text-sm font-semibold text-slate-300">No security vulnerabilities match the filter</p>
             <p className="text-xs text-slate-500 mt-1">Adjust severity or status filters to view logged findings</p>
@@ -180,7 +181,7 @@ export default function FindingsView() {
             return (
               <div
                 key={vuln.id}
-                className="bg-slate-900/80 border border-slate-800 hover:border-slate-700 rounded-xl p-4 shadow-sm transition-all"
+                className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-4 shadow-sm transition-all"
               >
                 {/* Main Card Line */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -194,19 +195,19 @@ export default function FindingsView() {
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-mono text-xs font-bold text-slate-400">{vuln.id}</span>
-                        <span className="font-mono text-xs font-semibold px-2 py-0.2 rounded bg-slate-800 text-cyan-400 border border-slate-700">
+                        <span className="font-mono text-xs font-semibold px-2 py-0.2 rounded bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]">
                           {vuln.cve}
                         </span>
                         <span className="text-xs text-slate-400 font-mono">• {vuln.client}</span>
                         <span className="text-[11px] text-slate-500 font-mono">({vuln.engagementId})</span>
                       </div>
-                      <h2 className="text-sm font-semibold text-white mt-1 hover:text-cyan-300 transition-colors cursor-pointer"
+                      <h2 className="text-sm font-semibold text-white mt-1 hover:text-[#b4d5ff] transition-colors cursor-pointer"
                           onClick={() => setExpandedFindingId(isExpanded ? null : vuln.id)}>
                         {vuln.title}
                       </h2>
                       <div className="text-xs text-slate-400 font-mono mt-1 flex items-center gap-2">
                         <span className="text-slate-500">Asset:</span>
-                        <span className="text-slate-300 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 truncate max-w-md">
+                        <span className="text-slate-300 bg-[#0b1a2d] px-2 py-0.5 rounded border border-[#1d3e63] truncate max-w-md">
                           {vuln.asset}
                         </span>
                       </div>
@@ -221,7 +222,7 @@ export default function FindingsView() {
 
                     <button
                       onClick={() => setExpandedFindingId(isExpanded ? null : vuln.id)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+                      className="p-1.5 rounded-lg bg-[#132b47] hover:bg-[#205588] text-slate-400 hover:text-white transition-colors"
                       title="Expand finding technical details"
                     >
                       {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -231,19 +232,19 @@ export default function FindingsView() {
 
                 {/* Expanded Technical Details & PoC */}
                 {isExpanded && (
-                  <div className="mt-4 pt-4 border-t border-slate-800 space-y-4 animate-in fade-in duration-200">
+                  <div className="mt-4 pt-4 border-t border-[#1d3e63] space-y-4 animate-in fade-in duration-200">
                     {/* CVSS Vector */}
-                    <div className="bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
+                    <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
                       <span className="text-slate-400">CVSS v3.1 Vector String:</span>
-                      <span className="text-cyan-400 select-all">{vuln.cvssVector}</span>
+                      <span className="text-[#b4d5ff] font-semibold select-all">{vuln.cvssVector}</span>
                     </div>
 
                     {/* Description */}
                     <div>
                       <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1 flex items-center gap-1.5">
-                        <FileCode className="w-3.5 h-3.5 text-cyan-400" /> Vulnerability Description & Impact
+                        <FileCode className="w-3.5 h-3.5 text-[#2365a3]" /> Vulnerability Description & Impact
                       </h4>
-                      <p className="text-xs text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800/80 leading-relaxed">
+                      <p className="text-xs text-slate-300 bg-[#0b1a2d] p-3 rounded-lg border border-[#1d3e63] leading-relaxed">
                         {vuln.description}
                       </p>
                     </div>
@@ -267,7 +268,7 @@ export default function FindingsView() {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-500 font-mono">Update State:</span>
+                        <span className="text-xs text-slate-400 font-mono">Update State:</span>
                         {vuln.status !== 'In Remediation' && (
                           <button
                             onClick={() => updateFindingStatus(vuln.id, 'In Remediation')}
@@ -279,7 +280,7 @@ export default function FindingsView() {
                         {vuln.status !== 'Retest Requested' && (
                           <button
                             onClick={() => updateFindingStatus(vuln.id, 'Retest Requested')}
-                            className="px-2.5 py-1 rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 text-[11px] font-mono transition-colors"
+                            className="px-2.5 py-1 rounded bg-[#205588] hover:bg-[#2365a3] text-white border border-[#2365a3] text-[11px] font-mono transition-colors"
                           >
                             Request Retest
                           </button>

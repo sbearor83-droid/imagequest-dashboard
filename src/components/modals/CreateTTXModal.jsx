@@ -12,7 +12,7 @@ export default function CreateTTXModal() {
     scenario: '',
     scheduledDate: '2026-11-12',
     duration: '4.0 Hours',
-    facilitator: team.find(t => t.name.includes('Maya'))?.name || 'Maya Lin',
+    facilitator: team.find(t => t.name.includes('Maya'))?.name || 'Andy Barker',
     participantsText: 'Chief Executive Officer\nChief Information Security Officer\nGeneral Counsel\nHead of Communications',
     inject1: 'Initial Alert: Ransomware note found on financial controller workstation.',
     inject2: 'Escalation: Darknet leak site lists client logo with 48h timer countdown.'
@@ -40,11 +40,11 @@ export default function CreateTTXModal() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-purple-950 text-purple-400 border border-purple-800">
-              <Gamepad2 className="w-5 h-5" />
+            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
+              <Gamepad2 className="w-5 h-5 text-[#2365a3]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white">Create Tabletop Simulation (TTX)</h2>
@@ -53,7 +53,7 @@ export default function CreateTTXModal() {
           </div>
           <button
             onClick={() => setIsCreateTTXModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -68,7 +68,7 @@ export default function CreateTTXModal() {
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g. Operation Crimson Vault: Multi-Stage Ransomware Outbreak"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -81,7 +81,7 @@ export default function CreateTTXModal() {
                 value={formData.client}
                 onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                 placeholder="e.g. BioNova Pharmaceuticals"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
               />
             </div>
 
@@ -92,7 +92,7 @@ export default function CreateTTXModal() {
                 value={formData.threatActor}
                 onChange={(e) => setFormData({ ...formData, threatActor: e.target.value })}
                 placeholder="e.g. LockBit 3.0 / Scattered Spider"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function CreateTTXModal() {
               value={formData.scenario}
               onChange={(e) => setFormData({ ...formData, scenario: e.target.value })}
               placeholder="Detail the breach vector, impact on business operations, and initial conditions..."
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -116,7 +116,7 @@ export default function CreateTTXModal() {
                 type="date"
                 value={formData.scheduledDate}
                 onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
 
@@ -127,7 +127,7 @@ export default function CreateTTXModal() {
                 value={formData.duration}
                 onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                 placeholder="e.g. 4.0 Hours"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -138,21 +138,21 @@ export default function CreateTTXModal() {
               rows={3}
               value={formData.participantsText}
               onChange={(e) => setFormData({ ...formData, participantsText: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-purple-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateTTXModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold font-mono tracking-wider transition-colors"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
             >
               Schedule Exercise
             </button>

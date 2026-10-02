@@ -42,7 +42,7 @@ export default function Sidebar() {
       subtitle: 'Healthcare & Banking Hub',
       icon: Building2,
       badge: `${clients.length} Orgs`,
-      badgeColor: 'bg-[#0096c7]/20 text-[#00b4d8] border-[#0096c7]/30'
+      badgeColor: 'bg-[#2365a3]/25 text-[#b4d5ff] border-[#2365a3]/40'
     },
     {
       id: 'overview',
@@ -57,7 +57,7 @@ export default function Sidebar() {
       subtitle: 'vCISO, Audits & Pentests',
       icon: FolderKanban,
       badge: clientFilteredEngagements.length,
-      badgeColor: 'bg-[#0096c7]/20 text-[#00b4d8] border-[#0096c7]/30'
+      badgeColor: 'bg-[#2365a3]/25 text-[#b4d5ff] border-[#2365a3]/40'
     },
     {
       id: 'findings',
@@ -116,12 +116,12 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-[#001428] border-r border-[#0e3966] flex flex-col justify-between shrink-0 select-none">
+    <aside className="w-64 bg-[#0f2238] border-r border-[#1d3e63] flex flex-col justify-between shrink-0 select-none">
       <div className="p-3 space-y-1">
         {/* Active Client Scope Banner */}
         {selectedClient !== 'ALL' && (
-          <div className="mx-1 mb-3 p-2.5 rounded-lg bg-[#002244] border border-[#0096c7]/50 text-xs font-mono shadow-sm">
-            <div className="flex items-center justify-between text-[10px] text-[#00b4d8] font-bold uppercase tracking-wider">
+          <div className="mx-1 mb-3 p-2.5 rounded-lg bg-[#132b47] border border-[#2365a3]/60 text-xs font-mono shadow-sm">
+            <div className="flex items-center justify-between text-[10px] text-[#b4d5ff] font-bold uppercase tracking-wider">
               <span>Scoped Client</span>
               <button 
                 onClick={() => setSelectedClient('ALL')}
@@ -135,7 +135,7 @@ export default function Sidebar() {
           </div>
         )}
 
-        <div className="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-[#48cae4]/70">
+        <div className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#b4d5ff]">
           Practices & Operations
         </div>
 
@@ -149,20 +149,20 @@ export default function Sidebar() {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all group ${
                   isActive
-                    ? 'bg-[#002b54] text-white border border-[#0096c7]/60 shadow-sm shadow-[#001224]'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#001c38] border border-transparent'
+                    ? 'bg-[#205588] text-white border border-[#2365a3] shadow-md shadow-[#0b1a2d]'
+                    : 'text-slate-300 hover:text-white hover:bg-[#132b47] border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className={`p-1.5 rounded-md transition-colors ${
                     isActive 
-                      ? 'bg-[#0096c7]/25 text-[#00b4d8] border border-[#0096c7]/40' 
-                      : 'bg-[#001c38] text-slate-400 group-hover:text-slate-200'
+                      ? 'bg-[#2365a3] text-white border border-[#3882c8]' 
+                      : 'bg-[#132b47] text-slate-400 group-hover:text-white'
                   }`}>
                     <Icon className="w-3.5 h-3.5 shrink-0" />
                   </div>
                   <div className="truncate">
-                    <div className={`text-xs font-semibold tracking-wide truncate ${isActive ? 'text-white' : 'text-slate-300'}`}>
+                    <div className={`text-xs font-semibold tracking-wide truncate ${isActive ? 'text-white' : 'text-slate-200'}`}>
                       {item.label}
                     </div>
                     <div className="text-[10px] text-slate-400 font-mono truncate">
@@ -183,7 +183,7 @@ export default function Sidebar() {
       </div>
 
       {/* System Status Footer */}
-      <div className="p-3 border-t border-[#0e3966] bg-[#001122]">
+      <div className="p-3 border-t border-[#1d3e63] bg-[#0b1a2d]">
         <div className="flex items-center justify-between text-xs mb-1.5">
           <span className="text-slate-400 flex items-center gap-1.5 text-[11px]">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -191,12 +191,12 @@ export default function Sidebar() {
           </span>
           <span className="font-mono text-[10px] text-emerald-400 font-bold">ONLINE</span>
         </div>
-        <div className="w-full bg-[#001c38] rounded-full h-1.5 overflow-hidden">
-          <div className="bg-gradient-to-r from-emerald-500 via-[#0096c7] to-[#00b4d8] h-full rounded-full w-[98%]"></div>
+        <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
+          <div className="bg-gradient-to-r from-emerald-500 via-[#2365a3] to-[#b4d5ff] h-full rounded-full w-[98%]"></div>
         </div>
         <div className="mt-1.5 text-[10px] font-mono text-slate-400 flex justify-between">
           <span>{clients.length} Accounts Synced</span>
-          <span className="text-[#48cae4]">SOC 2 Type II</span>
+          <span className="text-[#b4d5ff] font-semibold">SOC 2 Type II</span>
         </div>
       </div>
     </aside>

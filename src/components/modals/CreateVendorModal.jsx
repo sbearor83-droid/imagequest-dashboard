@@ -27,11 +27,11 @@ export default function CreateVendorModal() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
-              <Building2 className="w-5 h-5" />
+            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
+              <Building2 className="w-5 h-5 text-[#2365a3]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white">Onboard Third-Party Vendor (TPRM)</h2>
@@ -40,7 +40,7 @@ export default function CreateVendorModal() {
           </div>
           <button
             onClick={() => setIsCreateVendorModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -54,8 +54,8 @@ export default function CreateVendorModal() {
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="e.g. Datadog Telemetry, Snowflake Cloud"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500"
+              placeholder="e.g. Epic Systems, Fiserv, AWS Cloud"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -66,8 +66,8 @@ export default function CreateVendorModal() {
               required
               value={formData.service}
               onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-              placeholder="e.g. Cloud Monitoring & Observability"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500"
+              placeholder="e.g. Healthcare Clinical EHR Infrastructure"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -77,7 +77,7 @@ export default function CreateVendorModal() {
               <select
                 value={formData.tier}
                 onChange={(e) => setFormData({ ...formData, tier: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="Tier 1 - Mission Critical">Tier 1 - Mission Critical</option>
                 <option value="Tier 2 - Operational">Tier 2 - Operational</option>
@@ -93,7 +93,7 @@ export default function CreateVendorModal() {
                 max="100"
                 value={formData.riskScore}
                 onChange={(e) => setFormData({ ...formData, riskScore: Number(e.target.value) })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function CreateVendorModal() {
               <select
                 value={formData.soc2Status}
                 onChange={(e) => setFormData({ ...formData, soc2Status: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="Verified Current (Type II)">Verified Current (Type II)</option>
                 <option value="Verified Current (Type I)">Verified Current (Type I)</option>
@@ -120,7 +120,7 @@ export default function CreateVendorModal() {
                 value={formData.contact}
                 onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                 placeholder="security@vendor.com"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -131,8 +131,8 @@ export default function CreateVendorModal() {
               type="text"
               value={formData.dataAccess}
               onChange={(e) => setFormData({ ...formData, dataAccess: e.target.value })}
-              placeholder="e.g. Read-only application logs, PII, Source Code"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+              placeholder="e.g. Read-only application logs, ePHI, Core Banking GLBA"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
@@ -142,24 +142,24 @@ export default function CreateVendorModal() {
               id="isoCheck"
               checked={formData.iso27001}
               onChange={(e) => setFormData({ ...formData, iso27001: e.target.checked })}
-              className="rounded bg-slate-950 border-slate-700 text-cyan-600 focus:ring-0"
+              className="rounded bg-[#081320] border-[#1d3e63] text-[#205588] focus:ring-0"
             />
             <label htmlFor="isoCheck" className="text-slate-300 cursor-pointer">
               Vendor has active ISO/IEC 27001:2022 Certification
             </label>
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateVendorModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold font-mono tracking-wider transition-colors"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
             >
               Onboard Vendor
             </button>

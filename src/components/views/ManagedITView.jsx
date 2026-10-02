@@ -19,7 +19,7 @@ export default function ManagedITView() {
   const { managedIT, setIsCreateTicketModalOpen, selectedClient, setSelectedClient, searchQuery } = useCyber();
   const [ticketFilter, setTicketFilter] = useState('ALL');
 
-  const { summary, tickets = [], endpointHealth = [] } = managedIT;
+  const { summary = {}, tickets = [], endpointHealth = [] } = managedIT || {};
 
   const filteredTickets = tickets.filter(t => {
     const matchesSearch = 
@@ -37,7 +37,7 @@ export default function ManagedITView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
-            <Server className="w-5 h-5 text-emerald-400" />
+            <Server className="w-5 h-5 text-[#2365a3]" />
             Managed IT Operations & 24/7 SOC SLA Queue
           </h1>
           <p className="text-xs text-slate-400">
@@ -47,7 +47,7 @@ export default function ManagedITView() {
 
         <button
           onClick={() => setIsCreateTicketModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs tracking-wider transition-all shadow-md shadow-emerald-900/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Dispatch SLA Ticket</span>
@@ -56,10 +56,11 @@ export default function ManagedITView() {
 
       {/* Scoped Client Banner */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-emerald-950/30 border border-emerald-800/70 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
-          <span className="text-emerald-300 flex items-center gap-2">
+        <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+          <span className="text-[#b4d5ff] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#2365a3] animate-ping" />
             <span>Showing infrastructure & SLA tickets scoped for:</span>
-            <strong className="text-white bg-slate-900 px-2 py-0.5 rounded border border-emerald-800">{selectedClient}</strong>
+            <strong className="text-white bg-[#132b47] px-2 py-0.5 rounded border border-[#2365a3]">{selectedClient}</strong>
           </span>
           <button 
             onClick={() => setSelectedClient('ALL')}
@@ -72,17 +73,17 @@ export default function ManagedITView() {
 
       {/* Summary Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Monitored Endpoints</div>
           <div className="text-2xl font-bold font-mono text-white mt-1">
-            {summary.totalEndpoints?.toLocaleString() || 8420}
+            {summary.totalEndpoints?.toLocaleString() || '8,420'}
           </div>
           <div className="text-[11px] text-emerald-400 font-mono mt-1 flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3" /> {summary.healthyEndpoints?.toLocaleString() || 8312} Healthy
+            <CheckCircle2 className="w-3 h-3" /> {summary.healthyEndpoints?.toLocaleString() || '8,312'} Healthy
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Patch Compliance</div>
           <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
             {summary.patchCompliance || 98.7}%
@@ -92,9 +93,9 @@ export default function ManagedITView() {
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Avg SOC Response</div>
-          <div className="text-2xl font-bold font-mono text-cyan-400 mt-1">
+          <div className="text-2xl font-bold font-mono text-[#b4d5ff] mt-1">
             {summary.avgResponseMinutes || 11.4} min
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
@@ -102,7 +103,7 @@ export default function ManagedITView() {
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Overall SLA Met Rate</div>
           <div className="text-2xl font-bold font-mono text-amber-400 mt-1">
             {summary.slaMet || 99.4}%
@@ -114,9 +115,9 @@ export default function ManagedITView() {
       </div>
 
       {/* Fleet Telemetry & OS Breakdown */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
         <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-400" />
+          <Activity className="w-4 h-4 text-[#2365a3]" />
           Client Infrastructure & OS Fleet Health Telemetry
         </h2>
 
@@ -124,11 +125,11 @@ export default function ManagedITView() {
           {endpointHealth.map((item, idx) => {
             const pct = Math.round((item.patched / item.count) * 100);
             return (
-              <div key={idx} className="bg-slate-950/70 border border-slate-800 rounded-lg p-3.5 space-y-2">
+              <div key={idx} className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-3.5 space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-slate-200">{item.os}</span>
                   <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-bold ${
-                    item.status === 'Optimal' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' :
+                    item.status === 'Optimal' ? 'bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]' :
                     item.status === 'Good' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
                     'bg-amber-950 text-amber-300 border border-amber-800'
                   }`}>
@@ -139,9 +140,9 @@ export default function ManagedITView() {
                   <span className="text-slate-400">{item.patched} / {item.count} agents</span>
                   <span className="font-bold text-white">{pct}%</span>
                 </div>
-                <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
                   <div 
-                    className="bg-gradient-to-r from-emerald-500 to-cyan-500 h-full rounded-full"
+                    className="bg-gradient-to-r from-[#205588] to-[#2365a3] h-full rounded-full"
                     style={{ width: `${pct}%` }}
                   />
                 </div>
@@ -152,7 +153,7 @@ export default function ManagedITView() {
       </div>
 
       {/* Live SLA Tickets Queue */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
@@ -169,8 +170,8 @@ export default function ManagedITView() {
                 onClick={() => setTicketFilter(p)}
                 className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
                   ticketFilter === p
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
                 }`}
               >
                 {p === 'ALL' ? 'All Priorities' : `${p} Tickets`}
@@ -184,7 +185,7 @@ export default function ManagedITView() {
           {filteredTickets.map((ticket) => (
             <div 
               key={ticket.id}
-              className="bg-slate-950/70 border border-slate-800/90 hover:border-slate-700 rounded-xl p-4 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+              className="bg-[#0b1a2d] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-4 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
             >
               <div className="min-w-0">
                 <div className="flex items-center gap-2.5 flex-wrap">
@@ -196,12 +197,12 @@ export default function ManagedITView() {
                   }`}>
                     {ticket.priority}
                   </span>
-                  <span className="text-xs font-bold text-slate-200">• {ticket.client}</span>
-                  <span className="text-xs font-mono text-slate-500">({ticket.category})</span>
+                  <span className="text-xs font-bold text-white">• {ticket.client}</span>
+                  <span className="text-xs font-mono text-slate-400">({ticket.category})</span>
                 </div>
                 <h3 className="text-sm font-semibold text-white mt-1">{ticket.title}</h3>
                 <div className="text-xs text-slate-400 font-mono mt-1">
-                  Assigned Engineer: <strong className="text-slate-300">{ticket.assignedTo}</strong> • Opened: {ticket.created}
+                  Assigned Engineer: <strong className="text-slate-200">{ticket.assignedTo}</strong> • Opened: {ticket.created}
                 </div>
               </div>
 
@@ -217,7 +218,7 @@ export default function ManagedITView() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300">
+                  <span className="text-xs font-mono px-2.5 py-1 rounded bg-[#132b47] border border-[#1d3e63] text-slate-200">
                     {ticket.status}
                   </span>
                 </div>

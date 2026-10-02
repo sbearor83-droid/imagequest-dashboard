@@ -10,7 +10,7 @@ export default function CreateTicketModal() {
     priority: 'P1 - Critical (1h SLA)',
     title: '',
     category: 'SOC Escalation',
-    assignedTo: team.find(t => t.role.includes('MSSP'))?.name || 'David Okafor'
+    assignedTo: team.find(t => t.role.includes('MSSP'))?.name || 'Andy Barker'
   });
 
   if (!isCreateTicketModalOpen) return null;
@@ -24,11 +24,11 @@ export default function CreateTicketModal() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800">
-              <Server className="w-5 h-5" />
+            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
+              <Server className="w-5 h-5 text-[#2365a3]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white">Dispatch SOC / Managed IT Ticket</h2>
@@ -37,7 +37,7 @@ export default function CreateTicketModal() {
           </div>
           <button
             onClick={() => setIsCreateTicketModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -51,7 +51,7 @@ export default function CreateTicketModal() {
               required
               value={formData.client}
               onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
@@ -63,7 +63,7 @@ export default function CreateTicketModal() {
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g. Cobalt Strike Beacon detected on Domain Controller"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function CreateTicketModal() {
               <select
                 value={formData.priority}
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="P1 - Critical">P1 - Critical (1 Hour SLA)</option>
                 <option value="P2 - High">P2 - High (4 Hour SLA)</option>
@@ -87,7 +87,7 @@ export default function CreateTicketModal() {
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="SOC Escalation">SOC Escalation</option>
                 <option value="Endpoint Defense">Endpoint Defense</option>
@@ -103,7 +103,7 @@ export default function CreateTicketModal() {
             <select
               value={formData.assignedTo}
               onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 font-mono"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             >
               {team.map(t => (
                 <option key={t.id} value={t.name}>{t.name} ({t.role})</option>
@@ -111,17 +111,17 @@ export default function CreateTicketModal() {
             </select>
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateTicketModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold font-mono tracking-wider transition-colors"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
             >
               Dispatch Ticket
             </button>

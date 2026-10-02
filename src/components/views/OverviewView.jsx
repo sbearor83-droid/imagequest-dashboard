@@ -47,21 +47,21 @@ export default function OverviewView() {
     <div className="space-y-6">
       {/* Scoped Client Banner */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-cyan-950/40 border border-cyan-800/80 rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-          <div className="flex items-center gap-2 text-cyan-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-            <span>Operations Telemetry scoped for: <strong className="text-white text-sm bg-slate-900 px-2 py-0.5 rounded border border-cyan-800">{selectedClient}</strong></span>
+        <div className="bg-[#132b47] border border-[#2365a3]/60 rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono shadow-sm">
+          <div className="flex items-center gap-2 text-[#b4d5ff]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#2365a3] animate-pulse"></span>
+            <span>Operations Telemetry scoped for: <strong className="text-white text-sm bg-[#0b1a2d] px-2 py-0.5 rounded border border-[#2365a3]/60">{selectedClient}</strong></span>
           </div>
           <div className="flex items-center gap-2">
             <button 
               onClick={() => setActiveTab('clients')}
-              className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors"
+              className="px-2.5 py-1 rounded bg-[#0b1a2d] hover:bg-[#1a385c] text-[#b4d5ff] text-xs transition-colors border border-[#1d3e63]"
             >
               360° Client Profile
             </button>
             <button 
               onClick={() => setSelectedClient('ALL')}
-              className="px-2.5 py-1 rounded bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 text-xs transition-colors"
+              className="px-2.5 py-1 rounded bg-[#205588] hover:bg-[#2365a3] text-white text-xs transition-colors font-semibold"
             >
               Reset to All Accounts
             </button>
@@ -69,7 +69,7 @@ export default function OverviewView() {
         </div>
       )}
       {/* Top Banner: Threat Intel Stream */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 rounded-xl p-4 shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-[#0f2238] via-[#0f2238] to-[#132b47] border border-[#1d3e63] rounded-xl p-4 shadow-lg relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="flex h-3 w-3 relative">
@@ -90,7 +90,7 @@ export default function OverviewView() {
           {threatFeed.map((threat) => (
             <div 
               key={threat.id}
-              className="bg-slate-950/70 border border-slate-800/80 rounded-lg p-2.5 flex items-start gap-2.5 hover:border-slate-700 transition-colors"
+              className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-2.5 flex items-start gap-2.5 hover:border-[#2365a3] transition-colors"
             >
               <div className={`mt-0.5 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
                 threat.severity === 'CRITICAL' 
@@ -120,17 +120,17 @@ export default function OverviewView() {
         {/* Active Engagements */}
         <div 
           onClick={() => setActiveTab('engagements')}
-          className="bg-slate-900/80 border border-slate-800 hover:border-cyan-500/50 rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-cyan-950/30 group"
+          className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg hover:shadow-[#0b1a2d]/80 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Active Engagements</span>
-            <div className="p-2 rounded-lg bg-cyan-950/60 text-cyan-400 border border-cyan-800/50 group-hover:scale-110 transition-transform">
+            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63] group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-white font-mono">{activeEngagements.length}</span>
-            <span className="text-xs text-cyan-400 font-mono flex items-center">
+            <span className="text-xs text-[#b4d5ff] font-mono flex items-center">
               <TrendingUp className="w-3 h-3 mr-0.5" /> 100% On-Track
             </span>
           </div>
@@ -207,18 +207,18 @@ export default function OverviewView() {
       {/* Main Grid: Active Engagements vs. Critical Findings Triage */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Active Engagements Matrix (7 cols) */}
-        <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-7 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
-                <Layers className="w-4 h-4 text-cyan-400" />
+                <Layers className="w-4 h-4 text-[#b4d5ff]" />
                 Active Cyber Engagements & Milestones
               </h2>
               <p className="text-xs text-slate-400">Current offensive and defensive security operations</p>
             </div>
             <button
               onClick={() => setActiveTab('engagements')}
-              className="text-xs text-cyan-400 hover:text-cyan-300 font-mono flex items-center gap-1 group"
+              className="text-xs text-[#b4d5ff] hover:text-white font-mono flex items-center gap-1 group"
             >
               View All ({engagements.length})
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -229,21 +229,21 @@ export default function OverviewView() {
             {activeEngagements.slice(0, 4).map((eng) => (
               <div 
                 key={eng.id}
-                className="bg-slate-950/60 border border-slate-800/90 hover:border-slate-700 rounded-lg p-3.5 transition-all"
+                className="bg-[#0b1a2d] border border-[#1d3e63] hover:border-[#2365a3] rounded-lg p-3.5 transition-all"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-cyan-400">{eng.id}</span>
+                      <span className="text-xs font-mono font-bold text-[#b4d5ff]">{eng.id}</span>
                       <span className="text-xs font-medium text-slate-400">• {eng.client}</span>
                     </div>
                     <h3 className="text-sm font-semibold text-white mt-0.5">{eng.title}</h3>
                   </div>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold shrink-0 ${
-                    eng.type.includes('Penetration') ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' :
+                    eng.type.includes('Penetration') ? 'bg-[#2365a3]/30 text-[#b4d5ff] border border-[#2365a3]/60' :
                     eng.type.includes('Red') ? 'bg-rose-950 text-rose-300 border border-rose-800' :
                     eng.type.includes('Compliance') ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' :
-                    'bg-indigo-950 text-indigo-300 border border-indigo-800'
+                    'bg-[#132b47] text-[#b4d5ff] border border-[#1d3e63]'
                   }`}>
                     {eng.type}
                   </span>
@@ -255,18 +255,18 @@ export default function OverviewView() {
                     <span className="text-slate-400 font-mono">
                       Phase: <strong className="text-slate-200">{eng.phase}</strong>
                     </span>
-                    <span className="font-mono text-cyan-400">{eng.progress}%</span>
+                    <span className="font-mono text-[#b4d5ff]">{eng.progress}%</span>
                   </div>
-                  <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-[#132b47] rounded-full h-1.5 overflow-hidden">
                     <div 
-                      className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full transition-all" 
+                      className="bg-gradient-to-r from-[#205588] to-[#2365a3] h-full rounded-full transition-all" 
                       style={{ width: `${eng.progress}%` }}
                     />
                   </div>
                 </div>
 
                 {/* Footer metrics */}
-                <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+                <div className="mt-3 pt-2.5 border-t border-[#1d3e63] flex items-center justify-between text-xs text-slate-400">
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-mono">Lead: {eng.leadAnalyst}</span>
                     <span>•</span>
@@ -289,7 +289,7 @@ export default function OverviewView() {
                     )}
                     <button 
                       onClick={() => openReportFor(eng)}
-                      className="text-xs text-slate-300 hover:text-cyan-300 font-mono underline underline-offset-2 ml-1"
+                      className="text-xs text-[#b4d5ff] hover:text-white font-mono underline underline-offset-2 ml-1"
                     >
                       Report
                     </button>
@@ -301,7 +301,7 @@ export default function OverviewView() {
         </div>
 
         {/* Right Column: Critical Findings Immediate Triage (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-5 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">

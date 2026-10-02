@@ -50,16 +50,16 @@ export default function RiskRegisterView() {
     <div className="space-y-6">
       {/* Active Client Scope Alert */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-[#002244] border border-[#0096c7]/40 rounded-xl p-3 flex items-center justify-between">
+        <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl p-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#00b4d8] animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-[#2365a3] animate-ping" />
             <span className="text-slate-400">Scoped Risk Register:</span>
             <span className="text-white font-bold">{selectedClient}</span>
-            <span className="text-[#00b4d8]">({clientFilteredRisks.length} relevant risks identified)</span>
+            <span className="text-[#b4d5ff]">({clientFilteredRisks.length} relevant risks identified)</span>
           </div>
           <button
             onClick={() => setSelectedClient('ALL')}
-            className="text-xs font-mono text-[#00b4d8] hover:text-white underline"
+            className="text-xs font-mono text-[#b4d5ff] hover:text-white underline"
           >
             Show All Accounts
           </button>
@@ -70,7 +70,7 @@ export default function RiskRegisterView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-amber-400" />
+            <ShieldAlert className="w-5 h-5 text-[#2365a3]" />
             Cyber Risk & BIA Matrix (5x5 Heatmap)
           </h1>
           <p className="text-xs text-slate-400">
@@ -80,7 +80,7 @@ export default function RiskRegisterView() {
 
         <button
           onClick={() => setIsCreateRiskModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs tracking-wider transition-all shadow-md shadow-amber-900/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Add Enterprise Risk</span>
@@ -90,7 +90,7 @@ export default function RiskRegisterView() {
       {/* Heatmap & Matrix Top Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* 5x5 Heatmap Grid (7 cols) */}
-        <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-7 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
@@ -118,17 +118,17 @@ export default function RiskRegisterView() {
               {/* Likelihood on Y axis (5 down to 1), Impact on X axis (1 to 5) */}
               <div className="grid grid-cols-6 gap-1 text-center font-mono text-xs">
                 {/* Header Row */}
-                <div className="p-2 text-[10px] text-slate-500 font-bold uppercase">L \ I</div>
-                <div className="p-2 text-[11px] text-slate-400 font-semibold">1 (Minor)</div>
-                <div className="p-2 text-[11px] text-slate-400 font-semibold">2 (Mod)</div>
-                <div className="p-2 text-[11px] text-slate-400 font-semibold">3 (Major)</div>
-                <div className="p-2 text-[11px] text-slate-400 font-semibold">4 (Severe)</div>
-                <div className="p-2 text-[11px] text-slate-400 font-semibold">5 (Catastr)</div>
+                <div className="p-2 text-[10px] text-slate-400 font-bold uppercase">L \ I</div>
+                <div className="p-2 text-[11px] text-slate-300 font-semibold">1 (Minor)</div>
+                <div className="p-2 text-[11px] text-slate-300 font-semibold">2 (Mod)</div>
+                <div className="p-2 text-[11px] text-slate-300 font-semibold">3 (Major)</div>
+                <div className="p-2 text-[11px] text-slate-300 font-semibold">4 (Severe)</div>
+                <div className="p-2 text-[11px] text-slate-300 font-semibold">5 (Catastr)</div>
 
                 {/* Rows from Likelihood 5 down to 1 */}
                 {[5, 4, 3, 2, 1].map((lh) => (
                   <React.Fragment key={lh}>
-                    <div className="p-2 text-[11px] text-slate-400 font-semibold flex items-center justify-center bg-slate-950/60 rounded">
+                    <div className="p-2 text-[11px] text-slate-300 font-semibold flex items-center justify-center bg-[#0b1a2d] rounded border border-[#1d3e63]/40">
                       {lh} {lh === 5 ? '(Almost)' : lh === 1 ? '(Rare)' : ''}
                     </div>
                     {[1, 2, 3, 4, 5].map((imp) => {
@@ -139,7 +139,7 @@ export default function RiskRegisterView() {
                           key={`${lh}-${imp}`}
                           className={`p-2 rounded border transition-all min-h-[50px] flex flex-col items-center justify-center relative cursor-pointer ${getHeatmapCellColor(lh, imp)}`}
                         >
-                          <span className="text-[10px] font-mono text-slate-500 font-bold">{score}</span>
+                          <span className="text-[10px] font-mono text-slate-400 font-bold">{score}</span>
                           {matchingRisks.length > 0 && (
                             <div className="flex flex-wrap gap-1 mt-1 justify-center">
                               {matchingRisks.map(r => (
@@ -151,8 +151,8 @@ export default function RiskRegisterView() {
                                   }}
                                   className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-bold shadow ${
                                     highlightedRiskId === r.id
-                                      ? 'bg-white text-slate-950 ring-2 ring-cyan-400 scale-110'
-                                      : 'bg-slate-900/90 text-cyan-300 border border-cyan-500/40'
+                                      ? 'bg-white text-[#0b1a2d] ring-2 ring-[#2365a3] scale-110 font-black'
+                                      : 'bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]'
                                   }`}
                                   title={`${r.id}: ${r.title}`}
                                 >
@@ -167,7 +167,7 @@ export default function RiskRegisterView() {
                   </React.Fragment>
                 ))}
               </div>
-              <div className="text-center text-[11px] font-mono text-slate-500 mt-2">
+              <div className="text-center text-[11px] font-mono text-slate-400 mt-2">
                 Horizontal: Impact Rating (1-5)  •  Vertical: Likelihood Rating (1-5)
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function RiskRegisterView() {
         </div>
 
         {/* Residual Reduction Telemetry (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="lg:col-span-5 bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
           <h2 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
             <TrendingDown className="w-4 h-4 text-emerald-400" />
             Control Effectiveness & Residual Risk
@@ -190,8 +190,8 @@ export default function RiskRegisterView() {
               return (
                 <div 
                   key={risk.id}
-                  className={`bg-slate-950/70 border rounded-lg p-3 transition-all ${
-                    highlightedRiskId === risk.id ? 'border-cyan-400 ring-1 ring-cyan-400/50' : 'border-slate-800'
+                  className={`bg-[#0b1a2d] border rounded-lg p-3 transition-all ${
+                    highlightedRiskId === risk.id ? 'border-[#2365a3] ring-1 ring-[#2365a3]' : 'border-[#1d3e63]'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs">
@@ -200,14 +200,14 @@ export default function RiskRegisterView() {
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-xs font-mono">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-slate-500 text-[11px]">Inherent:</span>
+                      <span className="text-slate-400 text-[11px]">Inherent:</span>
                       <span className={`px-2 py-0.2 rounded font-bold border ${getScoreColor(risk.inherentScore)}`}>
                         {risk.inherentScore}
                       </span>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-600" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
                     <div className="flex items-center gap-1.5">
-                      <span className="text-slate-500 text-[11px]">Residual:</span>
+                      <span className="text-slate-400 text-[11px]">Residual:</span>
                       <span className={`px-2 py-0.2 rounded font-bold border ${getScoreColor(risk.residualScore)}`}>
                         {risk.residualScore}
                       </span>
@@ -221,18 +221,18 @@ export default function RiskRegisterView() {
       </div>
 
       {/* Category Filter & Full Register Table */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-5 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-mono text-slate-500">Filter Category:</span>
+            <span className="text-xs font-mono text-slate-400">Filter Category:</span>
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
                   selectedCategory === cat
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
                 }`}
               >
                 {cat}
@@ -246,14 +246,14 @@ export default function RiskRegisterView() {
           {filteredRisks.map((risk) => (
             <div 
               key={risk.id}
-              className={`bg-slate-950/70 border rounded-xl p-4 transition-all ${
-                highlightedRiskId === risk.id ? 'border-cyan-400 shadow-md shadow-cyan-950/30' : 'border-slate-800/90'
+              className={`bg-[#0b1a2d] border rounded-xl p-4 transition-all ${
+                highlightedRiskId === risk.id ? 'border-[#2365a3] shadow-md shadow-[#205588]/20' : 'border-[#1d3e63]'
               }`}
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
                       {risk.id}
                     </span>
                     {risk.sector && (
@@ -261,14 +261,14 @@ export default function RiskRegisterView() {
                         risk.sector === 'Healthcare' 
                           ? 'bg-rose-950/60 text-rose-300 border-rose-800'
                           : risk.sector === 'Financial'
-                          ? 'bg-cyan-950/60 text-cyan-300 border-cyan-800'
-                          : 'bg-slate-800 text-slate-300 border-slate-700'
+                          ? 'bg-[#205588]/30 text-[#b4d5ff] border-[#2365a3]'
+                          : 'bg-[#132b47] text-slate-300 border-[#1d3e63]'
                       }`}>
                         {risk.sector === 'Healthcare' ? '🏥 Healthcare' : risk.sector === 'Financial' ? '🏦 Financial' : '🌐 Enterprise'}
                       </span>
                     )}
                     {risk.client && (
-                      <span className="text-[11px] font-mono text-[#00b4d8] bg-[#00172e] px-2 py-0.5 rounded border border-[#0e3966]">
+                      <span className="text-[11px] font-mono text-[#b4d5ff] bg-[#132b47] px-2 py-0.5 rounded border border-[#1d3e63]">
                         {risk.client}
                       </span>
                     )}
@@ -276,31 +276,31 @@ export default function RiskRegisterView() {
                     <span className="text-xs font-mono text-slate-500">• Owner: {risk.owner}</span>
                   </div>
                   <h3 className="text-sm font-semibold text-white mt-1">{risk.title}</h3>
-                  <p className="text-xs text-slate-400 mt-1">{risk.description}</p>
+                  <p className="text-xs text-slate-300 mt-1">{risk.description}</p>
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
                   <div className="text-right font-mono text-xs">
-                    <div className="text-slate-500 text-[10px]">INHERENT / RESIDUAL</div>
+                    <div className="text-slate-400 text-[10px]">INHERENT / RESIDUAL</div>
                     <div className="font-bold text-slate-200 mt-0.5">
                       <span className="text-rose-400">{risk.inherentScore}</span> / <span className="text-emerald-400">{risk.residualScore}</span>
                     </div>
                   </div>
-                  <span className="text-xs font-mono px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300">
+                  <span className="text-xs font-mono px-2.5 py-1 rounded bg-[#132b47] border border-[#1d3e63] text-slate-200">
                     {risk.status}
                   </span>
                 </div>
               </div>
 
               {/* Mitigations */}
-              <div className="mt-3 pt-3 border-t border-slate-800/80">
+              <div className="mt-3 pt-3 border-t border-[#1d3e63]">
                 <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1.5 flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                   Active Mitigation Controls & Compensating Safeguards:
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {risk.mitigations.map((m, idx) => (
-                    <div key={idx} className="bg-slate-900/90 border border-slate-800 rounded p-2 text-xs text-slate-300 flex items-start gap-1.5 font-mono">
+                    <div key={idx} className="bg-[#132b47] border border-[#1d3e63] rounded p-2 text-xs text-slate-200 flex items-start gap-1.5 font-mono">
                       <span className="text-emerald-400 font-bold">•</span>
                       <span>{m}</span>
                     </div>
@@ -308,9 +308,9 @@ export default function RiskRegisterView() {
                 </div>
               </div>
 
-              <div className="mt-2.5 text-[11px] font-mono text-slate-500 flex justify-between">
+              <div className="mt-2.5 text-[11px] font-mono text-slate-400 flex justify-between">
                 <span>Next Formal Audit Review: {risk.nextAudit}</span>
-                <span className="text-cyan-400">Likelihood: {risk.likelihood}/5 • Impact: {risk.impact}/5</span>
+                <span className="text-[#b4d5ff]">Likelihood: {risk.likelihood}/5 • Impact: {risk.impact}/5</span>
               </div>
             </div>
           ))}

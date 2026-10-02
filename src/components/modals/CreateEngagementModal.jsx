@@ -11,7 +11,7 @@ export default function CreateEngagementModal() {
     type: 'Penetration Testing',
     phase: 'Scoping & Recon',
     priority: 'High',
-    leadAnalyst: team[0]?.name || 'Marcus Vance',
+    leadAnalyst: team[0]?.name || 'Andy Barker',
     scope: '',
     budgetHours: 80,
     startDate: new Date().toISOString().split('T')[0],
@@ -29,11 +29,11 @@ export default function CreateEngagementModal() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0b1a2d]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
-              <Layers className="w-5 h-5" />
+            <div className="p-2 rounded-lg bg-[#132b47] text-[#b4d5ff] border border-[#2365a3]">
+              <Layers className="w-5 h-5 text-[#2365a3]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white">Launch New Cyber Security Engagement</h2>
@@ -42,7 +42,7 @@ export default function CreateEngagementModal() {
           </div>
           <button
             onClick={() => setIsCreateEngModalOpen(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -58,7 +58,7 @@ export default function CreateEngagementModal() {
                 value={formData.client}
                 onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                 placeholder="e.g. Apex Financial Holdings"
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
               />
             </div>
 
@@ -67,12 +67,12 @@ export default function CreateEngagementModal() {
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 <option value="Penetration Testing">Penetration Testing (Web/Network/API)</option>
                 <option value="Red Teaming">Red Teaming & Adversary Emulation</option>
-                <option value="Compliance & Audit">Compliance & Audit (SOC2/ISO/CMMC)</option>
-                <option value="Managed IT & SOC">Managed IT & 24/7 SOC Onboarding</option>
+                <option value="Compliance & Audit">Compliance & Audit (SOC2/FFIEC/HIPAA)</option>
+                <option value="Managed IT & SOC">Managed IT & 24/7 SOC Operations</option>
                 <option value="Vendor Management">Vendor Risk Management (TPRM)</option>
                 <option value="Tabletop Exercise">Tabletop Incident Simulation</option>
               </select>
@@ -87,7 +87,7 @@ export default function CreateEngagementModal() {
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g. External Infrastructure & API Gateway Penetration Test"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500"
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3]"
             />
           </div>
 
@@ -98,8 +98,8 @@ export default function CreateEngagementModal() {
               rows={2}
               value={formData.scope}
               onChange={(e) => setFormData({ ...formData, scope: e.target.value })}
-              placeholder="e.g. 18 Public CIDRs, 4 GraphQL API Gateways, AWS Prod VPC, Active Directory forest"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+              placeholder="e.g. 14 Public IP ranges, AWS production VPC, GraphQL auth endpoints..."
+              className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
             />
           </div>
 
@@ -109,7 +109,7 @@ export default function CreateEngagementModal() {
               <select
                 value={formData.leadAnalyst}
                 onChange={(e) => setFormData({ ...formData, leadAnalyst: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
                 {team.map(t => (
                   <option key={t.id} value={t.name}>{t.name} ({t.clearance})</option>
@@ -118,15 +118,16 @@ export default function CreateEngagementModal() {
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Priority</label>
+              <label className="block text-slate-400 font-mono mb-1">Priority Level</label>
               <select
                 value={formData.priority}
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               >
-                <option value="Critical">Critical</option>
+                <option value="Critical">Critical (Immediate SLA)</option>
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
               </select>
             </div>
 
@@ -135,8 +136,8 @@ export default function CreateEngagementModal() {
               <input
                 type="number"
                 value={formData.budgetHours}
-                onChange={(e) => setFormData({ ...formData, budgetHours: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                onChange={(e) => setFormData({ ...formData, budgetHours: Number(e.target.value) })}
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
@@ -148,34 +149,34 @@ export default function CreateEngagementModal() {
                 type="date"
                 value={formData.startDate}
                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-mono mb-1">Delivery / Sign-Off Date</label>
+              <label className="block text-slate-400 font-mono mb-1">Target Delivery Date</label>
               <input
                 type="date"
                 value={formData.endDate}
                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-[#081320] border border-[#1d3e63] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#2365a3] font-mono"
               />
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setIsCreateEngModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono"
+              className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold font-mono tracking-wider transition-colors shadow-md shadow-cyan-900/30"
+              className="px-5 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold font-mono tracking-wider transition-all shadow-md shadow-[#205588]/30"
             >
-              Deploy Engagement
+              Initialize Engagement
             </button>
           </div>
         </form>

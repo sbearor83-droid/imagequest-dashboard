@@ -7,10 +7,10 @@ import {
   Plus, 
   ExternalLink, 
   FileCheck2, 
-  Calendar,
-  Lock,
-  Layers,
-  Search
+  Calendar, 
+  Lock, 
+  Layers, 
+  Search 
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
@@ -46,16 +46,16 @@ export default function VendorRiskView() {
     <div className="space-y-6">
       {/* Active Client Scope Alert */}
       {selectedClient !== 'ALL' && (
-        <div className="bg-[#002244] border border-[#0096c7]/40 rounded-xl p-3 flex items-center justify-between">
+        <div className="bg-[#0f2238] border border-[#2365a3]/50 rounded-xl p-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#00b4d8] animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-[#2365a3] animate-ping" />
             <span className="text-slate-400">Scoped TPRM Registry:</span>
             <span className="text-white font-bold">{selectedClient}</span>
-            <span className="text-[#00b4d8]">({clientFilteredVendors.length} authorized vendors & suppliers)</span>
+            <span className="text-[#b4d5ff]">({clientFilteredVendors.length} authorized vendors & suppliers)</span>
           </div>
           <button
             onClick={() => setSelectedClient('ALL')}
-            className="text-xs font-mono text-[#00b4d8] hover:text-white underline"
+            className="text-xs font-mono text-[#b4d5ff] hover:text-white underline"
           >
             Show All Accounts
           </button>
@@ -66,7 +66,7 @@ export default function VendorRiskView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-[#00b4d8]" />
+            <Building2 className="w-5 h-5 text-[#2365a3]" />
             Third-Party Vendor Risk Management (TPRM)
           </h1>
           <p className="text-xs text-slate-400">
@@ -76,7 +76,7 @@ export default function VendorRiskView() {
 
         <button
           onClick={() => setIsCreateVendorModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0096c7] hover:bg-[#00b4d8] text-[#001224] font-bold text-xs tracking-wider transition-all shadow-md shadow-[#0096c7]/30 shrink-0"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Onboard New Vendor</span>
@@ -85,15 +85,15 @@ export default function VendorRiskView() {
 
       {/* TPRM Statistics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Audited SaaS & Tech Vendors</span>
           <div className="text-2xl font-bold font-mono text-white mt-1">{vendors.length} Providers</div>
-          <div className="text-[11px] text-slate-500 font-mono mt-1">
+          <div className="text-[11px] text-slate-400 font-mono mt-1">
             {vendors.filter(v => v.tier.includes('Tier 1')).length} Mission-Critical Tier 1
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <span className="text-xs font-mono uppercase tracking-wider text-slate-400">SOC 2 Type II Verification</span>
           <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
             {Math.round((vendors.filter(v => v.soc2Status.includes('Verified')).length / vendors.length) * 100)}%
@@ -103,9 +103,9 @@ export default function VendorRiskView() {
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+        <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <span className="text-xs font-mono uppercase tracking-wider text-slate-400">Average Security Score</span>
-          <div className="text-2xl font-bold font-mono text-cyan-400 mt-1">
+          <div className="text-2xl font-bold font-mono text-[#b4d5ff] mt-1">
             {Math.round(vendors.reduce((acc, v) => acc + v.riskScore, 0) / vendors.length)} / 100
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
@@ -115,7 +115,7 @@ export default function VendorRiskView() {
       </div>
 
       {/* Filters: Sector & Tier */}
-      <div className="bg-[#00172e] border border-[#0e3966] rounded-xl p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Sector Tabs */}
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="text-xs font-mono text-slate-400 mr-1">Sector:</span>
@@ -130,8 +130,8 @@ export default function VendorRiskView() {
               onClick={() => setSectorFilter(s.id)}
               className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
                 sectorFilter === s.id
-                  ? 'bg-[#0096c7]/25 text-[#00b4d8] border border-[#0096c7]/50 font-bold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#001c38]'
+                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                  : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
               }`}
             >
               {s.label}
@@ -148,14 +148,14 @@ export default function VendorRiskView() {
               onClick={() => setTierFilter(tier)}
               className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
                 tierFilter === tier
-                  ? 'bg-[#0096c7]/25 text-[#00b4d8] border border-[#0096c7]/50 font-bold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#001c38]'
+                  ? 'bg-[#205588] text-white border border-[#2365a3] font-bold shadow-sm'
+                  : 'text-slate-400 hover:text-white hover:bg-[#132b47]'
               }`}
             >
               {tier === 'ALL' ? 'All' : tier}
             </button>
           ))}
-          <span className="text-xs font-mono text-[#00b4d8] ml-2">({filteredVendors.length} Providers)</span>
+          <span className="text-xs font-mono text-[#b4d5ff] ml-2">({filteredVendors.length} Providers)</span>
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default function VendorRiskView() {
         {filteredVendors.map((vendor) => (
           <div 
             key={vendor.id}
-            className="bg-[#00172e] border border-[#0e3966] hover:border-[#0096c7]/50 rounded-xl p-5 shadow-sm transition-all space-y-4"
+            className="bg-[#0f2238] border border-[#1d3e63] hover:border-[#2365a3] rounded-xl p-5 shadow-sm transition-all space-y-4"
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div>
@@ -174,34 +174,34 @@ export default function VendorRiskView() {
                   {vendor.sector && (
                     <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
                       vendor.sector === 'Healthcare' ? 'bg-rose-950/60 text-rose-300 border-rose-800' :
-                      vendor.sector === 'Financial' ? 'bg-cyan-950/60 text-cyan-300 border-cyan-800' :
-                      'bg-slate-800 text-slate-300 border-slate-700'
+                      vendor.sector === 'Financial' ? 'bg-[#205588]/30 text-[#b4d5ff] border-[#2365a3]' :
+                      'bg-[#132b47] text-slate-300 border-[#1d3e63]'
                     }`}>
                       {vendor.sector === 'Healthcare' ? '🏥 Healthcare EHR' :
                        vendor.sector === 'Financial' ? '🏦 Banking Core' : '🌐 Cloud Infra'}
                     </span>
                   )}
                   {vendor.client && vendor.client !== 'All Accounts' && (
-                    <span className="text-[10px] font-mono text-[#00b4d8] bg-[#002244] px-2 py-0.5 rounded border border-[#0096c7]/30">
+                    <span className="text-[10px] font-mono text-[#b4d5ff] bg-[#132b47] px-2 py-0.5 rounded border border-[#1d3e63]">
                       Client: {vendor.client}
                     </span>
                   )}
                   <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
-                    vendor.tier.includes('Tier 1') ? 'bg-purple-950 text-purple-300 border-purple-800' :
-                    'bg-slate-800 text-slate-300 border-slate-700'
+                    vendor.tier.includes('Tier 1') ? 'bg-[#205588] text-white border-[#2365a3]' :
+                    'bg-[#132b47] text-slate-300 border-[#1d3e63]'
                   }`}>
                     {vendor.tier}
                   </span>
                 </div>
                 <div className="text-xs text-slate-400 font-mono mt-1">
-                  Service Category: <strong className="text-slate-300">{vendor.service}</strong>
+                  Service Category: <strong className="text-slate-200">{vendor.service}</strong>
                 </div>
               </div>
 
               {/* Risk Score Pill */}
               <div className="flex items-center gap-4 self-end md:self-center shrink-0">
                 <div className="text-right font-mono">
-                  <div className="text-[10px] text-slate-500 uppercase">Security Score</div>
+                  <div className="text-[10px] text-slate-400 uppercase">Security Score</div>
                   <div className={`text-base font-black px-2.5 py-0.5 rounded border mt-0.5 ${getScoreColor(vendor.riskScore)}`}>
                     {vendor.riskScore} / 100
                   </div>
@@ -217,11 +217,11 @@ export default function VendorRiskView() {
             </div>
 
             {/* Compliance badges & Data access */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs bg-slate-950/60 p-3 rounded-lg border border-slate-800/80 font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs bg-[#0b1a2d] p-3 rounded-lg border border-[#1d3e63] font-mono">
               <div className="flex items-center gap-2">
-                <FileCheck2 className="w-4 h-4 text-cyan-400" />
+                <FileCheck2 className="w-4 h-4 text-[#2365a3]" />
                 <div>
-                  <div className="text-slate-500 text-[10px]">SOC 2 ATTESTATION</div>
+                  <div className="text-slate-400 text-[10px]">SOC 2 ATTESTATION</div>
                   <div className="text-slate-200">{vendor.soc2Status}</div>
                 </div>
               </div>
@@ -229,7 +229,7 @@ export default function VendorRiskView() {
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-emerald-400" />
                 <div>
-                  <div className="text-slate-500 text-[10px]">DATA ACCESS LEVEL</div>
+                  <div className="text-slate-400 text-[10px]">DATA ACCESS LEVEL</div>
                   <div className="text-slate-200">{vendor.dataAccess}</div>
                 </div>
               </div>
@@ -237,13 +237,13 @@ export default function VendorRiskView() {
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-amber-400" />
                 <div>
-                  <div className="text-slate-500 text-[10px]">NEXT RE-ASSESSMENT</div>
+                  <div className="text-slate-400 text-[10px]">NEXT RE-ASSESSMENT</div>
                   <div className="text-slate-200">{vendor.nextReview}</div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 text-[11px] font-mono text-slate-500 flex justify-between">
+            <div className="pt-2 text-[11px] font-mono text-slate-400 flex justify-between">
               <span>Security Liaison: {vendor.contact}</span>
               <span>ISO 27001 Certified: <strong className={vendor.iso27001 ? "text-emerald-400" : "text-slate-400"}>{vendor.iso27001 ? "YES" : "NO"}</strong></span>
             </div>

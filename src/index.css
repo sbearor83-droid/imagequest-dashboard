@@ -2,20 +2,27 @@
 
 @layer base {
   :root {
-    --iq-navy-dark: #001224;
-    --iq-navy: #001c38;
-    --iq-navy-card: #00254a;
-    --iq-blue: #0077b6;
-    --iq-blue-vibrant: #0096c7;
-    --iq-sky: #48cae4;
-    --iq-border: #0e3966;
+    /* ImageQuest Official Brand Colors (from imagequest.com) */
+    --iq-blue-primary: #2365a3;    /* Header Top Bar & Brand Highlight */
+    --iq-blue-button: #205588;     /* Primary Action Button & Footer Blue */
+    --iq-blue-dark: #195589;       /* Deep Ocean Blue */
+    --iq-blue-light: #b4d5ff;      /* Accent Pill Tag & Highlight */
+    --iq-blue-ice: #d1e0ee;        /* Soft Tint */
+    --iq-blue-pale: #e8eff6;       /* Divider Light Blue */
+    --iq-navy-dark: #0b1a2d;       /* Dark Canvas Background */
+    --iq-navy-surface: #0f2238;    /* Elevated Surfaces & Sidebars */
+    --iq-navy-card: #132b47;       /* Card Backgrounds */
+    --iq-border: #1d3e63;          /* Navy Border */
+    --iq-border-light: #2d5584;    /* Active Accent Border */
+    --iq-silver: #a0aec0;          /* Silver Gray from Logo */
   }
 
   body {
-    font-family: 'Plus Jakarta Sans', 'Open Sans', system-ui, -apple-system, sans-serif;
-    background-color: #001224;
-    color: #e2eaf4;
+    font-family: 'Open Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #0b1a2d;
+    color: #e8eff6;
   }
+
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
@@ -28,21 +35,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #001224;
+  background: #0b1a2d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0e3966;
+  background: #1d3e63;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0077b6;
+  background: #2365a3;
 }
 
-/* ImageQuest accents and glows */
+/* ImageQuest accents and glow effects */
 .iq-glow-blue {
-  box-shadow: 0 0 25px -4px rgba(0, 150, 199, 0.35);
+  box-shadow: 0 0 25px -4px rgba(35, 101, 163, 0.45);
 }
 
 .iq-glow-emerald {
@@ -56,6 +63,6 @@
 .cyber-grid-pattern {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(0, 150, 199, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 150, 199, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(35, 101, 163, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(35, 101, 163, 0.05) 1px, transparent 1px);
 }
