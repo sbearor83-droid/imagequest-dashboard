@@ -10,7 +10,13 @@ import {
   X,
   ShieldCheck
 } from 'lucide-react';
-import { useCyber } from '../context/CyberContext';
+import { useCyber, SECTOR_PREFIX, SECTOR_LABELS } from '../context/CyberContext';
+
+const SECTOR_GROUPS = [
+  { sector: 'Healthcare', label: 'Healthcare & Hospital Networks', icon: '🏥', className: 'font-bold text-emerald-700' },
+  { sector: 'Financial', label: 'Financial Institutions & Banking', icon: '🏦', className: 'font-bold text-[#205588]' },
+  { sector: 'Other', label: 'Other Commercial Clients', icon: '🌐', className: 'font-bold text-slate-700' }
+];
 
 export default function Navbar() {
   const { 
@@ -19,6 +25,8 @@ export default function Navbar() {
     clients,
     selectedClient,
     setSelectedClient,
+    scopeLabel,
+    clientFilteredEngagements,
     setIsCreateEngModalOpen, 
     setIsCreateFindingModalOpen, 
     openReportFor,
@@ -82,27 +90,21 @@ export default function Navbar() {
               className="bg-[#f0f5fa] border border-[#d8e5f2] hover:border-[#205588] rounded-lg pl-8 pr-7 py-1.5 text-xs text-[#1b2a3a] font-mono focus:outline-none focus:border-[#205588] focus:bg-white transition-all appearance-none cursor-pointer max-w-[210px] sm:max-w-xs truncate shadow-2xs font-semibold"
             >
               <option value="ALL">🌐 All Clients (Firm Portfolio)</option>
-              <optgroup label="🏥 Healthcare & Hospital Networks" className="font-bold text-emerald-700">
-                {clients.filter(c => c.sector === 'Healthcare').map(c => (
-                  <option key={c.id} value={c.name} className="text-[#1b2a3a]">
-                    🏥 {c.name}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="🏦 Financial Institutions & Banking" className="font-bold text-[#205588]">
-                {clients.filter(c => c.sector === 'Financial').map(c => (
-                  <option key={c.id} value={c.name} className="text-[#1b2a3a]">
-                    🏦 {c.name}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="🌐 Other Commercial Clients" className="font-bold text-slate-700">
-                {clients.filter(c => c.sector === 'Other').map(c => (
-                  <option key={c.id} value={c.name} className="text-[#1b2a3a]">
-                    🌐 {c.name}
-                  </option>
-                ))}
-              </optgroup>
+              {SECTOR_GROUPS.map(({ sector, label, icon, className }) => {
+                const sectorClients = clients.filter(c => c.sector === sector);
+                return (
+                  <optgroup key={sector} label={`${icon} ${label}`} className={className}>
+                    <option value={SECTOR_PREFIX + sector} className="text-[#1b2a3a] font-bold">
+                      {icon} All {SECTOR_LABELS[sector]} ({sectorClients.length})
+                    </option>
+                    {sectorClients.map(c => (
+                      <option key={c.id} value={c.name} className="text-[#1b2a3a]">
+                        {icon} {c.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
             </select>
             <ChevronDown className="w-3.5 h-3.5 text-[#64748b] absolute right-2.5 pointer-events-none" />
           </div>
@@ -128,7 +130,7 @@ export default function Navbar() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={selectedClient === 'ALL' ? "Search client, CVE, engagement, or asset..." : `Search within ${selectedClient}...`}
+            placeholder={selectedClient === 'ALL' ? "Search client, CVE, engagement, or asset..." : `Search within ${scopeLabel}...`}
             className="w-full bg-[#f0f5fa] border border-[#d8e5f2] rounded-lg pl-9 pr-4 py-1.5 text-xs text-[#1b2a3a] placeholder-[#64748b] focus:outline-none focus:border-[#205588] focus:bg-white transition-all font-sans"
           />
           {searchQuery && (
@@ -173,7 +175,7 @@ export default function Navbar() {
         {/* Report Button */}
         <button
           onClick={() => {
-            const targetEng = engagements.find(e => selectedClient === 'ALL' || e.client === selectedClient) || engagements[0];
+            const targetEng = clientFilteredEngagements[0] || engagements[0];
             openReportFor(targetEng);
           }}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#e8eff6] hover:bg-[#d8e7f5] border border-[#b4d5ff] text-[#205588] hover:text-[#195589] text-xs font-semibold transition-all shadow-2xs"

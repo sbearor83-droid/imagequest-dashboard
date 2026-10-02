@@ -1,13 +1,6 @@
 {
   "stats": {
-    "activeEngagements": 14,
-    "criticalVulnerabilities": 9,
-    "slaComplianceRate": 98.4,
-    "endpointsMonitored": 8420,
-    "managedTenants": 12,
-    "avgRemediationDays": 6.2,
-    "threatLevel": "ELEVATED",
-    "tabletopsScheduled": 3
+    "avgRemediationDays": 6.2
   },
   "threatFeed": [
     {
@@ -51,6 +44,9 @@
       "email": "s.vance@quanticohealth.org",
       "slaTier": "1h Emergency Hotline",
       "endpoints": 3200,
+      "patchCompliance": 98.9,
+      "avgResponseMinutes": 9.8,
+      "slaMet": 99.6,
       "budget": "$195,000 / yr"
     },
     {
@@ -68,6 +64,9 @@
       "email": "j.croft@bionova-pharma.com",
       "slaTier": "2h Response SLA",
       "endpoints": 1450,
+      "patchCompliance": 99.2,
+      "avgResponseMinutes": 12.1,
+      "slaMet": 99.3,
       "budget": "$140,000 / yr"
     },
     {
@@ -85,6 +84,9 @@
       "email": "r.hayes@mercycare-health.org",
       "slaTier": "1h P1 Guaranteed",
       "endpoints": 2800,
+      "patchCompliance": 97.6,
+      "avgResponseMinutes": 10.4,
+      "slaMet": 98.9,
       "budget": "$220,000 / yr"
     },
     {
@@ -102,6 +104,9 @@
       "email": "c.bennett@beaconhealth-partners.com",
       "slaTier": "4h SLA",
       "endpoints": 1150,
+      "patchCompliance": 99.4,
+      "avgResponseMinutes": 13.5,
+      "slaMet": 99.7,
       "budget": "$130,000 / yr"
     },
     {
@@ -119,6 +124,9 @@
       "email": "r.sterling@apexfin-core.com",
       "slaTier": "1h P1 Guaranteed",
       "endpoints": 2100,
+      "patchCompliance": 97.9,
+      "avgResponseMinutes": 8.6,
+      "slaMet": 99.1,
       "budget": "$240,000 / yr"
     },
     {
@@ -136,6 +144,9 @@
       "email": "m.brody@vanguard-fin.com",
       "slaTier": "4h SLA",
       "endpoints": 820,
+      "patchCompliance": 96.8,
+      "avgResponseMinutes": 14.2,
+      "slaMet": 98.2,
       "budget": "$115,000 / yr"
     },
     {
@@ -153,6 +164,9 @@
       "email": "t.albright@firstheritage-cu.org",
       "slaTier": "2h SLA",
       "endpoints": 680,
+      "patchCompliance": 99.5,
+      "avgResponseMinutes": 12.8,
+      "slaMet": 99.8,
       "budget": "$85,000 / yr"
     },
     {
@@ -170,6 +184,9 @@
       "email": "e.reed@summitcapital-mgmt.com",
       "slaTier": "1h P1 Guaranteed",
       "endpoints": 540,
+      "patchCompliance": 98.7,
+      "avgResponseMinutes": 9.9,
+      "slaMet": 99.5,
       "budget": "$160,000 / yr"
     },
     {
@@ -187,6 +204,9 @@
       "email": "a.miller@stratacloud.io",
       "slaTier": "1h P1 Guaranteed",
       "endpoints": 1850,
+      "patchCompliance": 98.4,
+      "avgResponseMinutes": 11.2,
+      "slaMet": 99.2,
       "budget": "$140,000 / yr"
     },
     {
@@ -204,6 +224,9 @@
       "email": "g.tremaine@globallogistics.com",
       "slaTier": "99.8% SLA Met",
       "endpoints": 1850,
+      "patchCompliance": 99.1,
+      "avgResponseMinutes": 13.1,
+      "slaMet": 99.8,
       "budget": "$120,000 / yr"
     }
   ],
@@ -617,15 +640,6 @@
     }
   ],
   "managedIT": {
-    "summary": {
-      "totalEndpoints": 8420,
-      "healthyEndpoints": 8312,
-      "vulnerableEndpoints": 108,
-      "patchCompliance": 98.7,
-      "avgResponseMinutes": 11.4,
-      "openTickets": 18,
-      "slaMet": 99.4
-    },
     "tickets": [
       {
         "id": "TKT-8921",
@@ -880,7 +894,6 @@
       "role": "Founder & Chief Executive Officer",
       "clearance": "Executive Clear",
       "certifications": ["CISM", "Advisory Board", "Nashville Tech Council"],
-      "activeEngagements": 2,
       "utilization": 75,
       "avatarColor": "from-blue-600 to-indigo-900",
       "email": "mbartley@cyberpulse.io"
@@ -891,7 +904,6 @@
       "role": "President & vCISO Advisory Practice Lead",
       "clearance": "Secret",
       "certifications": ["CISSP", "CISA", "FFIEC SME", "CRISC"],
-      "activeEngagements": 4,
       "utilization": 92,
       "avatarColor": "from-cyan-500 to-blue-700",
       "email": "abarker@cyberpulse.io"
@@ -902,7 +914,6 @@
       "role": "VP of Healthcare Compliance & HIPAA Officer",
       "clearance": "Secret",
       "certifications": ["CISSP", "HCISPP", "CISA", "HITRUST CCSFP"],
-      "activeEngagements": 4,
       "utilization": 90,
       "avatarColor": "from-emerald-500 to-teal-700",
       "email": "schen@cyberpulse.io"
@@ -913,7 +924,6 @@
       "role": "Principal Penetration Tester & Red Team Lead",
       "clearance": "Top Secret / SCI",
       "certifications": ["OSCP", "OSEP", "GXPN", "CISSP"],
-      "activeEngagements": 3,
       "utilization": 85,
       "avatarColor": "from-cyan-500 to-blue-600",
       "email": "mvance@cyberpulse.io"
@@ -924,7 +934,6 @@
       "role": "Director of 24/7 Managed IT & SOC Operations",
       "clearance": "Secret",
       "certifications": ["GCFA", "GCIH", "Azure Solutions Architect", "AWS Security"],
-      "activeEngagements": 4,
       "utilization": 94,
       "avatarColor": "from-blue-500 to-indigo-800",
       "email": "dokafor@cyberpulse.io"
@@ -935,7 +944,6 @@
       "role": "Banking TPRM & Cloud Security Assessor",
       "clearance": "Public Trust",
       "certifications": ["CRISC", "CISM", "CCSP", "GLBA Assessor"],
-      "activeEngagements": 3,
       "utilization": 70,
       "avatarColor": "from-teal-400 to-cyan-700",
       "email": "tmansoor@cyberpulse.io"
@@ -946,7 +954,6 @@
       "role": "BCM Simulation & Tabletop Director",
       "clearance": "Secret",
       "certifications": ["CISSP", "CBCP", "PMP"],
-      "activeEngagements": 2,
       "utilization": 65,
       "avatarColor": "from-pink-500 to-rose-700",
       "email": "mlin@cyberpulse.io"

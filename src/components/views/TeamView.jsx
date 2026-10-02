@@ -7,8 +7,21 @@ import {
 import { useCyber } from '../../context/CyberContext';
 
 export default function TeamView() {
-  const { team, searchQuery } = useCyber();
+  const {
+    team,
+    searchQuery,
+    selectedClient,
+    setSelectedClient,
+    scopeLabel,
+    scopedClients,
+    clientFilteredEngagements
+  } = useCyber();
   const [clearanceFilter, setClearanceFilter] = useState('ALL');
+
+  const isScoped = selectedClient !== 'ALL';
+  const activeEngagements = clientFilteredEngagements.filter(e => e.status !== 'Completed');
+  const engagementCount = (name) => activeEngagements.filter(e => e.leadAnalyst === name || e.team?.includes(name)).length;
+  const accountLeads = new Set(scopedClients.map(c => c.leadPartner));
 
   const query = searchQuery.toLowerCase();
   const filteredTeam = team.filter((member) => {
@@ -18,7 +31,9 @@ export default function TeamView() {
       member.certifications.some(c => c.toLowerCase().includes(query));
     // startsWith so "Secret" doesn't also match "Top Secret / SCI"
     const matchesClearance = clearanceFilter === 'ALL' || member.clearance.startsWith(clearanceFilter);
-    return matchesSearch && matchesClearance;
+    // When scoped, show people staffed on the scope's engagements or leading one of its accounts
+    const matchesScope = !isScoped || engagementCount(member.name) > 0 || accountLeads.has(member.name);
+    return matchesSearch && matchesClearance && matchesScope;
   });
 
   const getClearanceBadge = (clearance) => {
@@ -67,6 +82,26 @@ export default function TeamView() {
           ))}
         </div>
       </div>
+
+      {isScoped && (
+        <div className="bg-[#e8eff6] border border-[#b4d5ff] rounded-xl px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+          <span className="text-[#205588]">
+            Showing staff working on <strong className="text-[#1b2a3a]">{scopeLabel}</strong>
+          </span>
+          <button
+            onClick={() => setSelectedClient('ALL')}
+            className="text-[#205588] hover:text-[#2365a3] font-semibold underline text-[11px]"
+          >
+            Show Full Roster
+          </button>
+        </div>
+      )}
+
+      {filteredTeam.length === 0 && (
+        <div className="bg-white border border-dashed border-[#d8e5f2] rounded-xl p-10 text-center text-xs font-mono text-[#64748b]">
+          No staff match the current filters.
+        </div>
+      )}
 
       {/* Team Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -130,7 +165,7 @@ export default function TeamView() {
 
               {/* Footer */}
               <div className="pt-3 border-t border-[#d8e5f2] flex items-center justify-between text-xs text-[#64748b] font-mono">
-                <span>{member.activeEngagements} Engagements Active</span>
+                <span>{engagementCount(member.name)} Engagements Active</span>
                 <a 
                   href={`mailto:${member.email}`}
                   className="text-[#205588] hover:text-[#2365a3] flex items-center gap-1 font-semibold"

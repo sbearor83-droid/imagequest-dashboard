@@ -189,7 +189,6 @@ app.post('/api/managed-it/tickets', (req, res) => {
     status: 'Investigating'
   };
   db.managedIT.tickets.unshift(newTicket);
-  db.managedIT.summary.openTickets += 1;
   saveDb();
   res.status(201).json(newTicket);
 });

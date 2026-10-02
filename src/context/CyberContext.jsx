@@ -2,6 +2,14 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CyberContext = createContext();
 
+// Scope values: 'ALL', a client name, or SECTOR_PREFIX + sector (e.g. 'SECTOR:Healthcare')
+export const SECTOR_PREFIX = 'SECTOR:';
+export const SECTOR_LABELS = {
+  Healthcare: 'Healthcare Clients',
+  Financial: 'Financial Institutions',
+  Other: 'Other Commercial Clients'
+};
+
 async function fetchJson(url, options) {
   const res = await fetch(url, options);
   if (!res.ok) throw new Error(`${options?.method || 'GET'} ${url} failed: ${res.status}`);
@@ -17,21 +25,16 @@ const sendJson = (url, method, body) => fetchJson(url, {
 export function CyberProvider({ children }) {
   const [activeTab, setActiveTab] = useState('clients');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedClient, setSelectedClient] = useState('ALL'); // Global Client Filter: 'ALL' or Client Name
+  const [selectedClient, setSelectedClient] = useState('ALL'); // Global scope filter (see SECTOR_PREFIX)
 
   // Data states
-  const [stats, setStats] = useState({
-    slaComplianceRate: 0,
-    endpointsMonitored: 0,
-    managedTenants: 0,
-    avgRemediationDays: 0
-  });
+  const [stats, setStats] = useState({ avgRemediationDays: 0 });
   const [threatFeed, setThreatFeed] = useState([]);
   const [clients, setClients] = useState([]);
   const [engagements, setEngagements] = useState([]);
   const [findings, setFindings] = useState([]);
   const [risks, setRisks] = useState([]);
-  const [managedIT, setManagedIT] = useState({ summary: { openTickets: 0 }, tickets: [], endpointHealth: [] });
+  const [managedIT, setManagedIT] = useState({ tickets: [], endpointHealth: [] });
   const [vendors, setVendors] = useState([]);
   const [tabletopExercises, setTabletopExercises] = useState([]);
   const [team, setTeam] = useState([]);
@@ -65,18 +68,36 @@ export function CyberProvider({ children }) {
     load('/api/team', setTeam);
   }, []);
 
-  // Filtered dataset helpers based on selectedClient
-  const isScopedTo = (client, sharedLabel) =>
-    selectedClient === 'ALL' ||
-    (sharedLabel && (!client || client === sharedLabel)) ||
-    client?.toLowerCase() === selectedClient.toLowerCase();
+  // Resolve the scope to the set of clients it covers
+  const isAllScope = selectedClient === 'ALL';
+  const scopedSector = selectedClient.startsWith(SECTOR_PREFIX) ? selectedClient.slice(SECTOR_PREFIX.length) : null;
+  const scopedClientName = isAllScope || scopedSector ? null : selectedClient;
+  const scopeLabel = isAllScope ? 'All Clients' : scopedSector ? `All ${SECTOR_LABELS[scopedSector] || scopedSector}` : selectedClient;
+
+  const scopedClients = clients.filter(c =>
+    isAllScope ||
+    (scopedSector ? c.sector === scopedSector : c.name.toLowerCase() === scopedClientName.toLowerCase())
+  );
+  const scopedNames = new Set(scopedClients.map(c => c.name.toLowerCase()));
+  const scopedSectors = new Set(scopedClients.map(c => c.sector));
+
+  // Records shared across clients (client 'All Clients' / 'All Accounts') stay visible unless they
+  // belong to a client sector outside the scope; cross-sector ones (e.g. 'Enterprise') always show.
+  const isScopedTo = (client, sharedLabel, itemSector) => {
+    if (isAllScope) return true;
+    if (sharedLabel && (!client || client === sharedLabel)) {
+      return !itemSector || !(itemSector in SECTOR_LABELS) || scopedSectors.has(itemSector);
+    }
+    return scopedNames.has(client?.toLowerCase());
+  };
 
   const clientFilteredEngagements = engagements.filter(e => isScopedTo(e.client));
   const clientFilteredFindings = findings.filter(f => isScopedTo(f.client));
   const clientFilteredTickets = managedIT.tickets.filter(t => isScopedTo(t.client));
   const clientFilteredTabletop = tabletopExercises.filter(t => isScopedTo(t.client));
-  const clientFilteredRisks = risks.filter(r => isScopedTo(r.client, 'All Clients'));
-  const clientFilteredVendors = vendors.filter(v => isScopedTo(v.client, 'All Accounts'));
+  const clientFilteredRisks = risks.filter(r => isScopedTo(r.client, 'All Clients', r.sector));
+  const clientFilteredVendors = vendors.filter(v => isScopedTo(v.client, 'All Accounts', v.sector));
+  const clientFilteredThreats = threatFeed.filter(t => isAllScope || t.affectedClients?.some(name => scopedNames.has(name.toLowerCase())));
 
   // Action methods: POST a new record and prepend the server's copy to local state
   const createWith = (url, setter) => async (data) => {
@@ -96,19 +117,9 @@ export function CyberProvider({ children }) {
   const addVendor = createWith('/api/vendors', setVendors);
   const addTabletopExercise = createWith('/api/tabletop', setTabletopExercises);
 
-  const addTicket = async (ticketData) => {
-    try {
-      const created = await sendJson('/api/managed-it/tickets', 'POST', ticketData);
-      setManagedIT(prev => ({
-        ...prev,
-        summary: { ...prev.summary, openTickets: prev.summary.openTickets + 1 },
-        tickets: [created, ...prev.tickets]
-      }));
-      return created;
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const addTicket = createWith('/api/managed-it/tickets', (update) =>
+    setManagedIT(prev => ({ ...prev, tickets: update(prev.tickets) }))
+  );
 
   // Optimistic update; the server's copy replaces it once the PATCH succeeds
   const updateWith = (url, setter) => async (id, changes) => {
@@ -138,9 +149,13 @@ export function CyberProvider({ children }) {
       setSearchQuery,
       selectedClient,
       setSelectedClient,
+      scopeLabel,
+      scopedSector,
+      scopedClientName,
+      scopedClients,
       clients,
       stats,
-      threatFeed,
+      clientFilteredThreats,
       engagements,
       clientFilteredEngagements,
       findings,

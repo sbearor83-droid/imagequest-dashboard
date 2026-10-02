@@ -12,7 +12,8 @@ import { useCyber } from '../../context/CyberContext';
 export default function RiskRegisterView() {
   const { 
     clientFilteredRisks, 
-    selectedClient, 
+    selectedClient,
+    scopeLabel,
     setSelectedClient, 
     setIsCreateRiskModalOpen 
   } = useCyber();
@@ -49,7 +50,7 @@ export default function RiskRegisterView() {
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
             <span className="text-[#475569]">Scoped Risk Register:</span>
-            <span className="text-[#1b2a3a] font-bold">{selectedClient}</span>
+            <span className="text-[#1b2a3a] font-bold">{scopeLabel}</span>
             <span className="text-[#205588]">({clientFilteredRisks.length} relevant risks identified)</span>
           </div>
           <button

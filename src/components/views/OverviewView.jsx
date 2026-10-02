@@ -15,18 +15,19 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
-import { countFindingsBySeverity } from '../../utils/helpers';
+import { countFindingsBySeverity, summarizeClients } from '../../utils/helpers';
 
 export default function OverviewView() {
   const { 
     stats, 
-    threatFeed, 
+    clientFilteredThreats,
     findings, 
-    managedIT, 
+    scopedClients,
     setActiveTab, 
     updateFindingStatus, 
     openReportFor,
     selectedClient,
+    scopeLabel,
     setSelectedClient,
     clientFilteredEngagements,
     clientFilteredFindings
@@ -34,6 +35,7 @@ export default function OverviewView() {
 
   const activeEngagements = clientFilteredEngagements.filter(e => e.status !== 'Completed');
   const criticalFindings = clientFilteredFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
+  const itSummary = summarizeClients(scopedClients);
 
   return (
     <div className="space-y-6">
@@ -43,7 +45,7 @@ export default function OverviewView() {
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="w-2 h-2 rounded-full bg-[#205588] animate-ping" />
             <span className="text-[#64748b]">Scoped Operational Dashboard:</span>
-            <span className="text-[#1b2a3a] font-bold">{selectedClient}</span>
+            <span className="text-[#1b2a3a] font-bold">{scopeLabel}</span>
             <span className="text-[#205588] font-semibold">({clientFilteredEngagements.length} Engagements • {clientFilteredFindings.length} Vulnerabilities)</span>
           </div>
           <button
@@ -74,7 +76,12 @@ export default function OverviewView() {
 
         {/* Ticker Items */}
         <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-          {threatFeed.map((threat) => (
+          {clientFilteredThreats.length === 0 && (
+            <div className="md:col-span-3 text-xs font-mono text-[#64748b] bg-[#f8fafc] border border-dashed border-[#d8e5f2] rounded-lg p-3 text-center">
+              No active threat advisories affecting {scopeLabel}.
+            </div>
+          )}
+          {clientFilteredThreats.map((threat) => (
             <div 
               key={threat.id}
               className="bg-[#f8fafc] border border-[#d8e5f2] rounded-lg p-2.5 flex items-start gap-2.5 hover:border-[#205588] transition-colors"
@@ -143,7 +150,7 @@ export default function OverviewView() {
             <span className="text-xs text-rose-700 font-mono font-bold">CVSS 9.0+</span>
           </div>
           <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
-            <span>Avg MTTR: {stats.avgRemediationDays} Days</span>
+            <span>{selectedClient === 'ALL' ? 'Avg' : 'Firm avg'} MTTR: {stats.avgRemediationDays} Days</span>
             <span className="text-rose-700 font-mono font-bold">Urgent Triage</span>
           </div>
         </div>
@@ -160,11 +167,11 @@ export default function OverviewView() {
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-[#1b2a3a] font-mono">{stats.endpointsMonitored.toLocaleString()}</span>
-            <span className="text-xs text-emerald-700 font-mono font-semibold">{stats.managedTenants} Tenants</span>
+            <span className="text-3xl font-extrabold text-[#1b2a3a] font-mono">{itSummary.endpoints.toLocaleString()}</span>
+            <span className="text-xs text-emerald-700 font-mono font-semibold">{itSummary.clientCount} {itSummary.clientCount === 1 ? 'Tenant' : 'Tenants'}</span>
           </div>
           <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
-            <span>{managedIT.summary.patchCompliance}% Patch Compliance</span>
+            <span>{itSummary.patchCompliance ?? '—'}% Patch Compliance</span>
             <span className="text-emerald-700 font-mono font-semibold">EDR Active</span>
           </div>
         </div>
@@ -181,11 +188,11 @@ export default function OverviewView() {
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-amber-700 font-mono">{stats.slaComplianceRate}%</span>
+            <span className="text-3xl font-extrabold text-amber-700 font-mono">{itSummary.slaMet ?? '—'}%</span>
             <span className="text-xs text-[#64748b] font-mono">Target: 99.0%</span>
           </div>
           <div className="mt-2 text-[11px] text-[#64748b] flex justify-between">
-            <span>Avg Response: {managedIT.summary.avgResponseMinutes} min</span>
+            <span>Avg Response: {itSummary.avgResponseMinutes ?? '—'} min</span>
             <span className="text-[#205588] font-mono font-semibold">Tier 1-3 Active</span>
           </div>
         </div>

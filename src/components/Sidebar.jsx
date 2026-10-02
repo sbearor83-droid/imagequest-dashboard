@@ -20,6 +20,9 @@ export default function Sidebar() {
     setActiveTab, 
     clients,
     selectedClient,
+    scopeLabel,
+    scopedSector,
+    scopedClients,
     setSelectedClient,
     clientFilteredEngagements,
     clientFilteredFindings,
@@ -36,13 +39,13 @@ export default function Sidebar() {
       label: 'Client Accounts 360°',
       subtitle: 'Healthcare & Banking Hub',
       icon: Building2,
-      badge: `${clients.length} Orgs`,
+      badge: `${scopedClients.length} Orgs`,
       badgeColor: 'bg-[#e8eff6] text-[#205588] border-[#b4d5ff]'
     },
     {
       id: 'overview',
       label: 'Ops Telemetry',
-      subtitle: selectedClient === 'ALL' ? 'Multi-Client Executive Radar' : `Telemetry // ${selectedClient}`,
+      subtitle: selectedClient === 'ALL' ? 'Multi-Client Executive Radar' : `Telemetry // ${scopeLabel}`,
       icon: LayoutDashboard,
       badge: null
     },
@@ -117,7 +120,7 @@ export default function Sidebar() {
         {selectedClient !== 'ALL' && (
           <div className="mx-1 mb-3 p-2.5 rounded-lg bg-[#e8eff6] border border-[#b4d5ff] text-xs font-mono shadow-2xs">
             <div className="flex items-center justify-between text-[10px] text-[#205588] font-bold uppercase tracking-wider">
-              <span>Scoped Client</span>
+              <span>{scopedSector ? 'Scoped Sector' : 'Scoped Client'}</span>
               <button 
                 onClick={() => setSelectedClient('ALL')}
                 className="hover:text-[#195589] transition-colors"
@@ -126,7 +129,7 @@ export default function Sidebar() {
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
-            <div className="text-[#1b2a3a] font-bold truncate mt-0.5">{selectedClient}</div>
+            <div className="text-[#1b2a3a] font-bold truncate mt-0.5">{scopeLabel}</div>
           </div>
         )}
 
