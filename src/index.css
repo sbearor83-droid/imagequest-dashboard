@@ -18,13 +18,22 @@
   }
 
   body {
-    font-family: 'Open Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #0b1a2d;
-    color: #e8eff6;
+    background-color: var(--iq-navy-dark);
+    color: var(--iq-blue-pale);
   }
+}
 
-  code, pre, .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+/* Point Tailwind's font-sans / font-mono utilities at the brand fonts */
+@theme {
+  --font-sans: 'Open Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Keep the dark report styling when printing / saving to PDF */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 
@@ -45,19 +54,6 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #2365a3;
-}
-
-/* ImageQuest accents and glow effects */
-.iq-glow-blue {
-  box-shadow: 0 0 25px -4px rgba(35, 101, 163, 0.45);
-}
-
-.iq-glow-emerald {
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
-}
-
-.iq-glow-rose {
-  box-shadow: 0 0 20px -3px rgba(239, 71, 111, 0.35);
 }
 
 .cyber-grid-pattern {

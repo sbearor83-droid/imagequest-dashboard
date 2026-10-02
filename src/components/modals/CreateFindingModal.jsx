@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
-import { X, Bug, ShieldAlert, Crosshair, Sparkles } from 'lucide-react';
+import { X, Bug } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { dateInDays } from '../../utils/helpers';
 
 export default function CreateFindingModal() {
+  const { isCreateFindingModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateFindingModalOpen ? <CreateFindingForm /> : null;
+}
+
+function CreateFindingForm() {
   const { 
-    isCreateFindingModalOpen, 
     setIsCreateFindingModalOpen, 
     addFinding, 
     engagements,
+    clientFilteredEngagements,
     selectedEngagement,
+    setSelectedEngagement,
     team 
   } = useCyber();
 
   const [formData, setFormData] = useState({
-    engagementId: selectedEngagement?.id || engagements[0]?.id || 'ENG-2026-081',
+    engagementId: selectedEngagement?.id || clientFilteredEngagements[0]?.id || engagements[0]?.id || '',
     title: '',
     cve: 'CVE-2026-',
     severity: 'HIGH',
@@ -21,12 +29,16 @@ export default function CreateFindingModal() {
     cvssVector: 'CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N',
     asset: '',
     discoveredBy: team[0]?.name || 'Andy Barker',
-    remediationDeadline: '2026-10-25',
+    remediationDeadline: dateInDays(30),
     description: '',
     remediation: ''
   });
 
-  if (!isCreateFindingModalOpen) return null;
+
+  const close = () => {
+    setSelectedEngagement(null);
+    setIsCreateFindingModalOpen(false);
+  };
 
   const currentEng = engagements.find(e => e.id === formData.engagementId);
 
@@ -52,7 +64,7 @@ export default function CreateFindingModal() {
       ...formData,
       client: currentEng?.client || 'Client System'
     });
-    setIsCreateFindingModalOpen(false);
+    close();
   };
 
   return (
@@ -69,7 +81,7 @@ export default function CreateFindingModal() {
             </div>
           </div>
           <button
-            onClick={() => setIsCreateFindingModalOpen(false)}
+            onClick={() => close()}
             className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#132b47]"
           >
             <X className="w-5 h-5" />
@@ -191,7 +203,7 @@ export default function CreateFindingModal() {
           <div className="pt-4 border-t border-[#1d3e63] flex justify-end gap-3">
             <button
               type="button"
-              onClick={() => setIsCreateFindingModalOpen(false)}
+              onClick={() => close()}
               className="px-4 py-2 rounded-lg bg-[#132b47] hover:bg-[#1d3e63] text-slate-300 font-mono"
             >
               Cancel

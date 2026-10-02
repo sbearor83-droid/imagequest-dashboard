@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import { X, Server, Clock, Plus } from 'lucide-react';
+import { X, Server } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function CreateTicketModal() {
-  const { isCreateTicketModalOpen, setIsCreateTicketModalOpen, addTicket, engagements, team } = useCyber();
+  const { isCreateTicketModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateTicketModalOpen ? <CreateTicketForm /> : null;
+}
+
+function CreateTicketForm() {
+  const { setIsCreateTicketModalOpen, addTicket, engagements, team, selectedClient } = useCyber();
 
   const [formData, setFormData] = useState({
-    client: engagements[0]?.client || 'Apex Financial Holdings',
-    priority: 'P1 - Critical (1h SLA)',
+    client: selectedClient === 'ALL' ? (engagements[0]?.client || '') : selectedClient,
+    priority: 'P1 - Critical',
     title: '',
     category: 'SOC Escalation',
     assignedTo: team.find(t => t.role.includes('MSSP'))?.name || 'Andy Barker'
   });
 
-  if (!isCreateTicketModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

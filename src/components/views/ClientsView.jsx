@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { 
   Building2, 
-  ShieldCheck, 
-  ShieldAlert, 
-  Bug, 
-  Server, 
-  Clock, 
-  ChevronRight, 
   Plus, 
-  Search, 
-  Filter, 
   FileText, 
-  UserCheck, 
-  DollarSign,
   ArrowRight,
-  Target,
-  Sparkles,
   ExternalLink
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
@@ -38,24 +26,27 @@ export default function ClientsView() {
   const [selectedClientModal, setSelectedClientModal] = useState(null);
   const [clientModalTab, setClientModalTab] = useState('engagements');
 
+  const query = searchQuery.toLowerCase();
   const filteredClients = clients.filter(c => {
     const matchesSearch = 
-      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.primaryContact.toLowerCase().includes(searchQuery.toLowerCase());
+      c.name.toLowerCase().includes(query) ||
+      c.industry.toLowerCase().includes(query) ||
+      c.primaryContact.toLowerCase().includes(query);
     const matchesSector = sectorFilter === 'ALL' || c.sector === sectorFilter;
     return matchesSearch && matchesSector;
   });
 
   const getClientMetrics = (clientName) => {
-    const clientEngs = engagements.filter(e => e.client.toLowerCase() === clientName.toLowerCase());
-    const clientFindings = findings.filter(f => f.client.toLowerCase() === clientName.toLowerCase());
-    const clientTickets = (managedIT.tickets || []).filter(t => t.client.toLowerCase() === clientName.toLowerCase());
-    const clientTTX = tabletopExercises.filter(t => t.client.toLowerCase() === clientName.toLowerCase());
+    const isClient = (item) => item.client.toLowerCase() === clientName.toLowerCase();
+    const clientEngs = engagements.filter(isClient);
+    const clientFindings = findings.filter(isClient);
+    const clientTickets = managedIT.tickets.filter(isClient);
+    const clientTTX = tabletopExercises.filter(isClient);
     const criticalFindings = clientFindings.filter(f => f.severity === 'CRITICAL' && f.status !== 'Verified Mitigated');
 
     return {
       engs: clientEngs,
+      activeEngs: clientEngs.filter(e => e.status !== 'Completed'),
       findings: clientFindings,
       criticalFindings,
       tickets: clientTickets,
@@ -67,6 +58,8 @@ export default function ClientsView() {
     setSelectedClient(clientName);
     setActiveTab('overview');
   };
+
+  const modalMetrics = selectedClientModal && getClientMetrics(selectedClientModal.name);
 
   const healthcareCount = clients.filter(c => c.sector === 'Healthcare').length;
   const financialCount = clients.filter(c => c.sector === 'Financial').length;
@@ -229,7 +222,7 @@ export default function ClientsView() {
               <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
                 <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-2.5">
                   <span className="text-[10px] text-slate-400 uppercase">Engagements</span>
-                  <div className="text-sm font-bold text-white mt-0.5">{metrics.engs.length} Active</div>
+                  <div className="text-sm font-bold text-white mt-0.5">{metrics.activeEngs.length} Active</div>
                 </div>
 
                 <div className={`border rounded-lg p-2.5 ${
@@ -308,7 +301,7 @@ export default function ClientsView() {
       {/* 360° Client Detailed Drilldown Modal */}
       {selectedClientModal && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-[#1d3e63] flex items-center justify-between bg-[#0f2238] shrink-0">
               <div className="flex items-center gap-3">
@@ -373,11 +366,14 @@ export default function ClientsView() {
             <div className="p-6 overflow-y-auto space-y-4 text-xs font-sans">
               {clientModalTab === 'engagements' && (
                 <div className="space-y-3">
-                  {getClientMetrics(selectedClientModal.name).engs.map(e => (
+                  {modalMetrics.engs.length === 0 && (
+                    <div className="p-8 text-center text-slate-500 font-mono">No engagements on record for this client yet.</div>
+                  )}
+                  {modalMetrics.engs.map(e => (
                     <div key={e.id} className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4 space-y-2">
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="font-mono text-cyan-400 font-bold">{e.id}</span>
+                          <span className="font-mono text-[#b4d5ff] font-bold">{e.id}</span>
                           <h4 className="text-sm font-semibold text-white mt-0.5">{e.title}</h4>
                         </div>
                         <span className="font-mono text-xs px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300">
@@ -396,10 +392,10 @@ export default function ClientsView() {
 
               {clientModalTab === 'findings' && (
                 <div className="space-y-3">
-                  {getClientMetrics(selectedClientModal.name).findings.length === 0 ? (
+                  {modalMetrics.findings.length === 0 ? (
                     <div className="p-8 text-center text-slate-500 font-mono">No vulnerabilities logged for this client yet.</div>
                   ) : (
-                    getClientMetrics(selectedClientModal.name).findings.map(f => (
+                    modalMetrics.findings.map(f => (
                       <div key={f.id} className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 space-y-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
@@ -408,7 +404,7 @@ export default function ClientsView() {
                             }`}>
                               {f.severity} (CVSS {f.cvssScore})
                             </span>
-                            <span className="font-mono text-cyan-400">{f.cve}</span>
+                            <span className="font-mono text-[#b4d5ff]">{f.cve}</span>
                             <span className="font-semibold text-white">{f.title}</span>
                           </div>
                           <span className="font-mono text-xs text-slate-400">{f.status}</span>
@@ -425,10 +421,10 @@ export default function ClientsView() {
 
               {clientModalTab === 'managedIT' && (
                 <div className="space-y-3">
-                  {getClientMetrics(selectedClientModal.name).tickets.length === 0 ? (
+                  {modalMetrics.tickets.length === 0 ? (
                     <div className="p-8 text-center text-slate-500 font-mono">Zero open SOC escalation tickets for this client. 100% SLA compliant.</div>
                   ) : (
-                    getClientMetrics(selectedClientModal.name).tickets.map(t => (
+                    modalMetrics.tickets.map(t => (
                       <div key={t.id} className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
                         <div>
                           <div className="flex items-center gap-2">
@@ -450,10 +446,10 @@ export default function ClientsView() {
 
               {clientModalTab === 'tabletop' && (
                 <div className="space-y-3">
-                  {getClientMetrics(selectedClientModal.name).ttx.length === 0 ? (
+                  {modalMetrics.ttx.length === 0 ? (
                     <div className="p-8 text-center text-slate-500 font-mono">No crisis simulations scheduled for this client yet.</div>
                   ) : (
-                    getClientMetrics(selectedClientModal.name).ttx.map(t => (
+                    modalMetrics.ttx.map(t => (
                       <div key={t.id} className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="font-mono text-purple-400 font-bold">{t.id} • {t.status}</span>

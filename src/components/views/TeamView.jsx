@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import { 
-  Users, 
-  Award, 
-  Shield, 
-  Mail, 
-  Layers, 
-  CheckCircle2, 
-  AlertTriangle,
-  Search,
-  Filter
+  Users,
+  Award,
+  Mail
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function TeamView() {
-  const { team, engagements, searchQuery } = useCyber();
+  const { team, searchQuery } = useCyber();
   const [clearanceFilter, setClearanceFilter] = useState('ALL');
 
+  const query = searchQuery.toLowerCase();
   const filteredTeam = team.filter((member) => {
     const matchesSearch = 
-      member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.certifications.some(c => c.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesClearance = clearanceFilter === 'ALL' || member.clearance.includes(clearanceFilter);
+      member.name.toLowerCase().includes(query) ||
+      member.role.toLowerCase().includes(query) ||
+      member.certifications.some(c => c.toLowerCase().includes(query));
+    // startsWith so "Secret" doesn't also match "Top Secret / SCI"
+    const matchesClearance = clearanceFilter === 'ALL' || member.clearance.startsWith(clearanceFilter);
     return matchesSearch && matchesClearance;
   });
 

@@ -1,56 +1,33 @@
 import React, { useState } from 'react';
 import { 
-  FileCheck2, 
-  Printer, 
-  Download, 
-  ShieldCheck, 
-  ShieldAlert, 
-  CheckCircle2, 
-  Calendar, 
-  Award, 
-  Target, 
-  UserCheck, 
-  ChevronDown 
+  FileCheck2,
+  Printer,
+  Download,
+  ShieldCheck,
+  ShieldAlert,
+  CheckCircle2,
+  Award,
+  Target
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { countFindingsBySeverity, exportDeliverableJson } from '../../utils/helpers';
 
 export default function ReportsView() {
-  const { engagements, findings, selectedClient } = useCyber();
+  const { engagements, clientFilteredEngagements: availableEngagements, findings } = useCyber();
 
-  const availableEngagements = selectedClient === 'ALL'
-    ? engagements
-    : engagements.filter(e => e.client === selectedClient);
+  const [selectedEngId, setSelectedEngId] = useState(null);
 
-  const [selectedEngId, setSelectedEngId] = useState(availableEngagements[0]?.id || engagements[0]?.id || 'ENG-2026-081');
-
-  // Auto-switch if selected client changes and current engagement doesn't belong to it
+  // Falls back to the first in-scope engagement if the selected one isn't in the current client scope
   const currentEngagement = availableEngagements.find(e => e.id === selectedEngId) || availableEngagements[0] || engagements[0];
   const relatedFindings = findings.filter(f => f.engagementId === currentEngagement?.id);
-
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleExportJson = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
-      engagement: currentEngagement,
-      findings: relatedFindings,
-      generatedAt: new Date().toISOString()
-    }, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `${currentEngagement?.id || 'Audit'}_Security_Deliverable.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  };
+  const counts = countFindingsBySeverity(relatedFindings);
 
   if (!currentEngagement) return null;
 
   return (
     <div className="space-y-6">
       {/* Header and Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
         <div>
           <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
             <FileCheck2 className="w-5 h-5 text-[#2365a3]" />
@@ -63,7 +40,7 @@ export default function ReportsView() {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={handleExportJson}
+            onClick={() => exportDeliverableJson(currentEngagement, relatedFindings)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f2238] hover:bg-[#132b47] text-slate-300 hover:text-white border border-[#1d3e63] text-xs font-mono transition-all"
           >
             <Download className="w-3.5 h-3.5 text-[#2365a3]" />
@@ -71,7 +48,7 @@ export default function ReportsView() {
           </button>
 
           <button
-            onClick={handlePrint}
+            onClick={() => window.print()}
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#205588] hover:bg-[#2365a3] text-white font-bold text-xs tracking-wider transition-all shadow-md shadow-[#205588]/30"
           >
             <Printer className="w-3.5 h-3.5" />
@@ -81,7 +58,7 @@ export default function ReportsView() {
       </div>
 
       {/* Engagement Selector Bar */}
-      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+      <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm print:hidden">
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono text-slate-400">Select Target Engagement:</span>
           <select
@@ -103,7 +80,7 @@ export default function ReportsView() {
       </div>
 
       {/* Rendered Document Preview Sheet */}
-      <div className="bg-[#0b1a2d] border-2 border-[#1d3e63] rounded-2xl p-8 shadow-2xl space-y-8 font-sans print:bg-white print:text-black print:border-none print:shadow-none print:p-0">
+      <div className="bg-[#0b1a2d] border-2 border-[#1d3e63] rounded-2xl p-8 shadow-2xl space-y-8 font-sans print:border-none print:shadow-none">
         {/* Document Classification Header & Letterhead */}
         <div className="border-b-2 border-dashed border-[#1d3e63] pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -162,25 +139,25 @@ export default function ReportsView() {
             <div className="bg-rose-950/40 border border-rose-800/80 rounded-xl p-3">
               <span className="text-[10px] text-rose-400 font-bold uppercase">Critical (CVSS 9.0+)</span>
               <div className="text-2xl font-black text-rose-300 mt-1">
-                {currentEngagement.findingsCount?.critical || 0}
+                {counts.critical}
               </div>
             </div>
             <div className="bg-orange-950/40 border border-orange-800/80 rounded-xl p-3">
               <span className="text-[10px] text-orange-400 font-bold uppercase">High (CVSS 7.0-8.9)</span>
               <div className="text-2xl font-black text-orange-300 mt-1">
-                {currentEngagement.findingsCount?.high || 0}
+                {counts.high}
               </div>
             </div>
             <div className="bg-amber-950/40 border border-amber-800/80 rounded-xl p-3">
               <span className="text-[10px] text-amber-400 font-bold uppercase">Medium (CVSS 4.0-6.9)</span>
               <div className="text-2xl font-black text-amber-300 mt-1">
-                {currentEngagement.findingsCount?.medium || 0}
+                {counts.medium}
               </div>
             </div>
             <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-3">
               <span className="text-[10px] text-[#b4d5ff] font-bold uppercase">Low / Info (0.1-3.9)</span>
               <div className="text-2xl font-black text-white mt-1">
-                {currentEngagement.findingsCount?.low || 0}
+                {counts.low}
               </div>
             </div>
           </div>
@@ -194,7 +171,7 @@ export default function ReportsView() {
 
           {relatedFindings.length === 0 ? (
             <div className="bg-[#0f2238]/60 border border-dashed border-[#1d3e63] rounded-xl p-6 text-center text-xs text-slate-400 font-mono">
-              ✓ Zero Critical Vulnerabilities detected in the target scope. Controls operating within acceptable risk tolerance.
+              ✓ No findings logged for this engagement.
             </div>
           ) : (
             <div className="space-y-3">

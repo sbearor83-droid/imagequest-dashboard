@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Runtime API data (seed lives in server/data/database.json)
+server/data/runtime.json

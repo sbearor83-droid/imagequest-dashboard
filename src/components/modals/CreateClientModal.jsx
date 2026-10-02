@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
-import { X, Building2, Plus } from 'lucide-react';
+import { X, Building2 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
+// Industry option -> sector key used by the client filters and navbar selector
+const INDUSTRY_SECTOR = {
+  'Healthcare (HIPAA / EHR)': 'Healthcare',
+  'Financial & Banking (FFIEC / GLBA)': 'Financial',
+  'Other Commercial (SOC 2 / ISO)': 'Other'
+};
+
 export default function CreateClientModal() {
-  const { isCreateClientModalOpen, setIsCreateClientModalOpen, addClient, team } = useCyber();
+  const { isCreateClientModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateClientModalOpen ? <CreateClientForm /> : null;
+}
+
+function CreateClientForm() {
+  const { setIsCreateClientModalOpen, addClient, team } = useCyber();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -18,16 +31,16 @@ export default function CreateClientModal() {
     servicesText: 'vCISO Advisory & Regulatory Compliance\nManaged IT & 24/7 SOC Operations\nPenetration Testing & Red Teaming\nTabletop Crisis Simulation Drills'
   });
 
-  if (!isCreateClientModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name) return;
 
-    const services = formData.servicesText.split('\n').filter(Boolean);
+    const { servicesText, ...client } = formData;
     await addClient({
-      ...formData,
-      services
+      ...client,
+      sector: INDUSTRY_SECTOR[client.industry] || 'Other',
+      services: servicesText.split('\n').filter(Boolean)
     });
     setIsCreateClientModalOpen(false);
   };

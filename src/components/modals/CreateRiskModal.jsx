@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { X, ShieldAlert, Plus } from 'lucide-react';
+import { X, ShieldAlert } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { dateInDays } from '../../utils/helpers';
 
 export default function CreateRiskModal() {
-  const { isCreateRiskModalOpen, setIsCreateRiskModalOpen, addRisk, team } = useCyber();
+  const { isCreateRiskModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateRiskModalOpen ? <CreateRiskForm /> : null;
+}
+
+function CreateRiskForm() {
+  const { setIsCreateRiskModalOpen, addRisk, team } = useCyber();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -13,10 +20,9 @@ export default function CreateRiskModal() {
     impact: 4,
     owner: team[0]?.name || 'Andy Barker',
     mitigationsText: 'EDR continuous monitoring\nAir-gapped backups\nRole-based access control',
-    nextAudit: '2026-11-30'
+    nextAudit: dateInDays(60)
   });
 
-  if (!isCreateRiskModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

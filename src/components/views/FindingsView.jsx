@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
 import { 
-  Bug, 
-  ShieldAlert, 
-  ShieldCheck, 
-  Plus, 
-  Filter, 
-  Search, 
-  Clock, 
-  AlertTriangle, 
-  CheckCircle2, 
-  ExternalLink, 
-  Terminal,
+  Bug,
+  ShieldCheck,
+  Plus,
   FileCode,
-  Sparkles,
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
@@ -21,6 +12,7 @@ import { useCyber } from '../../context/CyberContext';
 export default function FindingsView() {
   const { 
     findings, 
+    clientFilteredFindings,
     updateFindingStatus, 
     setIsCreateFindingModalOpen, 
     selectedClient,
@@ -33,19 +25,19 @@ export default function FindingsView() {
   const [expandedFindingId, setExpandedFindingId] = useState(null);
 
   // Filter
-  const filtered = findings.filter((f) => {
+  const query = searchQuery.toLowerCase();
+  const filtered = clientFilteredFindings.filter((f) => {
     const matchesSearch = 
-      f.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.cve.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.asset.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.id.toLowerCase().includes(searchQuery.toLowerCase());
+      f.title.toLowerCase().includes(query) ||
+      f.cve.toLowerCase().includes(query) ||
+      f.asset.toLowerCase().includes(query) ||
+      f.client.toLowerCase().includes(query) ||
+      f.id.toLowerCase().includes(query);
 
-    const matchesClient = selectedClient === 'ALL' || f.client.toLowerCase() === selectedClient.toLowerCase();
     const matchesSev = selectedSeverity === 'ALL' || f.severity.toUpperCase() === selectedSeverity.toUpperCase();
     const matchesStat = selectedStatus === 'ALL' || f.status.toLowerCase() === selectedStatus.toLowerCase();
 
-    return matchesSearch && matchesClient && matchesSev && matchesStat;
+    return matchesSearch && matchesSev && matchesStat;
   });
 
   const getSeverityStyle = (sev) => {
@@ -126,7 +118,7 @@ export default function FindingsView() {
           { label: 'MEDIUM (4.0 - 6.9)', sev: 'MEDIUM', color: 'border-amber-800/80 bg-amber-950/30 text-amber-300 ring-[#2365a3]' },
           { label: 'LOW (0.1 - 3.9)', sev: 'LOW', color: 'border-[#1d3e63] bg-[#0f2238] text-[#b4d5ff] ring-[#2365a3]' },
         ].map(item => {
-          const count = findings.filter(f => f.severity.toUpperCase() === item.sev).length;
+          const count = clientFilteredFindings.filter(f => f.severity.toUpperCase() === item.sev).length;
           const isSelected = selectedSeverity === item.sev;
           return (
             <button
@@ -232,7 +224,7 @@ export default function FindingsView() {
 
                 {/* Expanded Technical Details & PoC */}
                 {isExpanded && (
-                  <div className="mt-4 pt-4 border-t border-[#1d3e63] space-y-4 animate-in fade-in duration-200">
+                  <div className="mt-4 pt-4 border-t border-[#1d3e63] space-y-4">
                     {/* CVSS Vector */}
                     <div className="bg-[#0b1a2d] border border-[#1d3e63] rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
                       <span className="text-slate-400">CVSS v3.1 Vector String:</span>

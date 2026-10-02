@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
 import { 
-  Server, 
-  Clock, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Plus, 
-  Activity, 
-  ShieldCheck, 
-  Cpu, 
-  HardDrive,
-  Users,
-  Search,
-  Filter
+  Server,
+  Clock,
+  CheckCircle2,
+  Plus,
+  Activity
 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
 
 export default function ManagedITView() {
-  const { managedIT, setIsCreateTicketModalOpen, selectedClient, setSelectedClient, searchQuery } = useCyber();
+  const { managedIT, clientFilteredTickets, setIsCreateTicketModalOpen, selectedClient, setSelectedClient, searchQuery } = useCyber();
   const [ticketFilter, setTicketFilter] = useState('ALL');
 
-  const { summary = {}, tickets = [], endpointHealth = [] } = managedIT || {};
+  const { summary, endpointHealth } = managedIT;
 
-  const filteredTickets = tickets.filter(t => {
+  const query = searchQuery.toLowerCase();
+  const filteredTickets = clientFilteredTickets.filter(t => {
     const matchesSearch = 
-      t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.id.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesClient = selectedClient === 'ALL' || t.client.toLowerCase() === selectedClient.toLowerCase();
+      t.title.toLowerCase().includes(query) ||
+      t.client.toLowerCase().includes(query) ||
+      t.id.toLowerCase().includes(query);
     const matchesFilter = ticketFilter === 'ALL' || t.priority.includes(ticketFilter);
-    return matchesSearch && matchesClient && matchesFilter;
+    return matchesSearch && matchesFilter;
   });
 
   return (
@@ -76,27 +69,27 @@ export default function ManagedITView() {
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Monitored Endpoints</div>
           <div className="text-2xl font-bold font-mono text-white mt-1">
-            {summary.totalEndpoints?.toLocaleString() || '8,420'}
+            {summary.totalEndpoints?.toLocaleString()}
           </div>
           <div className="text-[11px] text-emerald-400 font-mono mt-1 flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3" /> {summary.healthyEndpoints?.toLocaleString() || '8,312'} Healthy
+            <CheckCircle2 className="w-3 h-3" /> {summary.healthyEndpoints?.toLocaleString()} Healthy
           </div>
         </div>
 
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Patch Compliance</div>
           <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
-            {summary.patchCompliance || 98.7}%
+            {summary.patchCompliance}%
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
-            {summary.vulnerableEndpoints || 108} Pending Reboot
+            {summary.vulnerableEndpoints} Pending Reboot
           </div>
         </div>
 
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Avg SOC Response</div>
           <div className="text-2xl font-bold font-mono text-[#b4d5ff] mt-1">
-            {summary.avgResponseMinutes || 11.4} min
+            {summary.avgResponseMinutes} min
           </div>
           <div className="text-[11px] text-slate-400 font-mono mt-1">
             Target SLA: &lt;15 min
@@ -106,7 +99,7 @@ export default function ManagedITView() {
         <div className="bg-[#0f2238] border border-[#1d3e63] rounded-xl p-4">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400">Overall SLA Met Rate</div>
           <div className="text-2xl font-bold font-mono text-amber-400 mt-1">
-            {summary.slaMet || 99.4}%
+            {summary.slaMet}%
           </div>
           <div className="text-[11px] text-emerald-400 font-mono mt-1">
             Zero SLA Breaches in 30d
@@ -164,7 +157,7 @@ export default function ManagedITView() {
           </div>
 
           <div className="flex items-center gap-2">
-            {['ALL', 'P1', 'P2', 'P3'].map(p => (
+            {['ALL', 'P1', 'P2', 'P3', 'P4'].map(p => (
               <button
                 key={p}
                 onClick={() => setTicketFilter(p)}

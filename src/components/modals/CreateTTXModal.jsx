@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { X, Gamepad2, Plus } from 'lucide-react';
+import { X, Gamepad2 } from 'lucide-react';
 import { useCyber } from '../../context/CyberContext';
+import { dateInDays } from '../../utils/helpers';
 
 export default function CreateTTXModal() {
-  const { isCreateTTXModalOpen, setIsCreateTTXModalOpen, addTabletopExercise, team } = useCyber();
+  const { isCreateTTXModalOpen } = useCyber();
+  // Mount the form only while open so its defaults reflect current data and it resets between uses
+  return isCreateTTXModalOpen ? <CreateTTXForm /> : null;
+}
+
+function CreateTTXForm() {
+  const { setIsCreateTTXModalOpen, addTabletopExercise, team, selectedClient } = useCyber();
 
   const [formData, setFormData] = useState({
     title: '',
-    client: '',
+    client: selectedClient === 'ALL' ? '' : selectedClient,
     threatActor: 'APT29 / Russian SVR Emulation',
     scenario: '',
-    scheduledDate: '2026-11-12',
+    scheduledDate: dateInDays(30),
     duration: '4.0 Hours',
     facilitator: team.find(t => t.name.includes('Maya'))?.name || 'Andy Barker',
     participantsText: 'Chief Executive Officer\nChief Information Security Officer\nGeneral Counsel\nHead of Communications',
@@ -18,7 +25,6 @@ export default function CreateTTXModal() {
     inject2: 'Escalation: Darknet leak site lists client logo with 48h timer countdown.'
   });
 
-  if (!isCreateTTXModalOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
